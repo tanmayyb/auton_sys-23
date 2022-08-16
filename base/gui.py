@@ -5,6 +5,7 @@ from threading import *
 import time
 
 from publisher import miniPub
+from action import fibo_action_client
 
 from window import WIN_WIDTH, WIN_HEIGHT, WIN_X_POSITION, SETUP_STRING
 
@@ -19,7 +20,7 @@ class gui(Thread):
         Thread.__init__(self)
 
         self.window = window
-        self.draw_gui(window)
+        self.draw_gui()
         self.setup_window()
 
 
@@ -54,10 +55,11 @@ class gui(Thread):
         
 
         self.miniPub = miniPub(self)
+        self.miniFibo = fibo_action_client(self)
 
         self.executor = MultiThreadedExecutor()
         self.executor.add_node(self.miniPub)
-        # self.executor.add_node(self.miniReq)
+        self.executor.add_node(self.miniFibo)
 
         self.executor_thread = Thread(
             target=self.executor.spin, 
@@ -68,16 +70,21 @@ class gui(Thread):
     
     def fetch_result(self, num):
         print("I got Called, I got:", num)
+
+    def display_action_feedback(self, caller, msg):
+        self.action_scroll.insert(
+            END,
+            f"[ {str(caller)} ]: {str(msg)}"+'\n')
+        self.action_scroll.see('end')
         
     def button1(self):
-        self.miniPub.do_pub(2)    
+        self.miniPub.do_pub(2)    #fix message type
 
-    def button2(self):
-        #self.miniReq.send_request(2,2)
-        pass
-    
+    def a_button_1(self):
+        self.miniFibo.send_goal(10)
+        
     def show_buttons(self):
-        #button for getting result from service
+        #button pub sub buttons
         self.pub_button = Button(
             self.window, 
             text="Send Pub", 
@@ -87,15 +94,16 @@ class gui(Thread):
                 column=0, 
                 columnspan=3)
         
-
+        #action service buttons
         self.action_button = Button(
             self.window, 
             text="Do Action", 
             style="button.TButton", 
-            command=self.button2).grid(
+            command=self.a_button_1).grid(
                 row=10, 
                 column=0, 
                 columnspan=3)
+    
     
     def show_scroll(self):
         self.scroll = scrolledtext.ScrolledText(
@@ -104,7 +112,7 @@ class gui(Thread):
             width=32, 
             font=('Arial 14'), 
             borderwidth=0,)
-            
+
         self.scroll.grid(
                 row=0, 
                 column=0, 
@@ -112,14 +120,26 @@ class gui(Thread):
                 rowspan=2, 
                 pady=(10, 0))
         
-        #self.scroll.pack()
+        self.action_scroll = scrolledtext.ScrolledText(
+            self.window, 
+            height=8, 
+            width=32, 
+            font=('Arial 14'), 
+            borderwidth=0,)
+        
+        self.action_scroll.grid(
+                row=2, 
+                column=0, 
+                columnspan=3, 
+                rowspan=2, 
+                pady=(10, 0))
 
     def insert_in_scroll(self, data):
         data = str(data)
         self.scroll.insert(END,"rec:   "+data+'\n')
         self.scroll.see('end')
 
-    def draw_gui(self, window):
+    def draw_gui(self):
         
         self.show_scroll()
         self.show_buttons()

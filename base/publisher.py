@@ -9,7 +9,11 @@ class miniPub(Node):
         
         self.parent = parent
 
-        self.publisher = self.create_publisher(Int32, 'topic', 10)
+        self.publisher = self.create_publisher(
+            Int32, 
+            'topic', 
+            10)
+        
         self.subscription = self.create_subscription(
             Int32,
             'topic_result',
