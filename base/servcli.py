@@ -3,6 +3,7 @@ from std_msgs.msg import Int32
 
 import rclpy
 from rclpy.node import Node
+import sys
 
 class miniClient(Node):
 
@@ -52,9 +53,11 @@ def main(args=None):
     while rclpy.ok():
         rclpy.spin(minimal_client)
 
-    minimal_client.destroy_node()
-    rclpy.shutdown()
-
+    
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except:
+        rclpy.shutdown()
+

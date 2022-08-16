@@ -25,5 +25,7 @@ class miniPub(Node):
 
     def sub_callback(self, msg):
         self.get_logger().info('Got Result: "%d"' % msg.data)
-        self.parent.fetch_result(msg.data)
         
+        #rewrite these ...
+        self.parent.fetch_result(msg.data)
+        self.parent.insert_in_scroll(msg.data)

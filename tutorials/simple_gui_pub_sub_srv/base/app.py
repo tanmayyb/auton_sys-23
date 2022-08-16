@@ -12,8 +12,9 @@ def main(args= None):
 
     print("gui launched")
     root.mainloop()
+    #gui.stop()
 
 
 if __name__ == '__main__':
     main()
-    print("app closed")
+    #print("app closed")
