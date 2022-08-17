@@ -4,8 +4,7 @@ from tkinter import PhotoImage, StringVar, Label, scrolledtext
 from threading import *
 import time
 
-from publisher import miniPub
-from action import fibo_action_client
+from base_station import baseNode
 
 from window import WIN_WIDTH, WIN_HEIGHT, WIN_X_POSITION, SETUP_STRING
 
@@ -18,6 +17,11 @@ class gui(Thread):
 
     def __init__(self, window):
         Thread.__init__(self)
+        """
+        0 1 2 3 4 respectively
+        """
+        self.state_array = ["Initializing","Standby/Idle","Moving","Manual"] 
+        self.state = None
 
         self.window = window
         self.draw_gui()
@@ -31,6 +35,9 @@ class gui(Thread):
         
         print("gui initialised")
 
+    def fetch_state(self, state):
+        self.state = self.state_array[state]
+
     def setup_window(self):
          # Window setup
         self.window.title("Auton ROS GUI")
@@ -43,24 +50,14 @@ class gui(Thread):
                              anchor='center')
         
     def setup_nodes(self):
-        
-        #make nodes iterable
-        #self.node_list = [miniPub,]
 
-                # self.req_thread = Thread(
-        #     target=rclpy.spin, 
-        #     args=self.miniReq,
-        #     daemon=True)
-        # self.req_thread.start()  
-        
+        self.base_node = baseNode(self)
 
-        self.miniPub = miniPub(self)
-        self.miniFibo = fibo_action_client(self)
-
+        """
+        Threading
+        """
         self.executor = MultiThreadedExecutor()
-        self.executor.add_node(self.miniPub)
-        self.executor.add_node(self.miniFibo)
-
+        self.executor.add_node(self.base_node)
         self.executor_thread = Thread(
             target=self.executor.spin, 
             daemon=True)
@@ -78,10 +75,10 @@ class gui(Thread):
         self.action_scroll.see('end')
         
     def button1(self):
-        self.miniPub.do_pub(2)    #fix message type
+        self.base_node.do_pub(2)    #fix message type
 
     def a_button_1(self):
-        self.miniFibo.send_goal(10)
+        self.base_node.send_goal(10)
         
     def show_buttons(self):
         #button pub sub buttons
