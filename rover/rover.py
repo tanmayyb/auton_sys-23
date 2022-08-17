@@ -5,7 +5,7 @@ https://levelup.gitconnected.com/ros-spinning-threading-queuing-aac9c0a793f
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import Int16()
+from std_msgs.msg import Int16
 
 class Rover(Node):
     def __init__(self):
