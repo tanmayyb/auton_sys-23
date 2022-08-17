@@ -1,12 +1,14 @@
 from tkinter import *
 from tkinter.ttk import *
-from tkinter import PhotoImage, StringVar, Label, scrolledtext
+from tkinter import Label, scrolledtext
+
+import tkintermapview
 from threading import *
 import time
 
-from base.base import baseNode
+from base import baseNode
 
-from window import WIN_WIDTH, WIN_HEIGHT, WIN_X_POSITION, SETUP_STRING
+from window import *
 
 import rclpy
 
@@ -24,10 +26,9 @@ class gui(Thread):
         self.state = None
 
         self.window = window
-        self.draw_gui()
+        
         self.setup_window()
-
-
+        self.draw_gui()
 
         rclpy.init(args=None)
         
@@ -42,6 +43,9 @@ class gui(Thread):
          # Window setup
         self.window.title("Auton ROS GUI")
         self.window.geometry(SETUP_STRING)
+        self.setup_styles()
+
+    def setup_styles(self):
         # GUI Styles
         self.style = Style(self.window)
         self.style.configure('Info.TLabel',
@@ -63,7 +67,39 @@ class gui(Thread):
             daemon=True)
         self.executor_thread.start()
 
+    def show_map(self):
+        
+        self.map_label_frame = LabelFrame(self.window)
+        self.map_label_frame.grid(
+                row=0, 
+                column=0,
+                rowspan=5,
+                columnspan=5)
 
+        self.map_widget = tkintermapview.TkinterMapView(
+            self.map_label_frame, 
+            width=400, 
+            height=400, 
+            corner_radius=0)
+
+        self.map_widget.grid(
+            row=0,
+            column=0)
+
+        # self.map_widget.place(
+        #     relx=0.5, 
+        #     rely=0.5, 
+        #     anchor=CENTER)
+
+        # set current widget position and zoom
+        self.map_widget.set_position(
+            43.65897373429778, 
+            -79.37932931217927)  # Ryerson
+        self.map_widget.set_marker(
+            43.65897373429778, 
+            -79.37932931217927, 
+            text="Ryerson Uni")
+        self.map_widget.set_zoom(20)
     
     def fetch_result(self, num):
         print("I got Called, I got:", num)
@@ -85,20 +121,18 @@ class gui(Thread):
         self.pub_button = Button(
             self.window, 
             text="Send Pub", 
-            style="button.TButton", 
             command=self.button1).grid(
                 row=7, 
-                column=0, 
+                column=5, 
                 columnspan=3)
         
         #action service buttons
         self.action_button = Button(
             self.window, 
-            text="Do Action", 
-            style="button.TButton", 
+            text="Do Action",  
             command=self.a_button_1).grid(
                 row=10, 
-                column=0, 
+                column=5, 
                 columnspan=3)
     
     
@@ -112,7 +146,7 @@ class gui(Thread):
 
         self.scroll.grid(
                 row=0, 
-                column=0, 
+                column=8, 
                 columnspan=3, 
                 rowspan=2, 
                 pady=(10, 0))
@@ -125,8 +159,8 @@ class gui(Thread):
             borderwidth=0,)
         
         self.action_scroll.grid(
-                row=2, 
-                column=0, 
+                row=3, 
+                column=8, 
                 columnspan=3, 
                 rowspan=2, 
                 pady=(10, 0))
@@ -137,6 +171,7 @@ class gui(Thread):
         self.scroll.see('end')
 
     def draw_gui(self):
+        self.show_map()
         
         self.show_scroll()
         self.show_buttons()
