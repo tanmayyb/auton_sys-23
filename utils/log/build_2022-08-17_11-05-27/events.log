@@ -1,0 +1,71 @@
+[0.000000] (-) TimerEvent: {}
+[0.001320] (rover_actions) JobQueued: {'identifier': 'rover_actions', 'dependencies': OrderedDict()}
+[0.001745] (rover_actions) JobStarted: {'identifier': 'rover_actions'}
+[0.026434] (rover_actions) JobProgress: {'identifier': 'rover_actions', 'progress': 'cmake'}
+[0.027928] (rover_actions) Command: {'cmd': ['/usr/bin/cmake', '/home/ros-vm/github/auton_sys-23/utils/src/rover_actions', '-DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_actions'], 'cwd': '/home/ros-vm/github/auton_sys-23/utils/build/rover_actions', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ros-vm'), ('SSH_CLIENT', '10.0.0.220 59077 22'), ('XDG_SESSION_TYPE', 'tty'), ('GIT_ASKPASS', '/home/ros-vm/.vscode-server/bin/6d9b74a70ca9c7733b29f0456fd8195364076dda/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ros-vm/ros2_foxy/ros2-linux/opt/yaml_cpp_vendor/lib:/home/ros-vm/ros2_foxy/ros2-linux/opt/rviz_ogre_vendor/lib:/home/ros-vm/ros2_foxy/ros2-linux/lib'), ('BROWSER', '/home/ros-vm/.vscode-server/bin/6d9b74a70ca9c7733b29f0456fd8195364076dda/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/ros-vm'), ('OLDPWD', '/home/ros-vm/github/auton_sys-23'), ('TERM_PROGRAM_VERSION', '1.70.1'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-bc2461fc-7b08-46ad-bf6e-28775d7efac7.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/home/ros-vm/.vscode-server/bin/6d9b74a70ca9c7733b29f0456fd8195364076dda/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/home/ros-vm/.vscode-server/bin/6d9b74a70ca9c7733b29f0456fd8195364076dda/node'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('COLCON_PREFIX_PATH', '/home/ros-vm/ros2_foxy/ros2-linux'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'ros-vm'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/home/ros-vm/ros2_foxy/ros2-linux/lib/x86_64-linux-gnu/pkgconfig:/home/ros-vm/ros2_foxy/ros2-linux/lib/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '3'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/ros-vm/.vscode-server/bin/6d9b74a70ca9c7733b29f0456fd8195364076dda/bin/remote-cli:/home/ros-vm/.local/bin:/home/ros-vm/ros2_foxy/ros2-linux/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_CA.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-a8911bcff6.sock'), ('TERM_PROGRAM', 'vscode'), ('AMENT_PREFIX_PATH', '/home/ros-vm/ros2_foxy/ros2-linux'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/ros-vm/github/auton_sys-23/utils/build/rover_actions'), ('SSH_CONNECTION', '10.0.0.220 59077 10.0.0.52 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/ros-vm/ros2_foxy/ros2-linux')]), 'shell': False}
+[0.060565] (rover_actions) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.9 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake/cmake)\n'}
+[0.086697] (rover_actions) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.098646] (-) TimerEvent: {}
+[0.199512] (-) TimerEvent: {}
+[0.290253] (rover_actions) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.6 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_lint_auto/cmake)\n'}
+[0.299667] (-) TimerEvent: {}
+[0.359394] (rover_actions) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.0.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_default_generators/cmake)\n'}
+[0.361893] (rover_actions) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.365915] (rover_actions) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.2.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_adapter/cmake)\n'}
+[0.383838] (rover_actions) StdoutLine: {'line': b'-- Could not find RTI Connext - skipping rosidl_typesupport_connext_c\n'}
+[0.399776] (-) TimerEvent: {}
+[0.407060] (rover_actions) StdoutLine: {'line': b'-- Could not find RTI Connext - skipping rosidl_typesupport_connext_cpp\n'}
+[0.500835] (-) TimerEvent: {}
+[0.538007] (rover_actions) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.588289] (rover_actions) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") \n'}
+[0.600929] (-) TimerEvent: {}
+[0.701972] (-) TimerEvent: {}
+[0.775347] (rover_actions) StderrLine: {'line': b'CMake Error at /home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_adapter/cmake/rosidl_adapt_interfaces.cmake:60 (message):\n'}
+[0.775581] (rover_actions) StderrLine: {'line': b'  execute_process(/usr/bin/python3 -m rosidl_adapter --package-name\n'}
+[0.775661] (rover_actions) StderrLine: {'line': b'  rover_actions --arguments-file\n'}
+[0.775737] (rover_actions) StderrLine: {'line': b'  /home/ros-vm/github/auton_sys-23/utils/build/rover_actions/rosidl_adapter__arguments__rover_actions.json\n'}
+[0.775839] (rover_actions) StderrLine: {'line': b'  --output-dir\n'}
+[0.775937] (rover_actions) StderrLine: {'line': b'  /home/ros-vm/github/auton_sys-23/utils/build/rover_actions/rosidl_adapter/rover_actions\n'}
+[0.776036] (rover_actions) StderrLine: {'line': b'  --output-file\n'}
+[0.776104] (rover_actions) StderrLine: {'line': b'  /home/ros-vm/github/auton_sys-23/utils/build/rover_actions/rosidl_adapter/rover_actions.idls)\n'}
+[0.776164] (rover_actions) StderrLine: {'line': b'  returned error code 1:\n'}
+[0.776233] (rover_actions) StderrLine: {'line': b'\n'}
+[0.776293] (rover_actions) StderrLine: {'line': b"  Error processing 'geometry_msgs/Point32 POS' of\n"}
+[0.776361] (rover_actions) StderrLine: {'line': b"  'rover_actions/minimal_walk_Goal': ''POS' is an invalid field name.  It\n"}
+[0.776469] (rover_actions) StderrLine: {'line': b"  should have the pattern '^(?!.*__)(?!.*_$)[a-z][a-z0-9_]*$''\n"}
+[0.776544] (rover_actions) StderrLine: {'line': b'\n'}
+[0.776607] (rover_actions) StderrLine: {'line': b'  Traceback (most recent call last):\n'}
+[0.776675] (rover_actions) StderrLine: {'line': b'\n'}
+[0.776737] (rover_actions) StderrLine: {'line': b'    File "/usr/lib/python3.8/runpy.py", line 194, in _run_module_as_main\n'}
+[0.776805] (rover_actions) StderrLine: {'line': b'      return _run_code(code, main_globals, None,\n'}
+[0.776874] (rover_actions) StderrLine: {'line': b'    File "/usr/lib/python3.8/runpy.py", line 87, in _run_code\n'}
+[0.776941] (rover_actions) StderrLine: {'line': b'      exec(code, run_globals)\n'}
+[0.777003] (rover_actions) StderrLine: {'line': b'    File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/__main__.py", line 19, in <module>\n'}
+[0.777069] (rover_actions) StderrLine: {'line': b'      sys.exit(main())\n'}
+[0.777129] (rover_actions) StderrLine: {'line': b'    File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/main.py", line 53, in main\n'}
+[0.777197] (rover_actions) StderrLine: {'line': b'      abs_idl_file = convert_to_idl(\n'}
+[0.777258] (rover_actions) StderrLine: {'line': b'    File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/__init__.py", line 29, in convert_to_idl\n'}
+[0.777327] (rover_actions) StderrLine: {'line': b'      return convert_action_to_idl(\n'}
+[0.777387] (rover_actions) StderrLine: {'line': b'    File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/action/__init__.py", line 28, in convert_action_to_idl\n'}
+[0.777474] (rover_actions) StderrLine: {'line': b'      action = parse_action_string(package_name, input_file.stem, content)\n'}
+[0.777544] (rover_actions) StderrLine: {'line': b'    File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/parser.py", line 892, in parse_action_string\n'}
+[0.777606] (rover_actions) StderrLine: {'line': b'      goal_message = parse_message_string(\n'}
+[0.777673] (rover_actions) StderrLine: {'line': b'    File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/parser.py", line 515, in parse_message_string\n'}
+[0.777734] (rover_actions) StderrLine: {'line': b'      fields.append(Field(\n'}
+[0.777802] (rover_actions) StderrLine: {'line': b'    File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/parser.py", line 353, in __init__\n'}
+[0.777863] (rover_actions) StderrLine: {'line': b'      raise NameError(\n'}
+[0.777931] (rover_actions) StderrLine: {'line': b'\n'}
+[0.777992] (rover_actions) StderrLine: {'line': b"  NameError: 'POS' is an invalid field name.  It should have the pattern\n"}
+[0.778064] (rover_actions) StderrLine: {'line': b"  '^(?!.*__)(?!.*_$)[a-z][a-z0-9_]*$'\n"}
+[0.778127] (rover_actions) StderrLine: {'line': b'\n'}
+[0.778193] (rover_actions) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[0.778254] (rover_actions) StderrLine: {'line': b'  /home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:130 (rosidl_adapt_interfaces)\n'}
+[0.778322] (rover_actions) StderrLine: {'line': b'  CMakeLists.txt:37 (rosidl_generate_interfaces)\n'}
+[0.778391] (rover_actions) StderrLine: {'line': b'\n'}
+[0.778534] (rover_actions) StderrLine: {'line': b'\n'}
+[0.780326] (rover_actions) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[0.780478] (rover_actions) StdoutLine: {'line': b'See also "/home/ros-vm/github/auton_sys-23/utils/build/rover_actions/CMakeFiles/CMakeOutput.log".\n'}
+[0.786199] (rover_actions) CommandEnded: {'returncode': 1}
+[0.802087] (-) TimerEvent: {}
+[0.823342] (rover_actions) JobEnded: {'identifier': 'rover_actions', 'rc': 1}
+[0.835145] (-) EventReactorShutdown: {}

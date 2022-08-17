@@ -1,0 +1,21 @@
+[0.031s] Invoking command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_actions': /usr/bin/cmake /home/ros-vm/github/auton_sys-23/utils/src/rover_actions -DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_actions
+[0.057s] -- Found ament_cmake: 0.9.9 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake/cmake)
+[0.083s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.284s] -- Found ament_lint_auto: 0.9.6 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_lint_auto/cmake)
+[0.358s] -- Found rosidl_default_generators: 1.0.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_default_generators/cmake)
+[0.361s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.365s] -- Found rosidl_adapter: 1.2.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_adapter/cmake)
+[0.387s] -- Could not find RTI Connext - skipping rosidl_typesupport_connext_c
+[0.412s] -- Could not find RTI Connext - skipping rosidl_typesupport_connext_cpp
+[0.554s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.586s] CMake Error at /home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:93 (message):
+[0.586s]   rosidl_generate_interfaces() the passed file 'action/minimal_walk.action'
+[0.586s]   doesn't exist relative to the CMAKE_CURRENT_SOURCE_DIR
+[0.586s]   '/home/ros-vm/github/auton_sys-23/utils/src/rover_actions'
+[0.586s] Call Stack (most recent call first):
+[0.586s]   CMakeLists.txt:37 (rosidl_generate_interfaces)
+[0.586s] 
+[0.586s] 
+[0.589s] -- Configuring incomplete, errors occurred!
+[0.589s] See also "/home/ros-vm/github/auton_sys-23/utils/build/rover_actions/CMakeFiles/CMakeOutput.log".
+[0.595s] Invoked command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_actions' returned '1': /usr/bin/cmake /home/ros-vm/github/auton_sys-23/utils/src/rover_actions -DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_actions

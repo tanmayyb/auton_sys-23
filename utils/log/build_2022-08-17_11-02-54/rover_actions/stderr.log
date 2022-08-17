@@ -1,0 +1,8 @@
+CMake Error at /home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:93 (message):
+  rosidl_generate_interfaces() the passed file 'action/minimal_walk.action'
+  doesn't exist relative to the CMAKE_CURRENT_SOURCE_DIR
+  '/home/ros-vm/github/auton_sys-23/utils/src/rover_actions'
+Call Stack (most recent call first):
+  CMakeLists.txt:37 (rosidl_generate_interfaces)
+
+

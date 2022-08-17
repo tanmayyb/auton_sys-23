@@ -1,0 +1,23 @@
+[0.035s] Invoking command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_actions': /usr/bin/cmake /home/ros-vm/github/auton_sys-23/utils/src/rover_actions -DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_actions
+[0.059s] -- Found ament_cmake: 0.9.9 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake/cmake)
+[0.083s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.306s] -- Found ament_lint_auto: 0.9.6 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_lint_auto/cmake)
+[0.380s] -- Found rosidl_default_generators: 1.0.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_default_generators/cmake)
+[0.382s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.385s] -- Found rosidl_adapter: 1.2.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_adapter/cmake)
+[0.405s] -- Could not find RTI Connext - skipping rosidl_typesupport_connext_c
+[0.430s] -- Could not find RTI Connext - skipping rosidl_typesupport_connext_cpp
+[0.534s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[0.565s] -- Found FastRTPS: /home/ros-vm/ros2_foxy/ros2-linux/include  
+[0.665s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.719s] CMake Error at /home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:93 (message):
+[0.719s]   rosidl_generate_interfaces() the passed file 'action/minimal_walk.action'
+[0.719s]   doesn't exist relative to the CMAKE_CURRENT_SOURCE_DIR
+[0.719s]   '/home/ros-vm/github/auton_sys-23/utils/src/rover_actions'
+[0.719s] Call Stack (most recent call first):
+[0.719s]   CMakeLists.txt:37 (rosidl_generate_interfaces)
+[0.719s] 
+[0.720s] 
+[0.721s] -- Configuring incomplete, errors occurred!
+[0.721s] See also "/home/ros-vm/github/auton_sys-23/utils/build/rover_actions/CMakeFiles/CMakeOutput.log".
+[0.727s] Invoked command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_actions' returned '1': /usr/bin/cmake /home/ros-vm/github/auton_sys-23/utils/src/rover_actions -DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_actions

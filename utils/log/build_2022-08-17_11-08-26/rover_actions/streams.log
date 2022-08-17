@@ -1,0 +1,56 @@
+[0.038s] Invoking command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_actions': /usr/bin/cmake /home/ros-vm/github/auton_sys-23/utils/src/rover_actions -DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_actions
+[0.059s] -- Found ament_cmake: 0.9.9 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake/cmake)
+[0.083s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[0.083s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.296s] -- Found ament_lint_auto: 0.9.6 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_lint_auto/cmake)
+[0.374s] -- Found rosidl_default_generators: 1.0.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_default_generators/cmake)
+[0.376s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.379s] -- Found rosidl_adapter: 1.2.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_adapter/cmake)
+[0.399s] -- Could not find RTI Connext - skipping rosidl_typesupport_connext_c
+[0.426s] -- Could not find RTI Connext - skipping rosidl_typesupport_connext_cpp
+[0.557s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.616s] -- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") 
+[0.789s] CMake Error at /home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_adapter/cmake/rosidl_adapt_interfaces.cmake:60 (message):
+[0.789s]   execute_process(/usr/bin/python3 -m rosidl_adapter --package-name
+[0.790s]   rover_actions --arguments-file
+[0.790s]   /home/ros-vm/github/auton_sys-23/utils/build/rover_actions/rosidl_adapter__arguments__rover_actions.json
+[0.790s]   --output-dir
+[0.790s]   /home/ros-vm/github/auton_sys-23/utils/build/rover_actions/rosidl_adapter/rover_actions
+[0.790s]   --output-file
+[0.790s]   /home/ros-vm/github/auton_sys-23/utils/build/rover_actions/rosidl_adapter/rover_actions.idls)
+[0.791s]   returned error code 1:
+[0.791s] 
+[0.791s]   Traceback (most recent call last):
+[0.791s] 
+[0.792s]     File "/usr/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+[0.792s]       return _run_code(code, main_globals, None,
+[0.792s]     File "/usr/lib/python3.8/runpy.py", line 87, in _run_code
+[0.792s]       exec(code, run_globals)
+[0.792s]     File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/__main__.py", line 19, in <module>
+[0.793s]       sys.exit(main())
+[0.793s]     File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/main.py", line 53, in main
+[0.793s]       abs_idl_file = convert_to_idl(
+[0.793s]     File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/__init__.py", line 29, in convert_to_idl
+[0.793s]       return convert_action_to_idl(
+[0.793s]     File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/action/__init__.py", line 28, in convert_action_to_idl
+[0.794s]       action = parse_action_string(package_name, input_file.stem, content)
+[0.794s]     File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/parser.py", line 892, in parse_action_string
+[0.794s]       goal_message = parse_message_string(
+[0.794s]     File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/parser.py", line 540, in parse_message_string
+[0.794s]       msg = MessageSpecification(pkg_name, msg_name, fields, constants)
+[0.794s]     File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/parser.py", line 387, in __init__
+[0.795s]       self.base_type = BaseType(
+[0.795s]     File "/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages/rosidl_adapter/parser.py", line 204, in __init__
+[0.795s]       raise InvalidResourceName(
+[0.795s] 
+[0.796s]   rosidl_adapter.parser.InvalidResourceName: 'minimal_walk_Goal' is an
+[0.797s]   invalid message name.  It should have the pattern '^[A-Z][A-Za-z0-9]*$'
+[0.797s] 
+[0.799s] Call Stack (most recent call first):
+[0.800s]   /home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:130 (rosidl_adapt_interfaces)
+[0.801s]   CMakeLists.txt:37 (rosidl_generate_interfaces)
+[0.801s] 
+[0.801s] 
+[0.802s] -- Configuring incomplete, errors occurred!
+[0.802s] See also "/home/ros-vm/github/auton_sys-23/utils/build/rover_actions/CMakeFiles/CMakeOutput.log".
+[0.802s] Invoked command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_actions' returned '1': /usr/bin/cmake /home/ros-vm/github/auton_sys-23/utils/src/rover_actions -DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_actions
