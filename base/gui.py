@@ -4,7 +4,7 @@ from tkinter import PhotoImage, StringVar, Label, scrolledtext
 from threading import *
 import time
 
-from base_station import baseNode
+from base.base import baseNode
 
 from window import WIN_WIDTH, WIN_HEIGHT, WIN_X_POSITION, SETUP_STRING
 
