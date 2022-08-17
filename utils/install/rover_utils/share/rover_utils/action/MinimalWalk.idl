@@ -1,0 +1,18 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from rover_utils/action/MinimalWalk.action
+// generated code does not contain a copyright notice
+
+
+module rover_utils {
+  module action {
+    struct MinimalWalk_Goal {
+      int32 order;
+    };
+    struct MinimalWalk_Result {
+      int32 sequence;
+    };
+    struct MinimalWalk_Feedback {
+      int32 partial_sequence;
+    };
+  };
+};

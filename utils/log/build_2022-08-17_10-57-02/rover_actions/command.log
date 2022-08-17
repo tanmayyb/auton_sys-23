@@ -1,2 +1,0 @@
-Invoking command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_actions': /usr/bin/cmake /home/ros-vm/github/auton_sys-23/utils/src/rover_actions -DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_actions
-Invoked command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_actions' returned '1': /usr/bin/cmake /home/ros-vm/github/auton_sys-23/utils/src/rover_actions -DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_actions

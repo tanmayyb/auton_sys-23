@@ -1,9 +1,0 @@
-geometry_msgs/Point32 position
-bool use_guidance
-bool signal_and_wait
-float32 geofence_radius
----
-bool success
----
-float32 d2t
-float32 he

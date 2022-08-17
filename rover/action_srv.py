@@ -6,8 +6,6 @@ from rclpy.node import Node
 
 from action_tutorials_interfaces.action import Fibonacci
 
-from msg import custom_msg
-
 
 class FibonacciActionServer(Node):
 

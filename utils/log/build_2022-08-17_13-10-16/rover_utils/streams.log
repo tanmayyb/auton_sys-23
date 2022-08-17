@@ -1,0 +1,219 @@
+[0.014s] Invoking command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils': /usr/bin/cmake /home/ros-vm/github/auton_sys-23/utils/src/rover_utils -DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_utils
+[0.160s] -- The C compiler identification is GNU 9.4.0
+[0.235s] -- The CXX compiler identification is GNU 9.4.0
+[0.240s] -- Check for working C compiler: /usr/bin/cc
+[0.334s] -- Check for working C compiler: /usr/bin/cc -- works
+[0.335s] -- Detecting C compiler ABI info
+[0.425s] -- Detecting C compiler ABI info - done
+[0.436s] -- Detecting C compile features
+[0.436s] -- Detecting C compile features - done
+[0.439s] -- Check for working CXX compiler: /usr/bin/c++
+[0.546s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[0.547s] -- Detecting CXX compiler ABI info
+[0.650s] -- Detecting CXX compiler ABI info - done
+[0.661s] -- Detecting CXX compile features
+[0.662s] -- Detecting CXX compile features - done
+[0.664s] -- Found ament_cmake: 0.9.9 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake/cmake)
+[0.688s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[0.688s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.908s] -- Found ament_lint_auto: 0.9.6 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_lint_auto/cmake)
+[1.005s] -- Found rosidl_default_generators: 1.0.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_default_generators/cmake)
+[1.010s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.016s] -- Found rosidl_adapter: 1.2.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_adapter/cmake)
+[1.036s] -- Could not find RTI Connext - skipping rosidl_typesupport_connext_c
+[1.062s] -- Could not find RTI Connext - skipping rosidl_typesupport_connext_cpp
+[1.159s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[1.182s] -- Found FastRTPS: /home/ros-vm/ros2_foxy/ros2-linux/include  
+[1.259s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.316s] -- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") 
+[1.506s] -- Found ament_cmake_ros: 0.9.2 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake_ros/cmake)
+[1.637s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.662s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.690s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3.5") 
+[1.692s] -- Found python_cmake_module: 0.8.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/python_cmake_module/cmake)
+[1.726s] -- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.8.so (found suitable version "3.8.10", minimum required is "3.5") 
+[1.726s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[1.727s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.8
+[1.727s] -- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.8.so
+[1.749s] -- Found PythonExtra: .so  
+[1.808s] -- Added test 'copyright' to check source files copyright and LICENSE
+[1.814s] -- Added test 'lint_cmake' to check CMake code style
+[1.816s] -- Added test 'xmllint' to check XML markup files
+[1.824s] -- Configuring done
+[1.887s] -- Generating done
+[1.890s] -- Build files have been written to: /home/ros-vm/github/auton_sys-23/utils/build/rover_utils
+[1.903s] Invoked command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils' returned '0': /usr/bin/cmake /home/ros-vm/github/auton_sys-23/utils/src/rover_utils -DCMAKE_INSTALL_PREFIX=/home/ros-vm/github/auton_sys-23/utils/install/rover_utils
+[1.911s] Invoking command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils': /usr/bin/cmake --build /home/ros-vm/github/auton_sys-23/utils/build/rover_utils -- -j2 -l2
+[1.968s] [  3%] [34m[1mGenerating C code for ROS interfaces[0m
+[1.968s] [35m[1mScanning dependencies of target rover_utils__cpp[0m
+[1.982s] [  6%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[2.374s] [  6%] Built target rover_utils__cpp
+[2.374s] [35m[1mScanning dependencies of target rover_utils__rosidl_generator_c[0m
+[2.389s] [  9%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[2.390s] [ 12%] [32mBuilding C object CMakeFiles/rover_utils__rosidl_generator_c.dir/rosidl_generator_c/rover_utils/action/detail/minimal_walk__functions.c.o[0m
+[2.492s] [ 16%] [32m[1mLinking C shared library librover_utils__rosidl_generator_c.so[0m
+[2.560s] [ 16%] Built target rover_utils__rosidl_generator_c
+[2.574s] [ 19%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[2.662s] [35m[1mScanning dependencies of target rover_utils__rosidl_typesupport_cpp[0m
+[2.680s] [ 22%] [32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/rover_utils/action/minimal_walk__type_support.cpp.o[0m
+[2.949s] [35m[1mScanning dependencies of target rover_utils__rosidl_typesupport_fastrtps_cpp[0m
+[2.974s] [ 25%] [32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/rover_utils/action/detail/dds_fastrtps/minimal_walk__type_support.cpp.o[0m
+[3.057s] [ 29%] [32m[1mLinking CXX shared library librover_utils__rosidl_typesupport_cpp.so[0m
+[3.120s] [ 29%] Built target rover_utils__rosidl_typesupport_cpp
+[3.135s] [ 32%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[3.476s] [35m[1mScanning dependencies of target rover_utils__rosidl_typesupport_introspection_cpp[0m
+[3.496s] [ 35%] [32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/rover_utils/action/detail/minimal_walk__type_support.cpp.o[0m
+[3.577s] [ 38%] [32m[1mLinking CXX shared library librover_utils__rosidl_typesupport_fastrtps_cpp.so[0m
+[3.707s] [ 38%] Built target rover_utils__rosidl_typesupport_fastrtps_cpp
+[3.726s] [ 41%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[3.893s] [ 45%] [32m[1mLinking CXX shared library librover_utils__rosidl_typesupport_introspection_cpp.so[0m
+[3.995s] [ 45%] Built target rover_utils__rosidl_typesupport_introspection_cpp
+[3.995s] [35m[1mScanning dependencies of target rover_utils__rosidl_typesupport_c[0m
+[4.012s] [ 48%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[4.018s] [ 51%] [32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_c.dir/rosidl_typesupport_c/rover_utils/action/minimal_walk__type_support.cpp.o[0m
+[4.079s] [ 54%] [32m[1mLinking CXX shared library librover_utils__rosidl_typesupport_c.so[0m
+[4.144s] [ 54%] Built target rover_utils__rosidl_typesupport_c
+[4.161s] [ 58%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[4.362s] [35m[1mScanning dependencies of target rover_utils__rosidl_typesupport_introspection_c[0m
+[4.382s] [ 61%] [32mBuilding C object CMakeFiles/rover_utils__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/rover_utils/action/detail/minimal_walk__type_support.c.o[0m
+[4.442s] [ 64%] [32m[1mLinking C shared library librover_utils__rosidl_typesupport_introspection_c.so[0m
+[4.488s] [ 64%] Built target rover_utils__rosidl_typesupport_introspection_c
+[4.519s] [35m[1mScanning dependencies of target rover_utils__rosidl_typesupport_fastrtps_c[0m
+[4.544s] [ 67%] [32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/rover_utils/action/detail/minimal_walk__type_support_c.cpp.o[0m
+[4.986s] [ 70%] [32m[1mLinking CXX shared library librover_utils__rosidl_typesupport_fastrtps_c.so[0m
+[5.127s] [ 70%] Built target rover_utils__rosidl_typesupport_fastrtps_c
+[5.142s] [35m[1mScanning dependencies of target rover_utils[0m
+[5.157s] [ 70%] Built target rover_utils
+[5.172s] [35m[1mScanning dependencies of target rover_utils__py[0m
+[5.189s] [ 74%] [34m[1mGenerating Python code for ROS interfaces[0m
+[5.991s] [ 74%] Built target rover_utils__py
+[6.007s] [35m[1mScanning dependencies of target rover_utils__python[0m
+[6.036s] [ 77%] [32mBuilding C object CMakeFiles/rover_utils__python.dir/rosidl_generator_py/rover_utils/action/_minimal_walk_s.c.o[0m
+[6.180s] [ 80%] [32m[1mLinking C shared library rosidl_generator_py/rover_utils/librover_utils__python.so[0m
+[6.243s] [ 80%] Built target rover_utils__python
+[6.258s] [35m[1mScanning dependencies of target rover_utils__rosidl_typesupport_c__pyext[0m
+[6.258s] [35m[1mScanning dependencies of target rover_utils__rosidl_typesupport_fastrtps_c__pyext[0m
+[6.284s] [ 83%] [32mBuilding C object CMakeFiles/rover_utils__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/rover_utils/_rover_utils_s.ep.rosidl_typesupport_c.c.o[0m
+[6.287s] [ 87%] [32mBuilding C object CMakeFiles/rover_utils__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/rover_utils/_rover_utils_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[6.403s] [ 90%] [32m[1mLinking C shared library rosidl_generator_py/rover_utils/rover_utils_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so[0m
+[6.414s] [ 93%] [32m[1mLinking CXX shared library rosidl_generator_py/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so[0m
+[6.460s] [ 93%] Built target rover_utils__rosidl_typesupport_c__pyext
+[6.474s] [35m[1mScanning dependencies of target rover_utils__rosidl_typesupport_introspection_c__pyext[0m
+[6.501s] [ 96%] [32mBuilding C object CMakeFiles/rover_utils__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/rover_utils/_rover_utils_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[6.510s] [ 96%] Built target rover_utils__rosidl_typesupport_fastrtps_c__pyext
+[6.618s] [100%] [32m[1mLinking C shared library rosidl_generator_py/rover_utils/rover_utils_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so[0m
+[6.671s] [100%] Built target rover_utils__rosidl_typesupport_introspection_c__pyext
+[6.690s] Invoked command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils' returned '0': /usr/bin/cmake --build /home/ros-vm/github/auton_sys-23/utils/build/rover_utils -- -j2 -l2
+[6.803s] Invoking command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils': /usr/bin/cmake --install /home/ros-vm/github/auton_sys-23/utils/build/rover_utils
+[6.819s] -- Install configuration: ""
+[6.819s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/ament_index/resource_index/rosidl_interfaces/rover_utils
+[6.819s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils
+[6.820s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action
+[6.821s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail
+[6.821s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__struct.h
+[6.821s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__functions.c
+[6.821s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__functions.h
+[6.822s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__type_support.h
+[6.823s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/minimal_walk.h
+[6.823s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg
+[6.823s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/rosidl_generator_c__visibility_control.h
+[6.823s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/library_path.sh
+[6.823s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/library_path.dsv
+[6.824s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_generator_c.so
+[6.824s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_generator_c.so" to ""
+[6.825s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils
+[6.825s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action
+[6.825s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail
+[6.825s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__rosidl_typesupport_fastrtps_c.h
+[6.826s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg
+[6.826s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[6.826s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_fastrtps_c.so
+[6.827s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_fastrtps_c.so" to ""
+[6.827s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils
+[6.827s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action
+[6.827s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail
+[6.827s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__rosidl_typesupport_fastrtps_cpp.hpp
+[6.828s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/dds_fastrtps
+[6.828s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg
+[6.828s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[6.828s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_fastrtps_cpp.so
+[6.829s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_fastrtps_cpp.so" to ""
+[6.829s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils
+[6.829s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action
+[6.829s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail
+[6.829s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__type_support.c
+[6.830s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__rosidl_typesupport_introspection_c.h
+[6.830s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg
+[6.830s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[6.830s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_introspection_c.so
+[6.831s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_introspection_c.so" to ""
+[6.831s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_c.so
+[6.831s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_c.so" to ""
+[6.832s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils
+[6.832s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action
+[6.832s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/minimal_walk.hpp
+[6.832s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail
+[6.832s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__struct.hpp
+[6.832s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__builder.hpp
+[6.833s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__traits.hpp
+[6.833s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils
+[6.833s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action
+[6.833s] -- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail
+[6.833s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__type_support.cpp
+[6.833s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__rosidl_typesupport_introspection_cpp.hpp
+[6.834s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_introspection_cpp.so
+[6.834s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_introspection_cpp.so" to ""
+[6.834s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_cpp.so
+[6.835s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_cpp.so" to ""
+[6.835s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/pythonpath.sh
+[6.836s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/pythonpath.dsv
+[6.836s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/__init__.py
+[6.870s] Compiling '/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/__init__.py'...
+[6.874s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/action
+[6.874s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/action/_minimal_walk_s.c
+[6.874s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/action/_minimal_walk.py
+[6.874s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/action/__init__.py
+[6.875s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so
+[6.875s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so" to ""
+[6.876s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so
+[6.877s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so" to ""
+[6.877s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so
+[6.878s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so" to ""
+[6.878s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__python.so
+[6.878s] -- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__python.so" to ""
+[6.878s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/action/MinimalWalk.idl
+[6.879s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/action/MinimalWalk.action
+[6.879s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/ament_index/resource_index/package_run_dependencies/rover_utils
+[6.879s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/ament_index/resource_index/parent_prefix_path/rover_utils
+[6.879s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/ament_prefix_path.sh
+[6.880s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/ament_prefix_path.dsv
+[6.880s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/path.sh
+[6.880s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/path.dsv
+[6.881s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/local_setup.bash
+[6.881s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/local_setup.sh
+[6.881s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/local_setup.zsh
+[6.881s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/local_setup.dsv
+[6.882s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.dsv
+[6.882s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/ament_index/resource_index/packages/rover_utils
+[6.882s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_generator_cExport.cmake
+[6.883s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_generator_cExport-noconfig.cmake
+[6.883s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_introspection_cExport.cmake
+[6.883s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[6.883s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_cExport.cmake
+[6.884s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_cExport-noconfig.cmake
+[6.884s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_generator_cppExport.cmake
+[6.884s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_introspection_cppExport.cmake
+[6.884s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[6.885s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_cppExport.cmake
+[6.885s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_cppExport-noconfig.cmake
+[6.885s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rosidl_cmake-extras.cmake
+[6.886s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/ament_cmake_export_dependencies-extras.cmake
+[6.886s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/ament_cmake_export_libraries-extras.cmake
+[6.886s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/ament_cmake_export_targets-extras.cmake
+[6.886s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/ament_cmake_export_include_directories-extras.cmake
+[6.886s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[6.887s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[6.887s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utilsConfig.cmake
+[6.887s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utilsConfig-version.cmake
+[6.887s] -- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.xml
+[6.891s] Invoked command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils' returned '0': /usr/bin/cmake --install /home/ros-vm/github/auton_sys-23/utils/build/rover_utils
