@@ -8,65 +8,112 @@ from rclpy.node import Node
 from rclpy.action import ActionServer
 
 from rover_utils.action import MinimalWalk
+from rover_utils.msg import TestMsg
 
-from std_msgs.msg import Int16
+from action_tutorials_interfaces.action import Fibonacci
+
+from geometry_msgs.msg import Point
+
+import time
 
 
 class Rover(Node):
     def __init__(self):
         super().__init__('rover_node')
-        self.state = 0
-        self.state_dict = {
-            "Initializing": 0,
-            "Standby": 1,
-            "Transit": 2,
-            "Teleop": 3}
+        # self.state = 0
+        # self.state_dict = {
+        #     "Initializing": 0,
+        #     "Standby": 1,
+        #     "Transit": 2,
+        #     "Teleop": 3}
 
         """
         location and attitude trackers
         """
-        self.rover_lat = None
-        self.rover_lon = None
+        # self.rover_lat = None
+        # self.rover_lon = None
 
-        self.state_publisher = self.create_publisher(
-            Int16(),
-            'state_topic',
-            10)
+        # self.state_publisher = self.create_publisher(
+        #     Int16(),
+        #     'state_topic',
+        #     10)
 
-        self.pose_subscriber = self.create_subscription(
-            Int16(),
-            'pose_topic',
-            self.update_pose_trackers,
-            10)
+        # self.pose_subscriber = self.create_subscription(
+        #     Int16(),
+        #     'pose_topic',
+        #     self.update_pose_trackers,
+        #     10)
 
-        self._action_server = ActionServer(
+        self.min_walk_act_server = ActionServer(
             self,
             MinimalWalk,
-            'action_topic',
-            self.execute_minimal_walk_callback)
+            'mini_walk_act',
+            self.minimal_walk_callback)
 
-        
-        print("initialised")
+        # self.msg_sub = self.create_subscription(
+        #     TestMsg,
+        #     'topic',
+        #     self.handle_sub,
+        #     10)
 
-    def update_pose_trackers(self, msg):
-        pass
+        # self._action_server = ActionServer(
+        #     self,
+        #     Fibonacci,
+        #     'fibonacci',
+        #     self.execute_callback)
+
+        print("rover_node initialised")
+
     
-    def execute_minimal_walk_callback(self, goal_handle):
-        # self.position = goal_handle.request.position
+    # def handle_sub(self, msg):
+    #     self.get_logger().info('Got Result: "%d"' % msg.my_float)
+    #     print(msg.point)
 
-        # feedback_msg = MinimalWalk.Feedback()
-        # import time
-        # for i in range(10):
-        #     feedback_msg.d2t = i*10
-        #     feedback_msg.he = i*1.3
-        #     goal_handle.publish_feedback(feedback_msg)
-        #     time.sleep(1)
+    def minimal_walk_callback(self, goal_handle):
+        self.get_logger().info('Executing Goal...')
+        goal_var = goal_handle.request.goal_var
 
-        # goal_handle.succeed()
+
+        feedback_msg = MinimalWalk.Feedback()
+
+        for i in range(10):
+            
+            # feedback_msg.d2t = i*10
+            # feedback_msg.he = i*1.3
+            feedback_msg.feedback = int(i*2)
+
+            goal_handle.publish_feedback(feedback_msg)
+            time.sleep(1)
+
+        goal_handle.succeed()
 
         result = MinimalWalk.Result()
-        result.sequence = 1
+        #result.result = (position.x + position.y + position.z)
+        result.result = 10        
         return result
+
+    # def execute_callback(self, goal_handle):
+    #     self.get_logger().info('Executing goal...')
+
+    #     feedback_msg = Fibonacci.Feedback()
+    #     feedback_msg.partial_sequence = [0, 1]
+
+    #     for i in range(1, goal_handle.request.order):
+    #         feedback_msg.partial_sequence.append(
+    #             feedback_msg.partial_sequence[i] + feedback_msg.partial_sequence[i-1])
+    #         self.get_logger().info('Feedback: {0}'.format(feedback_msg.partial_sequence))
+    #         goal_handle.publish_feedback(feedback_msg)
+    #         time.sleep(1)
+
+    #     goal_handle.succeed()
+
+    #     result = Fibonacci.Result()
+    #     result.sequence = feedback_msg.partial_sequence
+    #     return result
+
+    # def update_pose_trackers(self, msg):
+    #     pass
+    
 
 def main(args=None):
     rclpy.init(args=args)

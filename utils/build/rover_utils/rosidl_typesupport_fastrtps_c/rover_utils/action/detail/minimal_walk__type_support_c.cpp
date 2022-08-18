@@ -49,9 +49,9 @@ static bool _MinimalWalk_Goal__cdr_serialize(
     return false;
   }
   const _MinimalWalk_Goal__ros_msg_type * ros_message = static_cast<const _MinimalWalk_Goal__ros_msg_type *>(untyped_ros_message);
-  // Field name: order
+  // Field name: goal_var
   {
-    cdr << ros_message->order;
+    cdr << ros_message->goal_var;
   }
 
   return true;
@@ -66,9 +66,9 @@ static bool _MinimalWalk_Goal__cdr_deserialize(
     return false;
   }
   _MinimalWalk_Goal__ros_msg_type * ros_message = static_cast<_MinimalWalk_Goal__ros_msg_type *>(untyped_ros_message);
-  // Field name: order
+  // Field name: goal_var
   {
-    cdr >> ros_message->order;
+    cdr >> ros_message->goal_var;
   }
 
   return true;
@@ -88,9 +88,9 @@ size_t get_serialized_size_rover_utils__action__MinimalWalk_Goal(
   (void)padding;
   (void)wchar_size;
 
-  // field.name order
+  // field.name goal_var
   {
-    size_t item_size = sizeof(ros_message->order);
+    size_t item_size = sizeof(ros_message->goal_var);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -118,7 +118,7 @@ size_t max_serialized_size_rover_utils__action__MinimalWalk_Goal(
   (void)wchar_size;
   (void)full_bounded;
 
-  // member: order
+  // member: goal_var
   {
     size_t array_size = 1;
 
@@ -215,9 +215,9 @@ static bool _MinimalWalk_Result__cdr_serialize(
     return false;
   }
   const _MinimalWalk_Result__ros_msg_type * ros_message = static_cast<const _MinimalWalk_Result__ros_msg_type *>(untyped_ros_message);
-  // Field name: sequence
+  // Field name: result
   {
-    cdr << ros_message->sequence;
+    cdr << ros_message->result;
   }
 
   return true;
@@ -232,9 +232,9 @@ static bool _MinimalWalk_Result__cdr_deserialize(
     return false;
   }
   _MinimalWalk_Result__ros_msg_type * ros_message = static_cast<_MinimalWalk_Result__ros_msg_type *>(untyped_ros_message);
-  // Field name: sequence
+  // Field name: result
   {
-    cdr >> ros_message->sequence;
+    cdr >> ros_message->result;
   }
 
   return true;
@@ -254,9 +254,9 @@ size_t get_serialized_size_rover_utils__action__MinimalWalk_Result(
   (void)padding;
   (void)wchar_size;
 
-  // field.name sequence
+  // field.name result
   {
-    size_t item_size = sizeof(ros_message->sequence);
+    size_t item_size = sizeof(ros_message->result);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -284,7 +284,7 @@ size_t max_serialized_size_rover_utils__action__MinimalWalk_Result(
   (void)wchar_size;
   (void)full_bounded;
 
-  // member: sequence
+  // member: result
   {
     size_t array_size = 1;
 
@@ -381,9 +381,9 @@ static bool _MinimalWalk_Feedback__cdr_serialize(
     return false;
   }
   const _MinimalWalk_Feedback__ros_msg_type * ros_message = static_cast<const _MinimalWalk_Feedback__ros_msg_type *>(untyped_ros_message);
-  // Field name: partial_sequence
+  // Field name: feedback
   {
-    cdr << ros_message->partial_sequence;
+    cdr << ros_message->feedback;
   }
 
   return true;
@@ -398,9 +398,9 @@ static bool _MinimalWalk_Feedback__cdr_deserialize(
     return false;
   }
   _MinimalWalk_Feedback__ros_msg_type * ros_message = static_cast<_MinimalWalk_Feedback__ros_msg_type *>(untyped_ros_message);
-  // Field name: partial_sequence
+  // Field name: feedback
   {
-    cdr >> ros_message->partial_sequence;
+    cdr >> ros_message->feedback;
   }
 
   return true;
@@ -420,9 +420,9 @@ size_t get_serialized_size_rover_utils__action__MinimalWalk_Feedback(
   (void)padding;
   (void)wchar_size;
 
-  // field.name partial_sequence
+  // field.name feedback
   {
-    size_t item_size = sizeof(ros_message->partial_sequence);
+    size_t item_size = sizeof(ros_message->feedback);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -450,7 +450,7 @@ size_t max_serialized_size_rover_utils__action__MinimalWalk_Feedback(
   (void)wchar_size;
   (void)full_bounded;
 
-  // member: partial_sequence
+  // member: feedback
   {
     size_t array_size = 1;
 

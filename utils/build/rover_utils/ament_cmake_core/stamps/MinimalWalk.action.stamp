@@ -1,5 +1,5 @@
-int32 order
+int32 goal_var
 ---
-int32 sequence
+int32 result
 ---
-int32 partial_sequence
+int32 feedback

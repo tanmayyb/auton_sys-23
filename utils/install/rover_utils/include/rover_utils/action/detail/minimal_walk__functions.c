@@ -15,7 +15,7 @@ rover_utils__action__MinimalWalk_Goal__init(rover_utils__action__MinimalWalk_Goa
   if (!msg) {
     return false;
   }
-  // order
+  // goal_var
   return true;
 }
 
@@ -25,7 +25,7 @@ rover_utils__action__MinimalWalk_Goal__fini(rover_utils__action__MinimalWalk_Goa
   if (!msg) {
     return;
   }
-  // order
+  // goal_var
 }
 
 rover_utils__action__MinimalWalk_Goal *
@@ -144,7 +144,7 @@ rover_utils__action__MinimalWalk_Result__init(rover_utils__action__MinimalWalk_R
   if (!msg) {
     return false;
   }
-  // sequence
+  // result
   return true;
 }
 
@@ -154,7 +154,7 @@ rover_utils__action__MinimalWalk_Result__fini(rover_utils__action__MinimalWalk_R
   if (!msg) {
     return;
   }
-  // sequence
+  // result
 }
 
 rover_utils__action__MinimalWalk_Result *
@@ -273,7 +273,7 @@ rover_utils__action__MinimalWalk_Feedback__init(rover_utils__action__MinimalWalk
   if (!msg) {
     return false;
   }
-  // partial_sequence
+  // feedback
   return true;
 }
 
@@ -283,7 +283,7 @@ rover_utils__action__MinimalWalk_Feedback__fini(rover_utils__action__MinimalWalk
   if (!msg) {
     return;
   }
-  // partial_sequence
+  // feedback
 }
 
 rover_utils__action__MinimalWalk_Feedback *

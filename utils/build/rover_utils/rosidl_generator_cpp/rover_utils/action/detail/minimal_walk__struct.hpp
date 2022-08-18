@@ -37,7 +37,7 @@ struct MinimalWalk_Goal_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->order = 0l;
+      this->goal_var = 0l;
     }
   }
 
@@ -47,20 +47,20 @@ struct MinimalWalk_Goal_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->order = 0l;
+      this->goal_var = 0l;
     }
   }
 
   // field types and members
-  using _order_type =
+  using _goal_var_type =
     int32_t;
-  _order_type order;
+  _goal_var_type goal_var;
 
   // setters for named parameter idiom
-  Type & set__order(
+  Type & set__goal_var(
     const int32_t & _arg)
   {
-    this->order = _arg;
+    this->goal_var = _arg;
     return *this;
   }
 
@@ -106,7 +106,7 @@ struct MinimalWalk_Goal_
   // comparison operators
   bool operator==(const MinimalWalk_Goal_ & other) const
   {
-    if (this->order != other.order) {
+    if (this->goal_var != other.goal_var) {
       return false;
     }
     return true;
@@ -151,7 +151,7 @@ struct MinimalWalk_Result_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->sequence = 0l;
+      this->result = 0l;
     }
   }
 
@@ -161,20 +161,20 @@ struct MinimalWalk_Result_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->sequence = 0l;
+      this->result = 0l;
     }
   }
 
   // field types and members
-  using _sequence_type =
+  using _result_type =
     int32_t;
-  _sequence_type sequence;
+  _result_type result;
 
   // setters for named parameter idiom
-  Type & set__sequence(
+  Type & set__result(
     const int32_t & _arg)
   {
-    this->sequence = _arg;
+    this->result = _arg;
     return *this;
   }
 
@@ -220,7 +220,7 @@ struct MinimalWalk_Result_
   // comparison operators
   bool operator==(const MinimalWalk_Result_ & other) const
   {
-    if (this->sequence != other.sequence) {
+    if (this->result != other.result) {
       return false;
     }
     return true;
@@ -265,7 +265,7 @@ struct MinimalWalk_Feedback_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->partial_sequence = 0l;
+      this->feedback = 0l;
     }
   }
 
@@ -275,20 +275,20 @@ struct MinimalWalk_Feedback_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->partial_sequence = 0l;
+      this->feedback = 0l;
     }
   }
 
   // field types and members
-  using _partial_sequence_type =
+  using _feedback_type =
     int32_t;
-  _partial_sequence_type partial_sequence;
+  _feedback_type feedback;
 
   // setters for named parameter idiom
-  Type & set__partial_sequence(
+  Type & set__feedback(
     const int32_t & _arg)
   {
-    this->partial_sequence = _arg;
+    this->feedback = _arg;
     return *this;
   }
 
@@ -334,7 +334,7 @@ struct MinimalWalk_Feedback_
   // comparison operators
   bool operator==(const MinimalWalk_Feedback_ & other) const
   {
-    if (this->partial_sequence != other.partial_sequence) {
+    if (this->feedback != other.feedback) {
       return false;
     }
     return true;

@@ -1,0 +1,23 @@
+[0.041s] Invoking command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils': /usr/bin/cmake --build /home/ros-vm/github/auton_sys-23/utils/build/rover_utils -- -j2 -l2
+[0.079s] -- Found ament_cmake: 0.9.9 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake/cmake)
+[0.105s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[0.105s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.300s] -- Found ament_lint_auto: 0.9.6 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_lint_auto/cmake)
+[0.367s] -- Found rosidl_default_generators: 1.0.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_default_generators/cmake)
+[0.369s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.373s] -- Found rosidl_adapter: 1.2.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_adapter/cmake)
+[0.393s] -- Could not find RTI Connext - skipping rosidl_typesupport_connext_c
+[0.420s] -- Could not find RTI Connext - skipping rosidl_typesupport_connext_cpp
+[0.540s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.586s] -- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") 
+[0.702s] CMake Error at /home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:162 (message):
+[0.702s]   rosidl_generate_interfaces() the passed dependency 'geometry_msgs' has not
+[0.702s]   been found before using find_package()
+[0.702s] Call Stack (most recent call first):
+[0.702s]   CMakeLists.txt:37 (rosidl_generate_interfaces)
+[0.702s] 
+[0.702s] 
+[0.705s] -- Configuring incomplete, errors occurred!
+[0.705s] See also "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/CMakeFiles/CMakeOutput.log".
+[0.716s] make: *** [Makefile:748: cmake_check_build_system] Error 1
+[0.719s] Invoked command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils' returned '2': /usr/bin/cmake --build /home/ros-vm/github/auton_sys-23/utils/build/rover_utils -- -j2 -l2

@@ -38,6 +38,26 @@ rover_utils/action/minimal_walk.h
 rover_utils/action/detail/minimal_walk__type_support.h
 /home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/action/rover_utils/action/detail/minimal_walk__type_support.h
 
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/msg/test_msg__type_support.cpp
+cstddef
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/msg/cstddef
+rosidl_runtime_c/message_type_support_struct.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/msg/rosidl_runtime_c/message_type_support_struct.h
+rover_utils/msg/rosidl_typesupport_c__visibility_control.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/msg/rover_utils/msg/rosidl_typesupport_c__visibility_control.h
+rover_utils/msg/detail/test_msg__struct.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/msg/rover_utils/msg/detail/test_msg__struct.h
+rosidl_typesupport_c/identifier.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/msg/rosidl_typesupport_c/identifier.h
+rosidl_typesupport_c/message_type_support_dispatch.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/msg/rosidl_typesupport_c/message_type_support_dispatch.h
+rosidl_typesupport_c/type_support_map.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/msg/rosidl_typesupport_c/type_support_map.h
+rosidl_typesupport_c/visibility_control.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/msg/rosidl_typesupport_c/visibility_control.h
+rosidl_typesupport_interface/macros.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_c/rover_utils/msg/rosidl_typesupport_interface/macros.h
+
 /home/ros-vm/ros2_foxy/ros2-linux/include/action_msgs/msg/detail/goal_info__struct.h
 stdbool.h
 -
@@ -148,6 +168,14 @@ stddef.h
 stdint.h
 -
 
+/home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/detail/point__struct.h
+stdbool.h
+-
+stddef.h
+-
+stdint.h
+-
+
 /home/ros-vm/ros2_foxy/ros2-linux/include/rosidl_runtime_c/action_type_support_struct.h
 rosidl_runtime_c/message_type_support_struct.h
 /home/ros-vm/ros2_foxy/ros2-linux/include/rosidl_runtime_c/rosidl_runtime_c/message_type_support_struct.h
@@ -249,6 +277,16 @@ rover_utils/action/detail/minimal_walk__functions.h
 rosidl_generator_c/rover_utils/action/rover_utils/action/detail/minimal_walk__functions.h
 rover_utils/action/detail/minimal_walk__type_support.h
 rosidl_generator_c/rover_utils/action/rover_utils/action/detail/minimal_walk__type_support.h
+
+rosidl_generator_c/rover_utils/msg/detail/test_msg__struct.h
+stdbool.h
+-
+stddef.h
+-
+stdint.h
+-
+geometry_msgs/msg/detail/point__struct.h
+rosidl_generator_c/rover_utils/msg/detail/geometry_msgs/msg/detail/point__struct.h
 
 rosidl_generator_c/rover_utils/msg/rosidl_generator_c__visibility_control.h
 

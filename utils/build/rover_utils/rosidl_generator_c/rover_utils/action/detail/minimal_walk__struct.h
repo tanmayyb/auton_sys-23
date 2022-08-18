@@ -20,7 +20,7 @@ extern "C"
 // Struct defined in action/MinimalWalk in the package rover_utils.
 typedef struct rover_utils__action__MinimalWalk_Goal
 {
-  int32_t order;
+  int32_t goal_var;
 } rover_utils__action__MinimalWalk_Goal;
 
 // Struct for a sequence of rover_utils__action__MinimalWalk_Goal.
@@ -39,7 +39,7 @@ typedef struct rover_utils__action__MinimalWalk_Goal__Sequence
 // Struct defined in action/MinimalWalk in the package rover_utils.
 typedef struct rover_utils__action__MinimalWalk_Result
 {
-  int32_t sequence;
+  int32_t result;
 } rover_utils__action__MinimalWalk_Result;
 
 // Struct for a sequence of rover_utils__action__MinimalWalk_Result.
@@ -58,7 +58,7 @@ typedef struct rover_utils__action__MinimalWalk_Result__Sequence
 // Struct defined in action/MinimalWalk in the package rover_utils.
 typedef struct rover_utils__action__MinimalWalk_Feedback
 {
-  int32_t partial_sequence;
+  int32_t feedback;
 } rover_utils__action__MinimalWalk_Feedback;
 
 // Struct for a sequence of rover_utils__action__MinimalWalk_Feedback.

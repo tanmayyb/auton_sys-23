@@ -39,14 +39,14 @@ void MinimalWalk_Goal_fini_function(void * message_memory)
 
 static const ::rosidl_typesupport_introspection_cpp::MessageMember MinimalWalk_Goal_message_member_array[1] = {
   {
-    "order",  // name
+    "goal_var",  // name
     ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT32,  // type
     0,  // upper bound of string
     nullptr,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(rover_utils::action::MinimalWalk_Goal, order),  // bytes offset in struct
+    offsetof(rover_utils::action::MinimalWalk_Goal, goal_var),  // bytes offset in struct
     nullptr,  // default value
     nullptr,  // size() function pointer
     nullptr,  // get_const(index) function pointer
@@ -156,14 +156,14 @@ void MinimalWalk_Result_fini_function(void * message_memory)
 
 static const ::rosidl_typesupport_introspection_cpp::MessageMember MinimalWalk_Result_message_member_array[1] = {
   {
-    "sequence",  // name
+    "result",  // name
     ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT32,  // type
     0,  // upper bound of string
     nullptr,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(rover_utils::action::MinimalWalk_Result, sequence),  // bytes offset in struct
+    offsetof(rover_utils::action::MinimalWalk_Result, result),  // bytes offset in struct
     nullptr,  // default value
     nullptr,  // size() function pointer
     nullptr,  // get_const(index) function pointer
@@ -273,14 +273,14 @@ void MinimalWalk_Feedback_fini_function(void * message_memory)
 
 static const ::rosidl_typesupport_introspection_cpp::MessageMember MinimalWalk_Feedback_message_member_array[1] = {
   {
-    "partial_sequence",  // name
+    "feedback",  // name
     ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT32,  // type
     0,  // upper bound of string
     nullptr,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(rover_utils::action::MinimalWalk_Feedback, partial_sequence),  // bytes offset in struct
+    offsetof(rover_utils::action::MinimalWalk_Feedback, feedback),  // bytes offset in struct
     nullptr,  // default value
     nullptr,  // size() function pointer
     nullptr,  // get_const(index) function pointer

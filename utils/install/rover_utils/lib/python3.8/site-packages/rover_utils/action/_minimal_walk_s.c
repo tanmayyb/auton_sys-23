@@ -50,13 +50,13 @@ bool rover_utils__action__minimal_walk__goal__convert_from_py(PyObject * _pymsg,
     assert(strncmp("rover_utils.action._minimal_walk.MinimalWalk_Goal", full_classname_dest, 49) == 0);
   }
   rover_utils__action__MinimalWalk_Goal * ros_message = _ros_message;
-  {  // order
-    PyObject * field = PyObject_GetAttrString(_pymsg, "order");
+  {  // goal_var
+    PyObject * field = PyObject_GetAttrString(_pymsg, "goal_var");
     if (!field) {
       return false;
     }
     assert(PyLong_Check(field));
-    ros_message->order = (int32_t)PyLong_AsLong(field);
+    ros_message->goal_var = (int32_t)PyLong_AsLong(field);
     Py_DECREF(field);
   }
 
@@ -81,11 +81,11 @@ PyObject * rover_utils__action__minimal_walk__goal__convert_to_py(void * raw_ros
     }
   }
   rover_utils__action__MinimalWalk_Goal * ros_message = (rover_utils__action__MinimalWalk_Goal *)raw_ros_message;
-  {  // order
+  {  // goal_var
     PyObject * field = NULL;
-    field = PyLong_FromLong(ros_message->order);
+    field = PyLong_FromLong(ros_message->goal_var);
     {
-      int rc = PyObject_SetAttrString(_pymessage, "order", field);
+      int rc = PyObject_SetAttrString(_pymessage, "goal_var", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;
@@ -145,13 +145,13 @@ bool rover_utils__action__minimal_walk__result__convert_from_py(PyObject * _pyms
     assert(strncmp("rover_utils.action._minimal_walk.MinimalWalk_Result", full_classname_dest, 51) == 0);
   }
   rover_utils__action__MinimalWalk_Result * ros_message = _ros_message;
-  {  // sequence
-    PyObject * field = PyObject_GetAttrString(_pymsg, "sequence");
+  {  // result
+    PyObject * field = PyObject_GetAttrString(_pymsg, "result");
     if (!field) {
       return false;
     }
     assert(PyLong_Check(field));
-    ros_message->sequence = (int32_t)PyLong_AsLong(field);
+    ros_message->result = (int32_t)PyLong_AsLong(field);
     Py_DECREF(field);
   }
 
@@ -176,11 +176,11 @@ PyObject * rover_utils__action__minimal_walk__result__convert_to_py(void * raw_r
     }
   }
   rover_utils__action__MinimalWalk_Result * ros_message = (rover_utils__action__MinimalWalk_Result *)raw_ros_message;
-  {  // sequence
+  {  // result
     PyObject * field = NULL;
-    field = PyLong_FromLong(ros_message->sequence);
+    field = PyLong_FromLong(ros_message->result);
     {
-      int rc = PyObject_SetAttrString(_pymessage, "sequence", field);
+      int rc = PyObject_SetAttrString(_pymessage, "result", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;
@@ -240,13 +240,13 @@ bool rover_utils__action__minimal_walk__feedback__convert_from_py(PyObject * _py
     assert(strncmp("rover_utils.action._minimal_walk.MinimalWalk_Feedback", full_classname_dest, 53) == 0);
   }
   rover_utils__action__MinimalWalk_Feedback * ros_message = _ros_message;
-  {  // partial_sequence
-    PyObject * field = PyObject_GetAttrString(_pymsg, "partial_sequence");
+  {  // feedback
+    PyObject * field = PyObject_GetAttrString(_pymsg, "feedback");
     if (!field) {
       return false;
     }
     assert(PyLong_Check(field));
-    ros_message->partial_sequence = (int32_t)PyLong_AsLong(field);
+    ros_message->feedback = (int32_t)PyLong_AsLong(field);
     Py_DECREF(field);
   }
 
@@ -271,11 +271,11 @@ PyObject * rover_utils__action__minimal_walk__feedback__convert_to_py(void * raw
     }
   }
   rover_utils__action__MinimalWalk_Feedback * ros_message = (rover_utils__action__MinimalWalk_Feedback *)raw_ros_message;
-  {  // partial_sequence
+  {  // feedback
     PyObject * field = NULL;
-    field = PyLong_FromLong(ros_message->partial_sequence);
+    field = PyLong_FromLong(ros_message->feedback);
     {
-      int rc = PyObject_SetAttrString(_pymessage, "partial_sequence", field);
+      int rc = PyObject_SetAttrString(_pymessage, "feedback", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;

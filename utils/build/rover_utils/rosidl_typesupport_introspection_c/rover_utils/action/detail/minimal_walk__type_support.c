@@ -33,14 +33,14 @@ void MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_fini
 
 static rosidl_typesupport_introspection_c__MessageMember MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_message_member_array[1] = {
   {
-    "order",  // name
+    "goal_var",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(rover_utils__action__MinimalWalk_Goal, order),  // bytes offset in struct
+    offsetof(rover_utils__action__MinimalWalk_Goal, goal_var),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -119,14 +119,14 @@ void MinimalWalk_Result__rosidl_typesupport_introspection_c__MinimalWalk_Result_
 
 static rosidl_typesupport_introspection_c__MessageMember MinimalWalk_Result__rosidl_typesupport_introspection_c__MinimalWalk_Result_message_member_array[1] = {
   {
-    "sequence",  // name
+    "result",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(rover_utils__action__MinimalWalk_Result, sequence),  // bytes offset in struct
+    offsetof(rover_utils__action__MinimalWalk_Result, result),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -205,14 +205,14 @@ void MinimalWalk_Feedback__rosidl_typesupport_introspection_c__MinimalWalk_Feedb
 
 static rosidl_typesupport_introspection_c__MessageMember MinimalWalk_Feedback__rosidl_typesupport_introspection_c__MinimalWalk_Feedback_message_member_array[1] = {
   {
-    "partial_sequence",  // name
+    "feedback",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(rover_utils__action__MinimalWalk_Feedback, partial_sequence),  // bytes offset in struct
+    offsetof(rover_utils__action__MinimalWalk_Feedback, feedback),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer

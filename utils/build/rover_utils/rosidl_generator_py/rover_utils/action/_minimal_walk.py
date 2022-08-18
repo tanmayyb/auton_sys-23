@@ -53,11 +53,11 @@ class MinimalWalk_Goal(metaclass=Metaclass_MinimalWalk_Goal):
     """Message class 'MinimalWalk_Goal'."""
 
     __slots__ = [
-        '_order',
+        '_goal_var',
     ]
 
     _fields_and_field_types = {
-        'order': 'int32',
+        'goal_var': 'int32',
     }
 
     SLOT_TYPES = (
@@ -68,7 +68,7 @@ class MinimalWalk_Goal(metaclass=Metaclass_MinimalWalk_Goal):
         assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
             'Invalid arguments passed to constructor: %s' % \
             ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
-        self.order = kwargs.get('order', int())
+        self.goal_var = kwargs.get('goal_var', int())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -99,7 +99,7 @@ class MinimalWalk_Goal(metaclass=Metaclass_MinimalWalk_Goal):
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
             return False
-        if self.order != other.order:
+        if self.goal_var != other.goal_var:
             return False
         return True
 
@@ -109,19 +109,19 @@ class MinimalWalk_Goal(metaclass=Metaclass_MinimalWalk_Goal):
         return copy(cls._fields_and_field_types)
 
     @property
-    def order(self):
-        """Message field 'order'."""
-        return self._order
+    def goal_var(self):
+        """Message field 'goal_var'."""
+        return self._goal_var
 
-    @order.setter
-    def order(self, value):
+    @goal_var.setter
+    def goal_var(self, value):
         if __debug__:
             assert \
                 isinstance(value, int), \
-                "The 'order' field must be of type 'int'"
+                "The 'goal_var' field must be of type 'int'"
             assert value >= -2147483648 and value < 2147483648, \
-                "The 'order' field must be an integer in [-2147483648, 2147483647]"
-        self._order = value
+                "The 'goal_var' field must be an integer in [-2147483648, 2147483647]"
+        self._goal_var = value
 
 
 # Import statements for member types
@@ -175,11 +175,11 @@ class MinimalWalk_Result(metaclass=Metaclass_MinimalWalk_Result):
     """Message class 'MinimalWalk_Result'."""
 
     __slots__ = [
-        '_sequence',
+        '_result',
     ]
 
     _fields_and_field_types = {
-        'sequence': 'int32',
+        'result': 'int32',
     }
 
     SLOT_TYPES = (
@@ -190,7 +190,7 @@ class MinimalWalk_Result(metaclass=Metaclass_MinimalWalk_Result):
         assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
             'Invalid arguments passed to constructor: %s' % \
             ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
-        self.sequence = kwargs.get('sequence', int())
+        self.result = kwargs.get('result', int())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -221,7 +221,7 @@ class MinimalWalk_Result(metaclass=Metaclass_MinimalWalk_Result):
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
             return False
-        if self.sequence != other.sequence:
+        if self.result != other.result:
             return False
         return True
 
@@ -231,19 +231,19 @@ class MinimalWalk_Result(metaclass=Metaclass_MinimalWalk_Result):
         return copy(cls._fields_and_field_types)
 
     @property
-    def sequence(self):
-        """Message field 'sequence'."""
-        return self._sequence
+    def result(self):
+        """Message field 'result'."""
+        return self._result
 
-    @sequence.setter
-    def sequence(self, value):
+    @result.setter
+    def result(self, value):
         if __debug__:
             assert \
                 isinstance(value, int), \
-                "The 'sequence' field must be of type 'int'"
+                "The 'result' field must be of type 'int'"
             assert value >= -2147483648 and value < 2147483648, \
-                "The 'sequence' field must be an integer in [-2147483648, 2147483647]"
-        self._sequence = value
+                "The 'result' field must be an integer in [-2147483648, 2147483647]"
+        self._result = value
 
 
 # Import statements for member types
@@ -297,11 +297,11 @@ class MinimalWalk_Feedback(metaclass=Metaclass_MinimalWalk_Feedback):
     """Message class 'MinimalWalk_Feedback'."""
 
     __slots__ = [
-        '_partial_sequence',
+        '_feedback',
     ]
 
     _fields_and_field_types = {
-        'partial_sequence': 'int32',
+        'feedback': 'int32',
     }
 
     SLOT_TYPES = (
@@ -312,7 +312,7 @@ class MinimalWalk_Feedback(metaclass=Metaclass_MinimalWalk_Feedback):
         assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
             'Invalid arguments passed to constructor: %s' % \
             ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
-        self.partial_sequence = kwargs.get('partial_sequence', int())
+        self.feedback = kwargs.get('feedback', int())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -343,7 +343,7 @@ class MinimalWalk_Feedback(metaclass=Metaclass_MinimalWalk_Feedback):
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
             return False
-        if self.partial_sequence != other.partial_sequence:
+        if self.feedback != other.feedback:
             return False
         return True
 
@@ -353,19 +353,19 @@ class MinimalWalk_Feedback(metaclass=Metaclass_MinimalWalk_Feedback):
         return copy(cls._fields_and_field_types)
 
     @property
-    def partial_sequence(self):
-        """Message field 'partial_sequence'."""
-        return self._partial_sequence
+    def feedback(self):
+        """Message field 'feedback'."""
+        return self._feedback
 
-    @partial_sequence.setter
-    def partial_sequence(self, value):
+    @feedback.setter
+    def feedback(self, value):
         if __debug__:
             assert \
                 isinstance(value, int), \
-                "The 'partial_sequence' field must be of type 'int'"
+                "The 'feedback' field must be of type 'int'"
             assert value >= -2147483648 and value < 2147483648, \
-                "The 'partial_sequence' field must be an integer in [-2147483648, 2147483647]"
-        self._partial_sequence = value
+                "The 'feedback' field must be an integer in [-2147483648, 2147483647]"
+        self._feedback = value
 
 
 # Import statements for member types

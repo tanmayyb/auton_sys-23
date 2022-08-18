@@ -101,69 +101,99 @@ class gui(Thread):
             text="Ryerson Uni")
         self.map_widget.set_zoom(20)
     
-    def fetch_result(self, num):
-        print("I got Called, I got:", num)
-
-    def display_action_feedback(self, caller, msg):
-        self.action_scroll.insert(
-            END,
-            f"[ {str(caller)} ]: {str(msg)}"+'\n')
-        self.action_scroll.see('end')
+    
         
     def button1(self):
         self.base_node.do_pub(2)    #fix message type
 
     def a_button_1(self):
         self.base_node.send_goal(10)
+
+    def a_button_2(self):
+        self.base_node.send_minimal_walk_goal(10.0,12.5,17.3)
+
         
     def show_buttons(self):
         #button pub sub buttons
-        self.pub_button = Button(
-            self.window, 
-            text="Send Pub", 
-            command=self.button1).grid(
+        
+        self.button_label_frame = LabelFrame(self.window)
+
+        self.button_label_frame.grid(
                 row=7, 
-                column=5, 
-                columnspan=3)
+                column=5,
+                rowspan=3,
+                columnspan=4)
+
+        self.pub_button = Button(
+            self.button_label_frame, 
+            text="Send Simple Pub", 
+            command=self.button1).pack()
+            # .grid(
+            #     row=7, 
+            #     column=5, 
+            #     columnspan=3)
         
         #action service buttons
         self.action_button = Button(
-            self.window, 
-            text="Do Action",  
-            command=self.a_button_1).grid(
-                row=10, 
-                column=5, 
-                columnspan=3)
-    
+            self.button_label_frame, 
+            text="Do Fibo Action",  
+            command=self.a_button_1).pack()
+            # .grid(
+            #     row=10, 
+            #     column=5, 
+            #     columnspan=3)
+        self.action_button_2 = Button(
+            self.button_label_frame, 
+            text="Do Custom Action",  
+            command=self.a_button_2).pack()
     
     def show_scroll(self):
+        
+        self.scroll_label_frame = LabelFrame(self.window)
+        
+        self.scroll_label_frame.grid(
+                row=0, 
+                column=5,
+                rowspan=2,
+                columnspan=3)
+        
         self.scroll = scrolledtext.ScrolledText(
-            self.window, 
+            self.scroll_label_frame, 
             height=8, 
             width=32, 
             font=('Arial 14'), 
             borderwidth=0,)
-
-        self.scroll.grid(
-                row=0, 
-                column=8, 
-                columnspan=3, 
-                rowspan=2, 
-                pady=(10, 0))
+        self.scroll.pack(pady=5)
+        # self.scroll.grid(
+        #         row=0, 
+        #         column=8, 
+        #         columnspan=3, 
+        #         rowspan=2, 
+        #         pady=(10, 0))
         
         self.action_scroll = scrolledtext.ScrolledText(
-            self.window, 
+            self.scroll_label_frame, 
             height=8, 
             width=32, 
             font=('Arial 14'), 
             borderwidth=0,)
+        self.action_scroll.pack(pady=5)
         
-        self.action_scroll.grid(
-                row=3, 
-                column=8, 
-                columnspan=3, 
-                rowspan=2, 
-                pady=(10, 0))
+        # self.action_scroll.grid(
+        #         row=3, 
+        #         column=8, 
+        #         columnspan=3, 
+        #         rowspan=2, 
+        #         pady=(10, 0))
+
+    def fetch_result(self, caller, result):
+        print(f"{caller}", result)
+
+    def display_action_feedback(self, caller, msg):
+        self.action_scroll.insert(
+            END,
+            f"[ {str(caller)} ]: {str(msg)}"+'\n')
+        self.action_scroll.see('end')
 
     def insert_in_scroll(self, data):
         data = str(data)

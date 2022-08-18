@@ -6,13 +6,13 @@
 module rover_utils {
   module action {
     struct MinimalWalk_Goal {
-      int32 order;
+      int32 goal_var;
     };
     struct MinimalWalk_Result {
-      int32 sequence;
+      int32 result;
     };
     struct MinimalWalk_Feedback {
-      int32 partial_sequence;
+      int32 feedback;
     };
   };
 };

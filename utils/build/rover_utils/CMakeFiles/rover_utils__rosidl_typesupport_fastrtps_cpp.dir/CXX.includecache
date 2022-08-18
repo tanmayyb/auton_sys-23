@@ -36,6 +36,30 @@ rosidl_typesupport_fastrtps_cpp/service_type_support.h
 rosidl_typesupport_fastrtps_cpp/service_type_support_decl.hpp
 /home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_fastrtps_cpp/rover_utils/action/detail/dds_fastrtps/rosidl_typesupport_fastrtps_cpp/service_type_support_decl.hpp
 
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/dds_fastrtps/test_msg__type_support.cpp
+rover_utils/msg/detail/test_msg__rosidl_typesupport_fastrtps_cpp.hpp
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/dds_fastrtps/rover_utils/msg/detail/test_msg__rosidl_typesupport_fastrtps_cpp.hpp
+rover_utils/msg/detail/test_msg__struct.hpp
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/dds_fastrtps/rover_utils/msg/detail/test_msg__struct.hpp
+limits
+-
+stdexcept
+-
+string
+-
+rosidl_typesupport_cpp/message_type_support.hpp
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/dds_fastrtps/rosidl_typesupport_cpp/message_type_support.hpp
+rosidl_typesupport_fastrtps_cpp/identifier.hpp
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/dds_fastrtps/rosidl_typesupport_fastrtps_cpp/identifier.hpp
+rosidl_typesupport_fastrtps_cpp/message_type_support.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/dds_fastrtps/rosidl_typesupport_fastrtps_cpp/message_type_support.h
+rosidl_typesupport_fastrtps_cpp/message_type_support_decl.hpp
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/dds_fastrtps/rosidl_typesupport_fastrtps_cpp/message_type_support_decl.hpp
+rosidl_typesupport_fastrtps_cpp/wstring_conversion.hpp
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/dds_fastrtps/rosidl_typesupport_fastrtps_cpp/wstring_conversion.hpp
+fastcdr/Cdr.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/dds_fastrtps/fastcdr/Cdr.h
+
 /home/ros-vm/ros2_foxy/ros2-linux/include/action_msgs/msg/detail/goal_info__builder.hpp
 action_msgs/msg/detail/goal_info__struct.hpp
 /home/ros-vm/ros2_foxy/ros2-linux/include/action_msgs/msg/detail/action_msgs/msg/detail/goal_info__struct.hpp
@@ -285,6 +309,22 @@ fastcdr/config.h
 -
 eProsima_auto_link.h
 /home/ros-vm/ros2_foxy/ros2-linux/include/fastcdr/eProsima_auto_link.h
+
+/home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/detail/point__struct.hpp
+rosidl_runtime_cpp/bounded_vector.hpp
+-
+rosidl_runtime_cpp/message_initialization.hpp
+-
+algorithm
+-
+array
+-
+memory
+-
+string
+-
+vector
+-
 
 /home/ros-vm/ros2_foxy/ros2-linux/include/rcutils/allocator.h
 stdbool.h
@@ -720,6 +760,24 @@ rosidl_generator_cpp/rover_utils/action/detail/action_msgs/msg/goal_info.hpp
 action_msgs/msg/goal_status_array.hpp
 rosidl_generator_cpp/rover_utils/action/detail/action_msgs/msg/goal_status_array.hpp
 
+rosidl_generator_cpp/rover_utils/msg/detail/test_msg__struct.hpp
+rosidl_runtime_cpp/bounded_vector.hpp
+-
+rosidl_runtime_cpp/message_initialization.hpp
+-
+algorithm
+-
+array
+-
+memory
+-
+string
+-
+vector
+-
+geometry_msgs/msg/detail/point__struct.hpp
+rosidl_generator_cpp/rover_utils/msg/detail/geometry_msgs/msg/detail/point__struct.hpp
+
 rosidl_typesupport_fastrtps_cpp/rover_utils/action/detail/minimal_walk__rosidl_typesupport_fastrtps_cpp.hpp
 rosidl_runtime_c/message_type_support_struct.h
 rosidl_typesupport_fastrtps_cpp/rover_utils/action/detail/rosidl_runtime_c/message_type_support_struct.h
@@ -735,6 +793,18 @@ rmw/types.h
 rosidl_typesupport_fastrtps_cpp/rover_utils/action/detail/rmw/types.h
 rosidl_typesupport_cpp/service_type_support.hpp
 rosidl_typesupport_fastrtps_cpp/rover_utils/action/detail/rosidl_typesupport_cpp/service_type_support.hpp
+
+rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/test_msg__rosidl_typesupport_fastrtps_cpp.hpp
+rosidl_runtime_c/message_type_support_struct.h
+rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/rosidl_runtime_c/message_type_support_struct.h
+rosidl_typesupport_interface/macros.h
+rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/rosidl_typesupport_interface/macros.h
+rover_utils/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/rover_utils/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+rover_utils/msg/detail/test_msg__struct.hpp
+rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/rover_utils/msg/detail/test_msg__struct.hpp
+fastcdr/Cdr.h
+rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/fastcdr/Cdr.h
 
 rosidl_typesupport_fastrtps_cpp/rover_utils/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
 

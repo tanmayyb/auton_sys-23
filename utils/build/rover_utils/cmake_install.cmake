@@ -259,6 +259,10 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/msg" TYPE DIRECTORY FILES "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_py/rover_utils/msg/" REGEX "/[^/]*\\.py$")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so")
     file(RPATH_CHECK
@@ -270,7 +274,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so"
-         OLD_RPATH "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_py/rover_utils:/home/ros-vm/github/auton_sys-23/utils/build/rover_utils:/home/ros-vm/ros2_foxy/ros2-linux/lib:/home/ros-vm/ros2_foxy/ros2-linux/share/action_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/builtin_interfaces/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/unique_identifier_msgs/cmake/../../../lib:"
+         OLD_RPATH "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_py/rover_utils:/home/ros-vm/github/auton_sys-23/utils/build/rover_utils:/home/ros-vm/ros2_foxy/ros2-linux/lib:/home/ros-vm/ros2_foxy/ros2-linux/share/geometry_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/std_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/builtin_interfaces/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/action_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/unique_identifier_msgs/cmake/../../../lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so")
@@ -293,7 +297,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so"
-         OLD_RPATH "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_py/rover_utils:/home/ros-vm/github/auton_sys-23/utils/build/rover_utils:/home/ros-vm/ros2_foxy/ros2-linux/lib:/home/ros-vm/ros2_foxy/ros2-linux/share/action_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/builtin_interfaces/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/unique_identifier_msgs/cmake/../../../lib:"
+         OLD_RPATH "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_py/rover_utils:/home/ros-vm/github/auton_sys-23/utils/build/rover_utils:/home/ros-vm/ros2_foxy/ros2-linux/lib:/home/ros-vm/ros2_foxy/ros2-linux/share/geometry_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/std_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/builtin_interfaces/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/action_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/unique_identifier_msgs/cmake/../../../lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so")
@@ -316,7 +320,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so"
-         OLD_RPATH "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_py/rover_utils:/home/ros-vm/github/auton_sys-23/utils/build/rover_utils:/home/ros-vm/ros2_foxy/ros2-linux/lib:/home/ros-vm/ros2_foxy/ros2-linux/share/action_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/builtin_interfaces/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/unique_identifier_msgs/cmake/../../../lib:"
+         OLD_RPATH "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_py/rover_utils:/home/ros-vm/github/auton_sys-23/utils/build/rover_utils:/home/ros-vm/ros2_foxy/ros2-linux/lib:/home/ros-vm/ros2_foxy/ros2-linux/share/geometry_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/std_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/builtin_interfaces/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/action_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/unique_identifier_msgs/cmake/../../../lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so")
@@ -339,7 +343,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/librover_utils__python.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/librover_utils__python.so"
-         OLD_RPATH "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils:/home/ros-vm/ros2_foxy/ros2-linux/share/action_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/builtin_interfaces/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/unique_identifier_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/lib:"
+         OLD_RPATH "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils:/home/ros-vm/ros2_foxy/ros2-linux/share/geometry_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/std_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/builtin_interfaces/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/action_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/share/unique_identifier_msgs/cmake/../../../lib:/home/ros-vm/ros2_foxy/ros2-linux/lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/librover_utils__python.so")
@@ -355,7 +359,15 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rover_utils/msg" TYPE FILE FILES "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_adapter/rover_utils/msg/TestMsg.idl")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rover_utils/action" TYPE FILE FILES "/home/ros-vm/github/auton_sys-23/utils/src/rover_utils/action/MinimalWalk.action")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rover_utils/msg" TYPE FILE FILES "/home/ros-vm/github/auton_sys-23/utils/src/rover_utils/msg/TestMsg.msg")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

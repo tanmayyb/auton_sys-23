@@ -32,8 +32,8 @@ cdr_serialize(
   const rover_utils::action::MinimalWalk_Goal & ros_message,
   eprosima::fastcdr::Cdr & cdr)
 {
-  // Member: order
-  cdr << ros_message.order;
+  // Member: goal_var
+  cdr << ros_message.goal_var;
   return true;
 }
 
@@ -43,8 +43,8 @@ cdr_deserialize(
   eprosima::fastcdr::Cdr & cdr,
   rover_utils::action::MinimalWalk_Goal & ros_message)
 {
-  // Member: order
-  cdr >> ros_message.order;
+  // Member: goal_var
+  cdr >> ros_message.goal_var;
 
   return true;
 }
@@ -62,9 +62,9 @@ get_serialized_size(
   (void)padding;
   (void)wchar_size;
 
-  // Member: order
+  // Member: goal_var
   {
-    size_t item_size = sizeof(ros_message.order);
+    size_t item_size = sizeof(ros_message.goal_var);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -87,7 +87,7 @@ max_serialized_size_MinimalWalk_Goal(
   (void)full_bounded;
 
 
-  // Member: order
+  // Member: goal_var
   {
     size_t array_size = 1;
 
@@ -216,8 +216,8 @@ cdr_serialize(
   const rover_utils::action::MinimalWalk_Result & ros_message,
   eprosima::fastcdr::Cdr & cdr)
 {
-  // Member: sequence
-  cdr << ros_message.sequence;
+  // Member: result
+  cdr << ros_message.result;
   return true;
 }
 
@@ -227,8 +227,8 @@ cdr_deserialize(
   eprosima::fastcdr::Cdr & cdr,
   rover_utils::action::MinimalWalk_Result & ros_message)
 {
-  // Member: sequence
-  cdr >> ros_message.sequence;
+  // Member: result
+  cdr >> ros_message.result;
 
   return true;
 }
@@ -246,9 +246,9 @@ get_serialized_size(
   (void)padding;
   (void)wchar_size;
 
-  // Member: sequence
+  // Member: result
   {
-    size_t item_size = sizeof(ros_message.sequence);
+    size_t item_size = sizeof(ros_message.result);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -271,7 +271,7 @@ max_serialized_size_MinimalWalk_Result(
   (void)full_bounded;
 
 
-  // Member: sequence
+  // Member: result
   {
     size_t array_size = 1;
 
@@ -400,8 +400,8 @@ cdr_serialize(
   const rover_utils::action::MinimalWalk_Feedback & ros_message,
   eprosima::fastcdr::Cdr & cdr)
 {
-  // Member: partial_sequence
-  cdr << ros_message.partial_sequence;
+  // Member: feedback
+  cdr << ros_message.feedback;
   return true;
 }
 
@@ -411,8 +411,8 @@ cdr_deserialize(
   eprosima::fastcdr::Cdr & cdr,
   rover_utils::action::MinimalWalk_Feedback & ros_message)
 {
-  // Member: partial_sequence
-  cdr >> ros_message.partial_sequence;
+  // Member: feedback
+  cdr >> ros_message.feedback;
 
   return true;
 }
@@ -430,9 +430,9 @@ get_serialized_size(
   (void)padding;
   (void)wchar_size;
 
-  // Member: partial_sequence
+  // Member: feedback
   {
-    size_t item_size = sizeof(ros_message.partial_sequence);
+    size_t item_size = sizeof(ros_message.feedback);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -455,7 +455,7 @@ max_serialized_size_MinimalWalk_Feedback(
   (void)full_bounded;
 
 
-  // Member: partial_sequence
+  // Member: feedback
   {
     size_t array_size = 1;
 

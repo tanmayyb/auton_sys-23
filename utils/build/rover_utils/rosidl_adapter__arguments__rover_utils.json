@@ -1,6 +1,7 @@
 {
   "package_name": "rover_utils",
   "non_idl_tuples": [
-    "/home/ros-vm/github/auton_sys-23/utils/src/rover_utils:action/MinimalWalk.action"
+    "/home/ros-vm/github/auton_sys-23/utils/src/rover_utils:action/MinimalWalk.action",
+    "/home/ros-vm/github/auton_sys-23/utils/src/rover_utils:msg/TestMsg.msg"
   ]
 }
