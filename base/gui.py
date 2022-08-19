@@ -155,10 +155,6 @@ class gui(Thread):
             #     row=10, 
             #     column=5, 
             #     columnspan=3)
-        self.action_button_2 = Button(
-            self.button_label_frame, 
-            text="Cancel Custom Action",  
-            command=self.a_button_2).pack()
     
     def show_scroll(self):
         
