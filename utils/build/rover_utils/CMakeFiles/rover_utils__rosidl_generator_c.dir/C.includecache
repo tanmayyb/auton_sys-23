@@ -24,9 +24,9 @@ unique_identifier_msgs/msg/detail/uuid__functions.h
 builtin_interfaces/msg/detail/time__functions.h
 /home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c/rover_utils/action/detail/builtin_interfaces/msg/detail/time__functions.h
 
-/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c/rover_utils/msg/detail/test_msg__functions.c
-rover_utils/msg/detail/test_msg__functions.h
-/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c/rover_utils/msg/detail/rover_utils/msg/detail/test_msg__functions.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c/rover_utils/msg/detail/tank_drive_msg__functions.c
+rover_utils/msg/detail/tank_drive_msg__functions.h
+/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c/rover_utils/msg/detail/rover_utils/msg/detail/tank_drive_msg__functions.h
 assert.h
 -
 stdbool.h
@@ -35,8 +35,6 @@ stdlib.h
 -
 string.h
 -
-geometry_msgs/msg/detail/point__functions.h
-/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c/rover_utils/msg/detail/geometry_msgs/msg/detail/point__functions.h
 
 /home/ros-vm/ros2_foxy/ros2-linux/include/builtin_interfaces/msg/detail/time__functions.h
 stdbool.h
@@ -134,7 +132,7 @@ rosidl_generator_c/rover_utils/action/detail/rover_utils/action/detail/minimal_w
 builtin_interfaces/msg/detail/time__struct.h
 rosidl_generator_c/rover_utils/action/detail/builtin_interfaces/msg/detail/time__struct.h
 
-rosidl_generator_c/rover_utils/msg/detail/test_msg__functions.h
+rosidl_generator_c/rover_utils/msg/detail/tank_drive_msg__functions.h
 stdbool.h
 -
 stdlib.h
@@ -143,18 +141,16 @@ rosidl_runtime_c/visibility_control.h
 rosidl_generator_c/rover_utils/msg/detail/rosidl_runtime_c/visibility_control.h
 rover_utils/msg/rosidl_generator_c__visibility_control.h
 rosidl_generator_c/rover_utils/msg/detail/rover_utils/msg/rosidl_generator_c__visibility_control.h
-rover_utils/msg/detail/test_msg__struct.h
-rosidl_generator_c/rover_utils/msg/detail/rover_utils/msg/detail/test_msg__struct.h
+rover_utils/msg/detail/tank_drive_msg__struct.h
+rosidl_generator_c/rover_utils/msg/detail/rover_utils/msg/detail/tank_drive_msg__struct.h
 
-rosidl_generator_c/rover_utils/msg/detail/test_msg__struct.h
+rosidl_generator_c/rover_utils/msg/detail/tank_drive_msg__struct.h
 stdbool.h
 -
 stddef.h
 -
 stdint.h
 -
-geometry_msgs/msg/detail/point__struct.h
-rosidl_generator_c/rover_utils/msg/detail/geometry_msgs/msg/detail/point__struct.h
 
 rosidl_generator_c/rover_utils/msg/rosidl_generator_c__visibility_control.h
 

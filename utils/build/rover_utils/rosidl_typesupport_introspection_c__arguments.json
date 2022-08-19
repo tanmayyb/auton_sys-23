@@ -4,7 +4,7 @@
   "template_dir": "/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_typesupport_introspection_c/resource",
   "idl_tuples": [
     "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_adapter/rover_utils:action/MinimalWalk.idl",
-    "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_adapter/rover_utils:msg/TestMsg.idl"
+    "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_adapter/rover_utils:msg/TankDriveMsg.idl"
   ],
   "ros_interface_dependencies": [
     "geometry_msgs:/home/ros-vm/ros2_foxy/ros2-linux/share/geometry_msgs/msg/Accel.idl",
@@ -84,7 +84,7 @@
     "/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_typesupport_introspection_c/resource/srv__rosidl_typesupport_introspection_c.h.em",
     "/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_typesupport_introspection_c/resource/srv__type_support.c.em",
     "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_adapter/rover_utils/action/MinimalWalk.idl",
-    "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_adapter/rover_utils/msg/TestMsg.idl",
+    "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_adapter/rover_utils/msg/TankDriveMsg.idl",
     "/home/ros-vm/ros2_foxy/ros2-linux/share/geometry_msgs/msg/Accel.idl",
     "/home/ros-vm/ros2_foxy/ros2-linux/share/geometry_msgs/msg/AccelStamped.idl",
     "/home/ros-vm/ros2_foxy/ros2-linux/share/geometry_msgs/msg/AccelWithCovariance.idl",

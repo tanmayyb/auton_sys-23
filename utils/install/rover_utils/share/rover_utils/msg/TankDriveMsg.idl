@@ -1,0 +1,14 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rover_utils/msg/TankDriveMsg.msg
+// generated code does not contain a copyright notice
+
+
+module rover_utils {
+  module msg {
+    struct TankDriveMsg {
+      int32 lpwm;
+
+      int32 rpwm;
+    };
+  };
+};

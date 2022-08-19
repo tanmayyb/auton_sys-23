@@ -24,39 +24,39 @@ static struct PyModuleDef rover_utils__module = {
 #include "rosidl_runtime_c/message_type_support_struct.h"
 #include "rosidl_runtime_c/service_type_support_struct.h"
 #include "rosidl_runtime_c/action_type_support_struct.h"
-#include "rover_utils/msg/detail/test_msg__type_support.h"
-#include "rover_utils/msg/detail/test_msg__struct.h"
-#include "rover_utils/msg/detail/test_msg__functions.h"
+#include "rover_utils/msg/detail/tank_drive_msg__type_support.h"
+#include "rover_utils/msg/detail/tank_drive_msg__struct.h"
+#include "rover_utils/msg/detail/tank_drive_msg__functions.h"
 
-static void * rover_utils__msg__test_msg__create_ros_message(void)
+static void * rover_utils__msg__tank_drive_msg__create_ros_message(void)
 {
-  return rover_utils__msg__TestMsg__create();
+  return rover_utils__msg__TankDriveMsg__create();
 }
 
-static void rover_utils__msg__test_msg__destroy_ros_message(void * raw_ros_message)
+static void rover_utils__msg__tank_drive_msg__destroy_ros_message(void * raw_ros_message)
 {
-  rover_utils__msg__TestMsg * ros_message = (rover_utils__msg__TestMsg *)raw_ros_message;
-  rover_utils__msg__TestMsg__destroy(ros_message);
+  rover_utils__msg__TankDriveMsg * ros_message = (rover_utils__msg__TankDriveMsg *)raw_ros_message;
+  rover_utils__msg__TankDriveMsg__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool rover_utils__msg__test_msg__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool rover_utils__msg__tank_drive_msg__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * rover_utils__msg__test_msg__convert_to_py(void * raw_ros_message);
+PyObject * rover_utils__msg__tank_drive_msg__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(rover_utils, msg, TestMsg);
+ROSIDL_GET_MSG_TYPE_SUPPORT(rover_utils, msg, TankDriveMsg);
 
 int8_t
-_register_msg_type__msg__test_msg(PyObject * pymodule)
+_register_msg_type__msg__tank_drive_msg(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&rover_utils__msg__test_msg__create_ros_message,
+    (void *)&rover_utils__msg__tank_drive_msg__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -64,7 +64,7 @@ _register_msg_type__msg__test_msg(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__msg__test_msg",
+    "create_ros_message_msg__msg__tank_drive_msg",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -75,7 +75,7 @@ _register_msg_type__msg__test_msg(PyObject * pymodule)
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&rover_utils__msg__test_msg__destroy_ros_message,
+    (void *)&rover_utils__msg__tank_drive_msg__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -83,7 +83,7 @@ _register_msg_type__msg__test_msg(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__msg__test_msg",
+    "destroy_ros_message_msg__msg__tank_drive_msg",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -94,7 +94,7 @@ _register_msg_type__msg__test_msg(PyObject * pymodule)
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&rover_utils__msg__test_msg__convert_from_py,
+    (void *)&rover_utils__msg__tank_drive_msg__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -102,7 +102,7 @@ _register_msg_type__msg__test_msg(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__msg__test_msg",
+    "convert_from_py_msg__msg__tank_drive_msg",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -113,7 +113,7 @@ _register_msg_type__msg__test_msg(PyObject * pymodule)
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&rover_utils__msg__test_msg__convert_to_py,
+    (void *)&rover_utils__msg__tank_drive_msg__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -121,7 +121,7 @@ _register_msg_type__msg__test_msg(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__msg__test_msg",
+    "convert_to_py_msg__msg__tank_drive_msg",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -132,7 +132,7 @@ _register_msg_type__msg__test_msg(PyObject * pymodule)
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(rover_utils, msg, TestMsg),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(rover_utils, msg, TankDriveMsg),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -140,7 +140,7 @@ _register_msg_type__msg__test_msg(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__msg__test_msg",
+    "type_support_msg__msg__tank_drive_msg",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -1378,7 +1378,7 @@ PyInit_rover_utils_s__rosidl_typesupport_connext_c(void)
   }
   int8_t err;
 
-  err = _register_msg_type__msg__test_msg(pymodule);
+  err = _register_msg_type__msg__tank_drive_msg(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;

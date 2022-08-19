@@ -7,8 +7,8 @@ file(REMOVE_RECURSE
   "../rosidl_generator_py/rover_utils/action/_minimal_walk.py"
   "../rosidl_generator_py/rover_utils/action/_minimal_walk_s.c"
   "../rosidl_generator_py/rover_utils/msg/__init__.py"
-  "../rosidl_generator_py/rover_utils/msg/_test_msg.py"
-  "../rosidl_generator_py/rover_utils/msg/_test_msg_s.c"
+  "../rosidl_generator_py/rover_utils/msg/_tank_drive_msg.py"
+  "../rosidl_generator_py/rover_utils/msg/_tank_drive_msg_s.c"
   "CMakeFiles/rover_utils__py"
 )
 

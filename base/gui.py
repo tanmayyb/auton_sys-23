@@ -104,7 +104,7 @@ class gui(Thread):
     
         
     def button1(self):
-        self.base_node.do_pub(2)    #fix message type
+        self.base_node.do_pub()    #fix message type
 
     def a_button_1(self):
         self.base_node.send_goal(10)
@@ -145,6 +145,19 @@ class gui(Thread):
         self.action_button_2 = Button(
             self.button_label_frame, 
             text="Do Custom Action",  
+            command=self.a_button_2).pack()
+
+        self.cancel_action_button = Button(
+            self.button_label_frame, 
+            text="Cancel Custom Action",  
+            command=self.a_button_1).pack()
+            # .grid(
+            #     row=10, 
+            #     column=5, 
+            #     columnspan=3)
+        self.action_button_2 = Button(
+            self.button_label_frame, 
+            text="Cancel Custom Action",  
             command=self.a_button_2).pack()
     
     def show_scroll(self):

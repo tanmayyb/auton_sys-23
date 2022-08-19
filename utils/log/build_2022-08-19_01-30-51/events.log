@@ -1,0 +1,371 @@
+[0.000000] (-) TimerEvent: {}
+[0.000213] (rover_utils) JobQueued: {'identifier': 'rover_utils', 'dependencies': OrderedDict()}
+[0.000267] (rover_utils) JobStarted: {'identifier': 'rover_utils'}
+[0.025814] (rover_utils) JobProgress: {'identifier': 'rover_utils', 'progress': 'cmake'}
+[0.028303] (rover_utils) JobProgress: {'identifier': 'rover_utils', 'progress': 'build'}
+[0.029679] (rover_utils) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils', '--', '-j2', '-l2'], 'cwd': '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ros-vm'), ('SSH_CLIENT', '10.0.0.220 61558 22'), ('XDG_SESSION_TYPE', 'tty'), ('GIT_ASKPASS', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ros-vm/ros2_foxy/ros2-linux/opt/yaml_cpp_vendor/lib:/home/ros-vm/ros2_foxy/ros2-linux/opt/rviz_ogre_vendor/lib:/home/ros-vm/ros2_foxy/ros2-linux/lib'), ('BROWSER', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/ros-vm'), ('OLDPWD', '/home/ros-vm/github'), ('TERM_PROGRAM_VERSION', '1.70.2'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-ead179bf-c27d-4f53-85d1-405d75ffd211.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/node'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('COLCON_PREFIX_PATH', '/home/ros-vm/ros2_foxy/ros2-linux'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'ros-vm'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/home/ros-vm/ros2_foxy/ros2-linux/lib/x86_64-linux-gnu/pkgconfig:/home/ros-vm/ros2_foxy/ros2-linux/lib/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '3'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/remote-cli:/home/ros-vm/.local/bin:/home/ros-vm/ros2_foxy/ros2-linux/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_CA.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-a8911bcff6.sock'), ('TERM_PROGRAM', 'vscode'), ('AMENT_PREFIX_PATH', '/home/ros-vm/ros2_foxy/ros2-linux'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils'), ('SSH_CONNECTION', '10.0.0.220 61558 10.0.0.52 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/ros-vm/ros2_foxy/ros2-linux')]), 'shell': False}
+[0.073081] (rover_utils) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.9 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake/cmake)\n'}
+[0.096910] (rover_utils) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[0.097376] (rover_utils) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.099614] (-) TimerEvent: {}
+[0.199973] (-) TimerEvent: {}
+[0.300312] (-) TimerEvent: {}
+[0.314275] (rover_utils) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.6 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_lint_auto/cmake)\n'}
+[0.394659] (rover_utils) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.0.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_default_generators/cmake)\n'}
+[0.396797] (rover_utils) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.400429] (-) TimerEvent: {}
+[0.401115] (rover_utils) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.2.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_adapter/cmake)\n'}
+[0.425254] (rover_utils) StdoutLine: {'line': b'-- Could not find RTI Connext - skipping rosidl_typesupport_connext_c\n'}
+[0.450225] (rover_utils) StdoutLine: {'line': b'-- Could not find RTI Connext - skipping rosidl_typesupport_connext_cpp\n'}
+[0.500836] (-) TimerEvent: {}
+[0.585254] (rover_utils) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.600939] (-) TimerEvent: {}
+[0.617351] (rover_utils) StdoutLine: {'line': b'-- Found geometry_msgs: 2.0.5 (/home/ros-vm/ros2_foxy/ros2-linux/share/geometry_msgs/cmake)\n'}
+[0.701048] (-) TimerEvent: {}
+[0.754697] (rover_utils) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") \n'}
+[0.801159] (-) TimerEvent: {}
+[0.901574] (-) TimerEvent: {}
+[0.971840] (rover_utils) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.9.2 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake_ros/cmake)\n'}
+[1.001717] (-) TimerEvent: {}
+[1.102036] (-) TimerEvent: {}
+[1.202375] (-) TimerEvent: {}
+[1.289916] (rover_utils) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[1.302506] (-) TimerEvent: {}
+[1.402888] (-) TimerEvent: {}
+[1.476780] (rover_utils) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[1.503003] (-) TimerEvent: {}
+[1.517008] (rover_utils) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3.5") \n'}
+[1.518416] (rover_utils) StdoutLine: {'line': b'-- Found python_cmake_module: 0.8.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/python_cmake_module/cmake)\n'}
+[1.557015] (rover_utils) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[1.557220] (rover_utils) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.8\n'}
+[1.557345] (rover_utils) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.8.so\n'}
+[1.603172] (-) TimerEvent: {}
+[1.665210] (rover_utils) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[1.668345] (rover_utils) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[1.670046] (rover_utils) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[1.678201] (rover_utils) StdoutLine: {'line': b'-- Configuring done\n'}
+[1.703291] (-) TimerEvent: {}
+[1.782961] (rover_utils) StdoutLine: {'line': b'-- Generating done\n'}
+[1.789161] (rover_utils) StdoutLine: {'line': b'-- Build files have been written to: /home/ros-vm/github/auton_sys-23/utils/build/rover_utils\n'}
+[1.805479] (-) TimerEvent: {}
+[1.844499] (rover_utils) StdoutLine: {'line': b'[  2%] \x1b[34m\x1b[1mGenerating C code for ROS interfaces\x1b[0m\n'}
+[1.853119] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__cpp\x1b[0m\n'}
+[1.884596] (rover_utils) StdoutLine: {'line': b'[  5%] \x1b[34m\x1b[1mGenerating C++ code for ROS interfaces\x1b[0m\n'}
+[1.909498] (-) TimerEvent: {}
+[2.010669] (-) TimerEvent: {}
+[2.111457] (-) TimerEvent: {}
+[2.212211] (-) TimerEvent: {}
+[2.312970] (-) TimerEvent: {}
+[2.413482] (-) TimerEvent: {}
+[2.514185] (-) TimerEvent: {}
+[2.615541] (-) TimerEvent: {}
+[2.716435] (-) TimerEvent: {}
+[2.817228] (-) TimerEvent: {}
+[2.917524] (-) TimerEvent: {}
+[2.951875] (rover_utils) StdoutLine: {'line': b'[  5%] Built target rover_utils__cpp\n'}
+[2.980100] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_generator_c\x1b[0m\n'}
+[2.994082] (rover_utils) StdoutLine: {'line': b'[  7%] \x1b[34m\x1b[1mGenerating C++ type support dispatch for ROS interfaces\x1b[0m\n'}
+[3.001629] (rover_utils) StdoutLine: {'line': b'[ 10%] \x1b[32mBuilding C object CMakeFiles/rover_utils__rosidl_generator_c.dir/rosidl_generator_c/rover_utils/action/detail/minimal_walk__functions.c.o\x1b[0m\n'}
+[3.021477] (-) TimerEvent: {}
+[3.122875] (-) TimerEvent: {}
+[3.223765] (-) TimerEvent: {}
+[3.236719] (rover_utils) StdoutLine: {'line': b'[ 12%] \x1b[32mBuilding C object CMakeFiles/rover_utils__rosidl_generator_c.dir/rosidl_generator_c/rover_utils/msg/detail/tank_drive_msg__functions.c.o\x1b[0m\n'}
+[3.324663] (-) TimerEvent: {}
+[3.353843] (rover_utils) StdoutLine: {'line': b'[ 15%] \x1b[32m\x1b[1mLinking C shared library librover_utils__rosidl_generator_c.so\x1b[0m\n'}
+[3.425469] (-) TimerEvent: {}
+[3.477775] (rover_utils) StdoutLine: {'line': b'[ 15%] Built target rover_utils__rosidl_generator_c\n'}
+[3.518600] (rover_utils) StdoutLine: {'line': b'[ 17%] \x1b[34m\x1b[1mGenerating C++ type support for eProsima Fast-RTPS\x1b[0m\n'}
+[3.525575] (-) TimerEvent: {}
+[3.596691] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_typesupport_cpp\x1b[0m\n'}
+[3.625716] (-) TimerEvent: {}
+[3.658794] (rover_utils) StdoutLine: {'line': b'[ 20%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/rover_utils/action/minimal_walk__type_support.cpp.o\x1b[0m\n'}
+[3.728103] (-) TimerEvent: {}
+[3.829824] (-) TimerEvent: {}
+[3.931125] (-) TimerEvent: {}
+[4.031443] (-) TimerEvent: {}
+[4.133290] (-) TimerEvent: {}
+[4.234292] (-) TimerEvent: {}
+[4.335337] (-) TimerEvent: {}
+[4.436272] (-) TimerEvent: {}
+[4.450057] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_typesupport_fastrtps_cpp\x1b[0m\n'}
+[4.506887] (rover_utils) StdoutLine: {'line': b'[ 23%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/rover_utils/action/detail/dds_fastrtps/minimal_walk__type_support.cpp.o\x1b[0m\n'}
+[4.511502] (rover_utils) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/rover_utils/msg/tank_drive_msg__type_support.cpp.o\x1b[0m\n'}
+[4.536415] (-) TimerEvent: {}
+[4.637496] (-) TimerEvent: {}
+[4.737828] (-) TimerEvent: {}
+[4.838333] (-) TimerEvent: {}
+[4.941194] (-) TimerEvent: {}
+[5.041476] (-) TimerEvent: {}
+[5.142733] (-) TimerEvent: {}
+[5.229976] (rover_utils) StdoutLine: {'line': b'[ 28%] \x1b[32m\x1b[1mLinking CXX shared library librover_utils__rosidl_typesupport_cpp.so\x1b[0m\n'}
+[5.242837] (-) TimerEvent: {}
+[5.343641] (-) TimerEvent: {}
+[5.417434] (rover_utils) StdoutLine: {'line': b'[ 28%] Built target rover_utils__rosidl_typesupport_cpp\n'}
+[5.443716] (-) TimerEvent: {}
+[5.478277] (rover_utils) StdoutLine: {'line': b'[ 30%] \x1b[34m\x1b[1mGenerating C++ introspection for ROS interfaces\x1b[0m\n'}
+[5.543870] (-) TimerEvent: {}
+[5.644246] (-) TimerEvent: {}
+[5.745606] (-) TimerEvent: {}
+[5.761066] (rover_utils) StdoutLine: {'line': b'[ 33%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/rover_utils/msg/detail/dds_fastrtps/tank_drive_msg__type_support.cpp.o\x1b[0m\n'}
+[5.845627] (-) TimerEvent: {}
+[5.945923] (-) TimerEvent: {}
+[6.046342] (-) TimerEvent: {}
+[6.050392] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_typesupport_introspection_cpp\x1b[0m\n'}
+[6.087102] (rover_utils) StdoutLine: {'line': b'[ 35%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/rover_utils/action/detail/minimal_walk__type_support.cpp.o\x1b[0m\n'}
+[6.146432] (-) TimerEvent: {}
+[6.246897] (-) TimerEvent: {}
+[6.261087] (rover_utils) StdoutLine: {'line': b'[ 38%] \x1b[32m\x1b[1mLinking CXX shared library librover_utils__rosidl_typesupport_fastrtps_cpp.so\x1b[0m\n'}
+[6.347022] (-) TimerEvent: {}
+[6.403100] (rover_utils) StdoutLine: {'line': b'[ 38%] Built target rover_utils__rosidl_typesupport_fastrtps_cpp\n'}
+[6.418441] (rover_utils) StdoutLine: {'line': b'[ 41%] \x1b[34m\x1b[1mGenerating C type support dispatch for ROS interfaces\x1b[0m\n'}
+[6.447118] (-) TimerEvent: {}
+[6.522468] (rover_utils) StdoutLine: {'line': b'[ 43%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/rover_utils/msg/detail/tank_drive_msg__type_support.cpp.o\x1b[0m\n'}
+[6.547219] (-) TimerEvent: {}
+[6.647479] (-) TimerEvent: {}
+[6.725808] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_typesupport_c\x1b[0m\n'}
+[6.743969] (rover_utils) StdoutLine: {'line': b'[ 46%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_c.dir/rosidl_typesupport_c/rover_utils/action/minimal_walk__type_support.cpp.o\x1b[0m\n'}
+[6.747588] (-) TimerEvent: {}
+[6.808295] (rover_utils) StdoutLine: {'line': b'[ 48%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_c.dir/rosidl_typesupport_c/rover_utils/msg/tank_drive_msg__type_support.cpp.o\x1b[0m\n'}
+[6.847689] (-) TimerEvent: {}
+[6.848919] (rover_utils) StdoutLine: {'line': b'[ 51%] \x1b[32m\x1b[1mLinking CXX shared library librover_utils__rosidl_typesupport_c.so\x1b[0m\n'}
+[6.887452] (rover_utils) StdoutLine: {'line': b'[ 53%] \x1b[32m\x1b[1mLinking CXX shared library librover_utils__rosidl_typesupport_introspection_cpp.so\x1b[0m\n'}
+[6.935464] (rover_utils) StdoutLine: {'line': b'[ 53%] Built target rover_utils__rosidl_typesupport_c\n'}
+[6.947863] (-) TimerEvent: {}
+[6.965011] (rover_utils) StdoutLine: {'line': b'[ 56%] \x1b[34m\x1b[1mGenerating C introspection for ROS interfaces\x1b[0m\n'}
+[7.007348] (rover_utils) StdoutLine: {'line': b'[ 56%] Built target rover_utils__rosidl_typesupport_introspection_cpp\n'}
+[7.023484] (rover_utils) StdoutLine: {'line': b'[ 58%] \x1b[34m\x1b[1mGenerating C type support for eProsima Fast-RTPS\x1b[0m\n'}
+[7.047958] (-) TimerEvent: {}
+[7.148276] (-) TimerEvent: {}
+[7.248575] (-) TimerEvent: {}
+[7.348893] (-) TimerEvent: {}
+[7.407985] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_typesupport_introspection_c\x1b[0m\n'}
+[7.437993] (rover_utils) StdoutLine: {'line': b'[ 61%] \x1b[32mBuilding C object CMakeFiles/rover_utils__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/rover_utils/action/detail/minimal_walk__type_support.c.o\x1b[0m\n'}
+[7.449039] (-) TimerEvent: {}
+[7.469979] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_typesupport_fastrtps_c\x1b[0m\n'}
+[7.498702] (rover_utils) StdoutLine: {'line': b'[ 64%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/rover_utils/action/detail/minimal_walk__type_support_c.cpp.o\x1b[0m\n'}
+[7.509156] (rover_utils) StdoutLine: {'line': b'[ 66%] \x1b[32mBuilding C object CMakeFiles/rover_utils__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/rover_utils/msg/detail/tank_drive_msg__type_support.c.o\x1b[0m\n'}
+[7.549140] (-) TimerEvent: {}
+[7.549860] (rover_utils) StdoutLine: {'line': b'[ 69%] \x1b[32m\x1b[1mLinking C shared library librover_utils__rosidl_typesupport_introspection_c.so\x1b[0m\n'}
+[7.617565] (rover_utils) StdoutLine: {'line': b'[ 69%] Built target rover_utils__rosidl_typesupport_introspection_c\n'}
+[7.630648] (rover_utils) StdoutLine: {'line': b'[ 71%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/rover_utils/msg/detail/tank_drive_msg__type_support_c.cpp.o\x1b[0m\n'}
+[7.649246] (-) TimerEvent: {}
+[7.749582] (-) TimerEvent: {}
+[7.849881] (-) TimerEvent: {}
+[7.950169] (-) TimerEvent: {}
+[8.050688] (-) TimerEvent: {}
+[8.080743] (rover_utils) StdoutLine: {'line': b'[ 74%] \x1b[32m\x1b[1mLinking CXX shared library librover_utils__rosidl_typesupport_fastrtps_c.so\x1b[0m\n'}
+[8.150860] (-) TimerEvent: {}
+[8.232919] (rover_utils) StdoutLine: {'line': b'[ 74%] Built target rover_utils__rosidl_typesupport_fastrtps_c\n'}
+[8.251003] (-) TimerEvent: {}
+[8.272580] (rover_utils) StdoutLine: {'line': b'[ 74%] Built target rover_utils\n'}
+[8.296414] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__py\x1b[0m\n'}
+[8.317542] (rover_utils) StdoutLine: {'line': b'[ 76%] \x1b[34m\x1b[1mGenerating Python code for ROS interfaces\x1b[0m\n'}
+[8.351101] (-) TimerEvent: {}
+[8.452432] (-) TimerEvent: {}
+[8.553651] (-) TimerEvent: {}
+[8.654985] (-) TimerEvent: {}
+[8.756956] (-) TimerEvent: {}
+[8.857957] (-) TimerEvent: {}
+[8.959255] (-) TimerEvent: {}
+[9.059596] (-) TimerEvent: {}
+[9.159919] (-) TimerEvent: {}
+[9.260238] (-) TimerEvent: {}
+[9.318156] (rover_utils) StdoutLine: {'line': b'[ 76%] Built target rover_utils__py\n'}
+[9.333803] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__python\x1b[0m\n'}
+[9.358142] (rover_utils) StdoutLine: {'line': b'[ 79%] \x1b[32mBuilding C object CMakeFiles/rover_utils__python.dir/rosidl_generator_py/rover_utils/action/_minimal_walk_s.c.o\x1b[0m\n'}
+[9.359998] (rover_utils) StdoutLine: {'line': b'[ 82%] \x1b[32mBuilding C object CMakeFiles/rover_utils__python.dir/rosidl_generator_py/rover_utils/msg/_tank_drive_msg_s.c.o\x1b[0m\n'}
+[9.360304] (-) TimerEvent: {}
+[9.460611] (-) TimerEvent: {}
+[9.521432] (rover_utils) StdoutLine: {'line': b'[ 84%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/rover_utils/librover_utils__python.so\x1b[0m\n'}
+[9.560717] (-) TimerEvent: {}
+[9.589552] (rover_utils) StdoutLine: {'line': b'[ 84%] Built target rover_utils__python\n'}
+[9.606863] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_typesupport_fastrtps_c__pyext\x1b[0m\n'}
+[9.607455] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_typesupport_c__pyext\x1b[0m\n'}
+[9.633995] (rover_utils) StdoutLine: {'line': b'[ 87%] \x1b[32mBuilding C object CMakeFiles/rover_utils__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/rover_utils/_rover_utils_s.ep.rosidl_typesupport_c.c.o\x1b[0m\n'}
+[9.657114] (rover_utils) StdoutLine: {'line': b'[ 89%] \x1b[32mBuilding C object CMakeFiles/rover_utils__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/rover_utils/_rover_utils_s.ep.rosidl_typesupport_fastrtps_c.c.o\x1b[0m\n'}
+[9.660802] (-) TimerEvent: {}
+[9.761165] (-) TimerEvent: {}
+[9.808969] (rover_utils) StdoutLine: {'line': b'[ 92%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/rover_utils/rover_utils_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so\x1b[0m\n'}
+[9.861291] (-) TimerEvent: {}
+[9.917543] (rover_utils) StdoutLine: {'line': b'[ 92%] Built target rover_utils__rosidl_typesupport_c__pyext\n'}
+[9.961160] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_typesupport_introspection_c__pyext\x1b[0m\n'}
+[9.961336] (-) TimerEvent: {}
+[9.981013] (rover_utils) StdoutLine: {'line': b'[ 94%] \x1b[32m\x1b[1mLinking CXX shared library rosidl_generator_py/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so\x1b[0m\n'}
+[10.013267] (rover_utils) StdoutLine: {'line': b'[ 97%] \x1b[32mBuilding C object CMakeFiles/rover_utils__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/rover_utils/_rover_utils_s.ep.rosidl_typesupport_introspection_c.c.o\x1b[0m\n'}
+[10.061455] (-) TimerEvent: {}
+[10.161764] (-) TimerEvent: {}
+[10.215096] (rover_utils) StdoutLine: {'line': b'[ 97%] Built target rover_utils__rosidl_typesupport_fastrtps_c__pyext\n'}
+[10.236378] (rover_utils) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/rover_utils/rover_utils_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so\x1b[0m\n'}
+[10.263857] (-) TimerEvent: {}
+[10.306046] (rover_utils) StdoutLine: {'line': b'[100%] Built target rover_utils__rosidl_typesupport_introspection_c__pyext\n'}
+[10.329326] (rover_utils) CommandEnded: {'returncode': 0}
+[10.364003] (-) TimerEvent: {}
+[10.465567] (-) TimerEvent: {}
+[10.504124] (rover_utils) JobProgress: {'identifier': 'rover_utils', 'progress': 'install'}
+[10.527870] (rover_utils) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils'], 'cwd': '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ros-vm'), ('SSH_CLIENT', '10.0.0.220 61558 22'), ('XDG_SESSION_TYPE', 'tty'), ('GIT_ASKPASS', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ros-vm/ros2_foxy/ros2-linux/opt/yaml_cpp_vendor/lib:/home/ros-vm/ros2_foxy/ros2-linux/opt/rviz_ogre_vendor/lib:/home/ros-vm/ros2_foxy/ros2-linux/lib'), ('BROWSER', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/ros-vm'), ('OLDPWD', '/home/ros-vm/github'), ('TERM_PROGRAM_VERSION', '1.70.2'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-ead179bf-c27d-4f53-85d1-405d75ffd211.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/node'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('COLCON_PREFIX_PATH', '/home/ros-vm/ros2_foxy/ros2-linux'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'ros-vm'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/home/ros-vm/ros2_foxy/ros2-linux/lib/x86_64-linux-gnu/pkgconfig:/home/ros-vm/ros2_foxy/ros2-linux/lib/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '3'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/remote-cli:/home/ros-vm/.local/bin:/home/ros-vm/ros2_foxy/ros2-linux/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_CA.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-a8911bcff6.sock'), ('TERM_PROGRAM', 'vscode'), ('AMENT_PREFIX_PATH', '/home/ros-vm/ros2_foxy/ros2-linux'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils'), ('SSH_CONNECTION', '10.0.0.220 61558 10.0.0.52 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/ros-vm/ros2_foxy/ros2-linux')]), 'shell': False}
+[10.545881] (rover_utils) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[10.546409] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/ament_index/resource_index/rosidl_interfaces/rover_utils\n'}
+[10.547198] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils\n'}
+[10.547573] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action\n'}
+[10.547978] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail\n'}
+[10.548293] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__struct.h\n'}
+[10.548875] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__functions.c\n'}
+[10.553242] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__functions.h\n'}
+[10.553729] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__type_support.h\n'}
+[10.554024] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/minimal_walk.h\n'}
+[10.554284] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg\n'}
+[10.554496] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/test_msg.h\n'}
+[10.554723] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/tank_drive_msg.h\n'}
+[10.554986] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail\n'}
+[10.555180] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__functions.h\n'}
+[10.555448] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__type_support.h\n'}
+[10.555651] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__functions.c\n'}
+[10.555958] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__struct.h\n'}
+[10.556113] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__functions.h\n'}
+[10.556278] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__struct.h\n'}
+[10.556524] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__functions.c\n'}
+[10.556707] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__type_support.h\n'}
+[10.557017] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/rosidl_generator_c__visibility_control.h\n'}
+[10.560629] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/library_path.sh\n'}
+[10.560962] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/library_path.dsv\n'}
+[10.561556] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_generator_c.so\n'}
+[10.562262] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_generator_c.so" to ""\n'}
+[10.562496] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils\n'}
+[10.562719] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action\n'}
+[10.562888] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail\n'}
+[10.563053] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__rosidl_typesupport_fastrtps_c.h\n'}
+[10.563333] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg\n'}
+[10.563512] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[10.563712] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail\n'}
+[10.563881] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__rosidl_typesupport_fastrtps_c.h\n'}
+[10.564037] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__rosidl_typesupport_fastrtps_c.h\n'}
+[10.564543] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_fastrtps_c.so\n'}
+[10.565357] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_fastrtps_c.so" to ""\n'}
+[10.565704] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils\n'}
+[10.565858] (-) TimerEvent: {}
+[10.569446] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action\n'}
+[10.569989] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail\n'}
+[10.570337] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[10.570783] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/dds_fastrtps\n'}
+[10.570966] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg\n'}
+[10.571193] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[10.571343] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail\n'}
+[10.571521] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[10.571765] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[10.571911] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/dds_fastrtps\n'}
+[10.572570] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_fastrtps_cpp.so\n'}
+[10.577383] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_fastrtps_cpp.so" to ""\n'}
+[10.577836] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils\n'}
+[10.578077] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action\n'}
+[10.578258] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail\n'}
+[10.578424] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__type_support.c\n'}
+[10.578804] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__rosidl_typesupport_introspection_c.h\n'}
+[10.579132] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg\n'}
+[10.579307] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail\n'}
+[10.579479] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__rosidl_typesupport_introspection_c.h\n'}
+[10.579638] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__type_support.c\n'}
+[10.579898] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__type_support.c\n'}
+[10.580091] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__rosidl_typesupport_introspection_c.h\n'}
+[10.580388] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[10.581752] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_introspection_c.so\n'}
+[10.582518] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_introspection_c.so" to ""\n'}
+[10.582938] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_c.so\n'}
+[10.583552] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_c.so" to ""\n'}
+[10.583772] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils\n'}
+[10.583963] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action\n'}
+[10.586669] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/minimal_walk.hpp\n'}
+[10.589165] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail\n'}
+[10.589554] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__struct.hpp\n'}
+[10.590102] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__builder.hpp\n'}
+[10.590544] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__traits.hpp\n'}
+[10.590993] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg\n'}
+[10.591317] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/tank_drive_msg.hpp\n'}
+[10.591783] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail\n'}
+[10.592105] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__traits.hpp\n'}
+[10.592382] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__traits.hpp\n'}
+[10.592901] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__struct.hpp\n'}
+[10.593076] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__struct.hpp\n'}
+[10.593549] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__builder.hpp\n'}
+[10.593749] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__builder.hpp\n'}
+[10.594602] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/test_msg.hpp\n'}
+[10.594908] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils\n'}
+[10.595160] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action\n'}
+[10.595340] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail\n'}
+[10.595707] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__type_support.cpp\n'}
+[10.596184] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/action/detail/minimal_walk__rosidl_typesupport_introspection_cpp.hpp\n'}
+[10.596845] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg\n'}
+[10.597190] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail\n'}
+[10.597720] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__rosidl_typesupport_introspection_cpp.hpp\n'}
+[10.598085] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__rosidl_typesupport_introspection_cpp.hpp\n'}
+[10.598778] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/tank_drive_msg__type_support.cpp\n'}
+[10.599463] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/include/rover_utils/msg/detail/test_msg__type_support.cpp\n'}
+[10.600183] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_introspection_cpp.so\n'}
+[10.601956] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_introspection_cpp.so" to ""\n'}
+[10.602554] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_cpp.so\n'}
+[10.608473] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__rosidl_typesupport_cpp.so" to ""\n'}
+[10.609025] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/pythonpath.sh\n'}
+[10.609331] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/pythonpath.dsv\n'}
+[10.609950] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/__init__.py\n'}
+[10.666327] (-) TimerEvent: {}
+[10.688892] (rover_utils) StdoutLine: {'line': b"Compiling '/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/__init__.py'...\n"}
+[10.695663] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/action\n'}
+[10.696152] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/action/_minimal_walk_s.c\n'}
+[10.696752] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/action/_minimal_walk.py\n'}
+[10.697201] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/action/__init__.py\n'}
+[10.697605] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/msg\n'}
+[10.697829] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/msg/_tank_drive_msg.py\n'}
+[10.698128] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/msg/_test_msg.py\n'}
+[10.698343] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/msg/_test_msg_s.c\n'}
+[10.698603] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/msg/_tank_drive_msg_s.c\n'}
+[10.698872] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/msg/__init__.py\n'}
+[10.699701] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so\n'}
+[10.700857] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so" to ""\n'}
+[10.703847] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so\n'}
+[10.704875] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so" to ""\n'}
+[10.705565] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so\n'}
+[10.706353] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages/rover_utils/rover_utils_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so" to ""\n'}
+[10.706946] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__python.so\n'}
+[10.707654] (rover_utils) StdoutLine: {'line': b'-- Set runtime path of "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/librover_utils__python.so" to ""\n'}
+[10.707909] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/action/MinimalWalk.idl\n'}
+[10.708133] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/msg/TankDriveMsg.idl\n'}
+[10.709502] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/action/MinimalWalk.action\n'}
+[10.709852] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/msg/TankDriveMsg.msg\n'}
+[10.710222] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/ament_index/resource_index/package_run_dependencies/rover_utils\n'}
+[10.710451] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/ament_index/resource_index/parent_prefix_path/rover_utils\n'}
+[10.710667] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/ament_prefix_path.sh\n'}
+[10.710871] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/ament_prefix_path.dsv\n'}
+[10.711292] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/path.sh\n'}
+[10.711385] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/environment/path.dsv\n'}
+[10.713549] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/local_setup.bash\n'}
+[10.713996] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/local_setup.sh\n'}
+[10.714355] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/local_setup.zsh\n'}
+[10.716625] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/local_setup.dsv\n'}
+[10.717236] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.dsv\n'}
+[10.717600] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/ament_index/resource_index/packages/rover_utils\n'}
+[10.717923] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_generator_cExport.cmake\n'}
+[10.718146] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_generator_cExport-noconfig.cmake\n'}
+[10.718683] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_introspection_cExport.cmake\n'}
+[10.718907] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[10.719357] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_cExport.cmake\n'}
+[10.719581] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[10.719996] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_generator_cppExport.cmake\n'}
+[10.720338] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[10.720556] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[10.720985] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_cppExport.cmake\n'}
+[10.721232] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utils__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[10.721580] (rover_utils) StdoutLine: {'line': b'-- Installing: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rosidl_cmake-extras.cmake\n'}
+[10.726120] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[10.726864] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[10.727346] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[10.727729] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[10.728284] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[10.728655] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[10.728960] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utilsConfig.cmake\n'}
+[10.729152] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/cmake/rover_utilsConfig-version.cmake\n'}
+[10.729488] (rover_utils) StdoutLine: {'line': b'-- Up-to-date: /home/ros-vm/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.xml\n'}
+[10.736898] (rover_utils) CommandEnded: {'returncode': 0}
+[10.766405] (-) TimerEvent: {}
+[10.866799] (-) TimerEvent: {}
+[10.967191] (-) TimerEvent: {}
+[10.987788] (rover_utils) JobEnded: {'identifier': 'rover_utils', 'rc': 0}
+[10.989537] (-) EventReactorShutdown: {}

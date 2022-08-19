@@ -2,12 +2,11 @@ from rclpy.node import Node
 from rclpy.action import ActionClient
 
 
-from std_msgs.msg import Int32
 from geometry_msgs.msg import Point
 
-from action_tutorials_interfaces.action import Fibonacci
+
 from rover_utils.action import MinimalWalk
-# from rover_utils.msg import TestMsg
+from rover_utils.msg import TankDriveMsg
 
 
 import time 
@@ -19,10 +18,10 @@ class baseNode(Node):
         
         self.parent = parent
 
-        # self.publisher = self.create_publisher(
-        #     TestMsg, 
-        #     'topic', 
-        #     10)
+        self.teensy_publisher = self.create_publisher(
+            TankDriveMsg, 
+            'pwm_to_teensy', 
+            10)
         
         # self.subscription = self.create_subscription(
         #     Int32,
@@ -83,17 +82,15 @@ class baseNode(Node):
         self.parent.fetch_result("minimal client", result)
         self.parent.insert_in_scroll(result)
 
-    # def do_pub(self, num):
-    #     msg = TestMsg()
-    #     point = Point()
-    #     point.x = 2.0
-    #     point.y = 2.0
-    #     point.z = 2.0
-    #     msg.point = point
-    #     msg.my_float = 3.2
-    #     self.publisher.publish(msg)
-    #     #self.get_logger().info('Publishing: "%d"' % msg)
-    #     print(msg)
+    def do_pub(self):
+        msg = TankDriveMsg()
+        msg.lpwm = 127
+        msg.rpwm = 127
+        
+        self.teensy_publisher.publish(msg)
+        #self.get_logger().info('Publishing: "%d"' % msg)
+
+        #print("Publishing: ")
 
     # def sub_callback(self, msg):
     #     self.get_logger().info('Got Result: "%f"' % msg.my_float)

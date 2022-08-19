@@ -7,11 +7,10 @@ import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionServer
 
-from geometry_msgs.msg import Point
+#from geometry_msgs.msg import Point
 
 from action_tutorials_interfaces.action import Fibonacci
 from rover_utils.action import MinimalWalk
-#from rover_utils.msg import TestMsg
 
 import time
 

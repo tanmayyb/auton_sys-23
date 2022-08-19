@@ -359,7 +359,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rover_utils/msg" TYPE FILE FILES "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_adapter/rover_utils/msg/TestMsg.idl")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rover_utils/msg" TYPE FILE FILES "/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_adapter/rover_utils/msg/TankDriveMsg.idl")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -367,7 +367,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rover_utils/msg" TYPE FILE FILES "/home/ros-vm/github/auton_sys-23/utils/src/rover_utils/msg/TestMsg.msg")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rover_utils/msg" TYPE FILE FILES "/home/ros-vm/github/auton_sys-23/utils/src/rover_utils/msg/TankDriveMsg.msg")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

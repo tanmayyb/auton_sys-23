@@ -4,10 +4,10 @@ file(REMOVE_RECURSE
   "rosidl_generator_cpp/rover_utils/action/detail/minimal_walk__struct.hpp"
   "rosidl_generator_cpp/rover_utils/action/detail/minimal_walk__traits.hpp"
   "rosidl_generator_cpp/rover_utils/action/minimal_walk.hpp"
-  "rosidl_generator_cpp/rover_utils/msg/detail/test_msg__builder.hpp"
-  "rosidl_generator_cpp/rover_utils/msg/detail/test_msg__struct.hpp"
-  "rosidl_generator_cpp/rover_utils/msg/detail/test_msg__traits.hpp"
-  "rosidl_generator_cpp/rover_utils/msg/test_msg.hpp"
+  "rosidl_generator_cpp/rover_utils/msg/detail/tank_drive_msg__builder.hpp"
+  "rosidl_generator_cpp/rover_utils/msg/detail/tank_drive_msg__struct.hpp"
+  "rosidl_generator_cpp/rover_utils/msg/detail/tank_drive_msg__traits.hpp"
+  "rosidl_generator_cpp/rover_utils/msg/tank_drive_msg.hpp"
 )
 
 # Per-language clean rules from dependency scanning.
