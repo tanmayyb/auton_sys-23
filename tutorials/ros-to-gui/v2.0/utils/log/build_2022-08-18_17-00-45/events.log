@@ -1,0 +1,106 @@
+[0.000000] (-) TimerEvent: {}
+[0.000921] (rover_utils) JobQueued: {'identifier': 'rover_utils', 'dependencies': OrderedDict()}
+[0.000955] (rover_utils) JobStarted: {'identifier': 'rover_utils'}
+[0.025452] (rover_utils) JobProgress: {'identifier': 'rover_utils', 'progress': 'cmake'}
+[0.027129] (rover_utils) JobProgress: {'identifier': 'rover_utils', 'progress': 'build'}
+[0.029483] (rover_utils) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils', '--', '-j2', '-l2'], 'cwd': '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ros-vm'), ('SSH_CLIENT', '10.0.0.220 60143 22'), ('XDG_SESSION_TYPE', 'tty'), ('GIT_ASKPASS', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib:/home/ros-vm/ros2_foxy/ros2-linux/opt/yaml_cpp_vendor/lib:/home/ros-vm/ros2_foxy/ros2-linux/opt/rviz_ogre_vendor/lib:/home/ros-vm/ros2_foxy/ros2-linux/lib'), ('BROWSER', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/ros-vm'), ('OLDPWD', '/home/ros-vm/github'), ('TERM_PROGRAM_VERSION', '1.70.2'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-42e401a3-3273-4cdf-8b1e-9dd1a315b7a4.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/node'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('COLCON_PREFIX_PATH', '/home/ros-vm/github/auton_sys-23/utils/install:/home/ros-vm/ros2_foxy/ros2-linux'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'ros-vm'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/home/ros-vm/ros2_foxy/ros2-linux/lib/x86_64-linux-gnu/pkgconfig:/home/ros-vm/ros2_foxy/ros2-linux/lib/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '3'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/ros-vm/ros2_foxy/ros2-linux/bin:/home/ros-vm/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_CA.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-a8911bcff6.sock'), ('TERM_PROGRAM', 'vscode'), ('AMENT_PREFIX_PATH', '/home/ros-vm/github/auton_sys-23/utils/install/rover_utils:/home/ros-vm/ros2_foxy/ros2-linux'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils'), ('SSH_CONNECTION', '10.0.0.220 60143 10.0.0.52 22'), ('PYTHONPATH', '/home/ros-vm/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages:/home/ros-vm/ros2_foxy/ros2-linux/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/ros-vm/github/auton_sys-23/utils/install/rover_utils:/home/ros-vm/ros2_foxy/ros2-linux')]), 'shell': False}
+[0.082423] (rover_utils) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.9 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake/cmake)\n'}
+[0.099625] (-) TimerEvent: {}
+[0.116984] (rover_utils) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[0.117661] (rover_utils) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.199644] (-) TimerEvent: {}
+[0.300623] (-) TimerEvent: {}
+[0.335583] (rover_utils) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.6 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_lint_auto/cmake)\n'}
+[0.400734] (-) TimerEvent: {}
+[0.406989] (rover_utils) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.0.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_default_generators/cmake)\n'}
+[0.410136] (rover_utils) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.414701] (rover_utils) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.2.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/rosidl_adapter/cmake)\n'}
+[0.434663] (rover_utils) StdoutLine: {'line': b'-- Could not find RTI Connext - skipping rosidl_typesupport_connext_c\n'}
+[0.459078] (rover_utils) StdoutLine: {'line': b'-- Could not find RTI Connext - skipping rosidl_typesupport_connext_cpp\n'}
+[0.500898] (-) TimerEvent: {}
+[0.581251] (rover_utils) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.601047] (-) TimerEvent: {}
+[0.607525] (rover_utils) StdoutLine: {'line': b'-- Found geometry_msgs: 2.0.5 (/home/ros-vm/ros2_foxy/ros2-linux/share/geometry_msgs/cmake)\n'}
+[0.701167] (-) TimerEvent: {}
+[0.740289] (rover_utils) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") \n'}
+[0.802452] (-) TimerEvent: {}
+[0.903520] (-) TimerEvent: {}
+[0.975657] (rover_utils) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.9.2 (/home/ros-vm/ros2_foxy/ros2-linux/share/ament_cmake_ros/cmake)\n'}
+[1.003606] (-) TimerEvent: {}
+[1.104339] (-) TimerEvent: {}
+[1.204757] (-) TimerEvent: {}
+[1.293903] (rover_utils) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_connext_c;rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[1.304892] (-) TimerEvent: {}
+[1.405359] (-) TimerEvent: {}
+[1.450463] (rover_utils) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_connext_cpp;rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[1.488306] (rover_utils) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3.5") \n'}
+[1.488774] (rover_utils) StdoutLine: {'line': b'-- Found python_cmake_module: 0.8.1 (/home/ros-vm/ros2_foxy/ros2-linux/share/python_cmake_module/cmake)\n'}
+[1.505520] (-) TimerEvent: {}
+[1.522351] (rover_utils) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[1.523073] (rover_utils) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.8\n'}
+[1.523311] (rover_utils) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.8.so\n'}
+[1.605654] (-) TimerEvent: {}
+[1.627885] (rover_utils) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[1.631101] (rover_utils) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[1.635039] (rover_utils) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[1.649121] (rover_utils) StdoutLine: {'line': b'-- Configuring done\n'}
+[1.705772] (-) TimerEvent: {}
+[1.758691] (rover_utils) StdoutLine: {'line': b'-- Generating done\n'}
+[1.765787] (rover_utils) StdoutLine: {'line': b'-- Build files have been written to: /home/ros-vm/github/auton_sys-23/utils/build/rover_utils\n'}
+[1.821654] (rover_utils) StdoutLine: {'line': b'[  2%] \x1b[34m\x1b[1mGenerating C code for ROS interfaces\x1b[0m\n'}
+[1.821882] (-) TimerEvent: {}
+[1.830194] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__cpp\x1b[0m\n'}
+[1.884919] (rover_utils) StdoutLine: {'line': b'[  5%] \x1b[34m\x1b[1mGenerating C++ code for ROS interfaces\x1b[0m\n'}
+[1.922544] (-) TimerEvent: {}
+[2.023508] (-) TimerEvent: {}
+[2.130508] (-) TimerEvent: {}
+[2.294025] (-) TimerEvent: {}
+[2.394614] (-) TimerEvent: {}
+[2.495566] (-) TimerEvent: {}
+[2.597411] (-) TimerEvent: {}
+[2.699594] (-) TimerEvent: {}
+[2.802714] (-) TimerEvent: {}
+[2.903019] (-) TimerEvent: {}
+[2.905265] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_generator_c\x1b[0m\n'}
+[2.955720] (rover_utils) StdoutLine: {'line': b'[  7%] \x1b[32mBuilding C object CMakeFiles/rover_utils__rosidl_generator_c.dir/rosidl_generator_c/rover_utils/action/detail/minimal_walk__functions.c.o\x1b[0m\n'}
+[3.003127] (-) TimerEvent: {}
+[3.007630] (rover_utils) StdoutLine: {'line': b'[  7%] Built target rover_utils__cpp\n'}
+[3.045535] (rover_utils) StdoutLine: {'line': b'[ 10%] \x1b[32mBuilding C object CMakeFiles/rover_utils__rosidl_generator_c.dir/rosidl_generator_c/rover_utils/msg/detail/test_msg__functions.c.o\x1b[0m\n'}
+[3.066432] (rover_utils) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c/rover_utils/msg/detail/test_msg__functions.h:19\x1b[m\x1b[K,\n'}
+[3.066701] (rover_utils) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c/rover_utils/msg/detail/test_msg__functions.c:4\x1b[m\x1b[K:\n'}
+[3.067334] (rover_utils) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c/rover_utils/msg/detail/test_msg__struct.h:22:10:\x1b[m\x1b[K \x1b[01;31m\x1b[Kfatal error: \x1b[m\x1b[Kgeometry_msg/msg/detail/point__struct.h: No such file or directory\n'}
+[3.067519] (rover_utils) StderrLine: {'line': b'   22 | #include \x1b[01;31m\x1b[K"geometry_msg/msg/detail/point__struct.h"\x1b[m\x1b[K\n'}
+[3.067601] (rover_utils) StderrLine: {'line': b'      |          \x1b[01;31m\x1b[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[3.071593] (rover_utils) StderrLine: {'line': b'compilation terminated.\n'}
+[3.071950] (rover_utils) StderrLine: {'line': b'make[2]: *** [CMakeFiles/rover_utils__rosidl_generator_c.dir/build.make:187: CMakeFiles/rover_utils__rosidl_generator_c.dir/rosidl_generator_c/rover_utils/msg/detail/test_msg__functions.c.o] Error 1\n'}
+[3.072107] (rover_utils) StderrLine: {'line': b'make[2]: *** Waiting for unfinished jobs....\n'}
+[3.103237] (-) TimerEvent: {}
+[3.105601] (rover_utils) StdoutLine: {'line': b'[ 12%] \x1b[34m\x1b[1mGenerating C++ type support dispatch for ROS interfaces\x1b[0m\n'}
+[3.112617] (rover_utils) StderrLine: {'line': b'make[1]: *** [CMakeFiles/Makefile2:267: CMakeFiles/rover_utils__rosidl_generator_c.dir/all] Error 2\n'}
+[3.113216] (rover_utils) StderrLine: {'line': b'make[1]: *** Waiting for unfinished jobs....\n'}
+[3.203338] (-) TimerEvent: {}
+[3.303666] (-) TimerEvent: {}
+[3.403951] (-) TimerEvent: {}
+[3.502714] (rover_utils) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rover_utils__rosidl_typesupport_cpp\x1b[0m\n'}
+[3.504021] (-) TimerEvent: {}
+[3.545838] (rover_utils) StdoutLine: {'line': b'[ 15%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/rover_utils/msg/test_msg__type_support.cpp.o\x1b[0m\n'}
+[3.546830] (rover_utils) StdoutLine: {'line': b'[ 17%] \x1b[32mBuilding CXX object CMakeFiles/rover_utils__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/rover_utils/action/minimal_walk__type_support.cpp.o\x1b[0m\n'}
+[3.618132] (-) TimerEvent: {}
+[3.718581] (-) TimerEvent: {}
+[3.733222] (rover_utils) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_typesupport_cpp/rover_utils/msg/test_msg__type_support.cpp:7\x1b[m\x1b[K:\n'}
+[3.733527] (rover_utils) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_cpp/rover_utils/msg/detail/test_msg__struct.hpp:19:10:\x1b[m\x1b[K \x1b[01;31m\x1b[Kfatal error: \x1b[m\x1b[Kgeometry_msg/msg/detail/point__struct.hpp: No such file or directory\n'}
+[3.733709] (rover_utils) StderrLine: {'line': b'   19 | #include \x1b[01;31m\x1b[K"geometry_msg/msg/detail/point__struct.hpp"\x1b[m\x1b[K\n'}
+[3.733852] (rover_utils) StderrLine: {'line': b'      |          \x1b[01;31m\x1b[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[3.733999] (rover_utils) StderrLine: {'line': b'compilation terminated.\n'}
+[3.740004] (rover_utils) StderrLine: {'line': b'make[2]: *** [CMakeFiles/rover_utils__rosidl_typesupport_cpp.dir/build.make:156: CMakeFiles/rover_utils__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/rover_utils/msg/test_msg__type_support.cpp.o] Error 1\n'}
+[3.740201] (rover_utils) StderrLine: {'line': b'make[2]: *** Waiting for unfinished jobs....\n'}
+[3.818713] (-) TimerEvent: {}
+[3.919036] (-) TimerEvent: {}
+[4.019330] (-) TimerEvent: {}
+[4.061410] (rover_utils) StderrLine: {'line': b'make[1]: *** [CMakeFiles/Makefile2:496: CMakeFiles/rover_utils__rosidl_typesupport_cpp.dir/all] Error 2\n'}
+[4.061617] (rover_utils) StderrLine: {'line': b'make: *** [Makefile:141: all] Error 2\n'}
+[4.064863] (rover_utils) CommandEnded: {'returncode': 2}
+[4.123578] (-) TimerEvent: {}
+[4.223944] (-) TimerEvent: {}
+[4.308603] (rover_utils) JobEnded: {'identifier': 'rover_utils', 'rc': 2}
+[4.313740] (-) EventReactorShutdown: {}
