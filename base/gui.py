@@ -69,15 +69,17 @@ class gui(Thread):
 
     def show_map(self):
         
-        self.map_label_frame = LabelFrame(self.window)
-        self.map_label_frame.grid(
+        self.map_frame = LabelFrame(
+            self.window,
+            text="map")
+        self.map_frame.grid(
                 row=0, 
                 column=0,
                 rowspan=5,
                 columnspan=5)
 
         self.map_widget = tkintermapview.TkinterMapView(
-            self.map_label_frame, 
+            self.map_frame, 
             width=400, 
             height=400, 
             corner_radius=0)
@@ -85,11 +87,6 @@ class gui(Thread):
         self.map_widget.grid(
             row=0,
             column=0)
-
-        # self.map_widget.place(
-        #     relx=0.5, 
-        #     rely=0.5, 
-        #     anchor=CENTER)
 
         # set current widget position and zoom
         self.map_widget.set_position(
@@ -111,6 +108,9 @@ class gui(Thread):
 
     def a_button_2(self):
         self.base_node.send_minimal_walk_goal(10.0,12.5)
+    
+    def a_button_3(self):
+         self.base_node.send_minimal_walk_goal(10.0,12.5)
 
         
     def show_buttons(self):
@@ -158,21 +158,26 @@ class gui(Thread):
     
     def show_scroll(self):
         
-        self.scroll_label_frame = LabelFrame(self.window)
+        self.scroll_frame = LabelFrame(
+            self.window, 
+            text="scrolls")
         
-        self.scroll_label_frame.grid(
+        self.scroll_frame.grid(
                 row=0, 
                 column=5,
                 rowspan=2,
                 columnspan=3)
         
-        self.scroll = scrolledtext.ScrolledText(
-            self.scroll_label_frame, 
+        self.event_scroll = scrolledtext.ScrolledText(
+            self.scroll_frame, 
             height=8, 
             width=32, 
             font=('Arial 14'), 
             borderwidth=0,)
-        self.scroll.pack(pady=5)
+        
+        self.event_scroll.pack(
+            padx=5, 
+            pady=5)
         # self.scroll.grid(
         #         row=0, 
         #         column=8, 
@@ -180,13 +185,15 @@ class gui(Thread):
         #         rowspan=2, 
         #         pady=(10, 0))
         
-        self.action_scroll = scrolledtext.ScrolledText(
-            self.scroll_label_frame, 
+        self.feedback_scroll = scrolledtext.ScrolledText(
+            self.scroll_frame, 
             height=8, 
             width=32, 
             font=('Arial 14'), 
             borderwidth=0,)
-        self.action_scroll.pack(pady=5)
+        self.feedback_scroll.pack(
+            padx=5, 
+            pady=5)
         
         # self.action_scroll.grid(
         #         row=3, 
