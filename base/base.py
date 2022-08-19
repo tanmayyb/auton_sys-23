@@ -1,5 +1,7 @@
 from rclpy.node import Node
 from rclpy.action import ActionClient
+from rclpy.action import ClientGoal
+
 
 
 from geometry_msgs.msg import Point
@@ -44,6 +46,8 @@ class baseNode(Node):
             self, 
             MinimalWalk, 
             'mini_walk_act')
+
+        self.goal_handle = ClientGoalHandle
     
     def send_minimal_walk_goal(self,tlat,tlon):
         coords  = Point()
