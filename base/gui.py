@@ -206,15 +206,15 @@ class gui(Thread):
         print(f"{caller}", result)
 
     def display_action_feedback(self, caller, msg):
-        self.action_scroll.insert(
+        self.feedback_scroll.insert(
             END,
             f"[ {str(caller)} ]: {str(msg)}"+'\n')
-        self.action_scroll.see('end')
+        self.feedback_scroll.see('end')
 
     def insert_in_scroll(self, data):
         data = str(data)
-        self.scroll.insert(END,"rec:   "+data+'\n')
-        self.scroll.see('end')
+        self.event_scroll.insert(END,"rec:   "+data+'\n')
+        self.event_scroll.see('end')
 
     def draw_gui(self):
         self.show_map()
