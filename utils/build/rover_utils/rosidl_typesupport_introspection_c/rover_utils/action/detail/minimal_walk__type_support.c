@@ -12,6 +12,12 @@
 #include "rover_utils/action/detail/minimal_walk__struct.h"
 
 
+// Include directives for member types
+// Member `coords`
+#include "geometry_msgs/msg/point.h"
+// Member `coords`
+#include "geometry_msgs/msg/detail/point__rosidl_typesupport_introspection_c.h"
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -31,16 +37,46 @@ void MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_fini
   rover_utils__action__MinimalWalk_Goal__fini(message_memory);
 }
 
-static rosidl_typesupport_introspection_c__MessageMember MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_message_member_array[1] = {
+static rosidl_typesupport_introspection_c__MessageMember MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_message_member_array[3] = {
   {
-    "goal_var",  // name
-    rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
+    "coords",  // name
+    rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE,  // type
+    0,  // upper bound of string
+    NULL,  // members of sub message (initialized later)
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(rover_utils__action__MinimalWalk_Goal, coords),  // bytes offset in struct
+    NULL,  // default value
+    NULL,  // size() function pointer
+    NULL,  // get_const(index) function pointer
+    NULL,  // get(index) function pointer
+    NULL  // resize(index) function pointer
+  },
+  {
+    "use_guidance",  // name
+    rosidl_typesupport_introspection_c__ROS_TYPE_BOOLEAN,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(rover_utils__action__MinimalWalk_Goal, goal_var),  // bytes offset in struct
+    offsetof(rover_utils__action__MinimalWalk_Goal, use_guidance),  // bytes offset in struct
+    NULL,  // default value
+    NULL,  // size() function pointer
+    NULL,  // get_const(index) function pointer
+    NULL,  // get(index) function pointer
+    NULL  // resize(index) function pointer
+  },
+  {
+    "signal_and_wait",  // name
+    rosidl_typesupport_introspection_c__ROS_TYPE_BOOLEAN,  // type
+    0,  // upper bound of string
+    NULL,  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(rover_utils__action__MinimalWalk_Goal, signal_and_wait),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -52,7 +88,7 @@ static rosidl_typesupport_introspection_c__MessageMember MinimalWalk_Goal__rosid
 static const rosidl_typesupport_introspection_c__MessageMembers MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_message_members = {
   "rover_utils__action",  // message namespace
   "MinimalWalk_Goal",  // message name
-  1,  // number of fields
+  3,  // number of fields
   sizeof(rover_utils__action__MinimalWalk_Goal),
   MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_message_member_array,  // message members
   MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_init_function,  // function to initialize message memory (memory has to be allocated)
@@ -70,6 +106,8 @@ static rosidl_message_type_support_t MinimalWalk_Goal__rosidl_typesupport_intros
 ROSIDL_TYPESUPPORT_INTROSPECTION_C_EXPORT_rover_utils
 const rosidl_message_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_Goal)() {
+  MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_message_member_array[0].members_ =
+    ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, geometry_msgs, msg, Point)();
   if (!MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_message_type_support_handle.typesupport_identifier) {
     MinimalWalk_Goal__rosidl_typesupport_introspection_c__MinimalWalk_Goal_message_type_support_handle.typesupport_identifier =
       rosidl_typesupport_introspection_c__identifier;
@@ -120,7 +158,7 @@ void MinimalWalk_Result__rosidl_typesupport_introspection_c__MinimalWalk_Result_
 static rosidl_typesupport_introspection_c__MessageMember MinimalWalk_Result__rosidl_typesupport_introspection_c__MinimalWalk_Result_message_member_array[1] = {
   {
     "result",  // name
-    rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
+    rosidl_typesupport_introspection_c__ROS_TYPE_BOOLEAN,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
     false,  // is array
@@ -203,16 +241,31 @@ void MinimalWalk_Feedback__rosidl_typesupport_introspection_c__MinimalWalk_Feedb
   rover_utils__action__MinimalWalk_Feedback__fini(message_memory);
 }
 
-static rosidl_typesupport_introspection_c__MessageMember MinimalWalk_Feedback__rosidl_typesupport_introspection_c__MinimalWalk_Feedback_message_member_array[1] = {
+static rosidl_typesupport_introspection_c__MessageMember MinimalWalk_Feedback__rosidl_typesupport_introspection_c__MinimalWalk_Feedback_message_member_array[2] = {
   {
-    "feedback",  // name
-    rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
+    "d2t",  // name
+    rosidl_typesupport_introspection_c__ROS_TYPE_DOUBLE,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(rover_utils__action__MinimalWalk_Feedback, feedback),  // bytes offset in struct
+    offsetof(rover_utils__action__MinimalWalk_Feedback, d2t),  // bytes offset in struct
+    NULL,  // default value
+    NULL,  // size() function pointer
+    NULL,  // get_const(index) function pointer
+    NULL,  // get(index) function pointer
+    NULL  // resize(index) function pointer
+  },
+  {
+    "he",  // name
+    rosidl_typesupport_introspection_c__ROS_TYPE_DOUBLE,  // type
+    0,  // upper bound of string
+    NULL,  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(rover_utils__action__MinimalWalk_Feedback, he),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -224,7 +277,7 @@ static rosidl_typesupport_introspection_c__MessageMember MinimalWalk_Feedback__r
 static const rosidl_typesupport_introspection_c__MessageMembers MinimalWalk_Feedback__rosidl_typesupport_introspection_c__MinimalWalk_Feedback_message_members = {
   "rover_utils__action",  // message namespace
   "MinimalWalk_Feedback",  // message name
-  1,  // number of fields
+  2,  // number of fields
   sizeof(rover_utils__action__MinimalWalk_Feedback),
   MinimalWalk_Feedback__rosidl_typesupport_introspection_c__MinimalWalk_Feedback_message_member_array,  // message members
   MinimalWalk_Feedback__rosidl_typesupport_introspection_c__MinimalWalk_Feedback_init_function,  // function to initialize message memory (memory has to be allocated)

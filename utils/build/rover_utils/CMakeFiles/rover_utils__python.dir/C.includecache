@@ -651,6 +651,8 @@ stddef.h
 -
 stdint.h
 -
+geometry_msgs/msg/detail/point__struct.h
+rosidl_generator_c/rover_utils/action/detail/geometry_msgs/msg/detail/point__struct.h
 unique_identifier_msgs/msg/detail/uuid__struct.h
 rosidl_generator_c/rover_utils/action/detail/unique_identifier_msgs/msg/detail/uuid__struct.h
 rover_utils/action/detail/minimal_walk__struct.h

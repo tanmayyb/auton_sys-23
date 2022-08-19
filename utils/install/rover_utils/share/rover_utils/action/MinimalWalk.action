@@ -1,5 +1,8 @@
-int32 goal_var
+geometry_msgs/Point coords
+bool use_guidance
+bool signal_and_wait
 ---
-int32 result
+bool result
 ---
-int32 feedback
+float64 d2t
+float64 he

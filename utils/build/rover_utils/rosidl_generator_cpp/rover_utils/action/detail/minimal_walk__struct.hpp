@@ -14,6 +14,10 @@
 #include <vector>
 
 
+// Include directives for member types
+// Member 'coords'
+#include "geometry_msgs/msg/detail/point__struct.hpp"
+
 #ifndef _WIN32
 # define DEPRECATED__rover_utils__action__MinimalWalk_Goal __attribute__((deprecated))
 #else
@@ -33,34 +37,55 @@ struct MinimalWalk_Goal_
   using Type = MinimalWalk_Goal_<ContainerAllocator>;
 
   explicit MinimalWalk_Goal_(rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
+  : coords(_init)
   {
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->goal_var = 0l;
+      this->use_guidance = false;
+      this->signal_and_wait = false;
     }
   }
 
   explicit MinimalWalk_Goal_(const ContainerAllocator & _alloc, rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
+  : coords(_alloc, _init)
   {
-    (void)_alloc;
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->goal_var = 0l;
+      this->use_guidance = false;
+      this->signal_and_wait = false;
     }
   }
 
   // field types and members
-  using _goal_var_type =
-    int32_t;
-  _goal_var_type goal_var;
+  using _coords_type =
+    geometry_msgs::msg::Point_<ContainerAllocator>;
+  _coords_type coords;
+  using _use_guidance_type =
+    bool;
+  _use_guidance_type use_guidance;
+  using _signal_and_wait_type =
+    bool;
+  _signal_and_wait_type signal_and_wait;
 
   // setters for named parameter idiom
-  Type & set__goal_var(
-    const int32_t & _arg)
+  Type & set__coords(
+    const geometry_msgs::msg::Point_<ContainerAllocator> & _arg)
   {
-    this->goal_var = _arg;
+    this->coords = _arg;
+    return *this;
+  }
+  Type & set__use_guidance(
+    const bool & _arg)
+  {
+    this->use_guidance = _arg;
+    return *this;
+  }
+  Type & set__signal_and_wait(
+    const bool & _arg)
+  {
+    this->signal_and_wait = _arg;
     return *this;
   }
 
@@ -106,7 +131,13 @@ struct MinimalWalk_Goal_
   // comparison operators
   bool operator==(const MinimalWalk_Goal_ & other) const
   {
-    if (this->goal_var != other.goal_var) {
+    if (this->coords != other.coords) {
+      return false;
+    }
+    if (this->use_guidance != other.use_guidance) {
+      return false;
+    }
+    if (this->signal_and_wait != other.signal_and_wait) {
       return false;
     }
     return true;
@@ -151,7 +182,7 @@ struct MinimalWalk_Result_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->result = 0l;
+      this->result = false;
     }
   }
 
@@ -161,18 +192,18 @@ struct MinimalWalk_Result_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->result = 0l;
+      this->result = false;
     }
   }
 
   // field types and members
   using _result_type =
-    int32_t;
+    bool;
   _result_type result;
 
   // setters for named parameter idiom
   Type & set__result(
-    const int32_t & _arg)
+    const bool & _arg)
   {
     this->result = _arg;
     return *this;
@@ -265,7 +296,8 @@ struct MinimalWalk_Feedback_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->feedback = 0l;
+      this->d2t = 0.0;
+      this->he = 0.0;
     }
   }
 
@@ -275,20 +307,30 @@ struct MinimalWalk_Feedback_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->feedback = 0l;
+      this->d2t = 0.0;
+      this->he = 0.0;
     }
   }
 
   // field types and members
-  using _feedback_type =
-    int32_t;
-  _feedback_type feedback;
+  using _d2t_type =
+    double;
+  _d2t_type d2t;
+  using _he_type =
+    double;
+  _he_type he;
 
   // setters for named parameter idiom
-  Type & set__feedback(
-    const int32_t & _arg)
+  Type & set__d2t(
+    const double & _arg)
   {
-    this->feedback = _arg;
+    this->d2t = _arg;
+    return *this;
+  }
+  Type & set__he(
+    const double & _arg)
+  {
+    this->he = _arg;
     return *this;
   }
 
@@ -334,7 +376,10 @@ struct MinimalWalk_Feedback_
   // comparison operators
   bool operator==(const MinimalWalk_Feedback_ & other) const
   {
-    if (this->feedback != other.feedback) {
+    if (this->d2t != other.d2t) {
+      return false;
+    }
+    if (this->he != other.he) {
       return false;
     }
     return true;

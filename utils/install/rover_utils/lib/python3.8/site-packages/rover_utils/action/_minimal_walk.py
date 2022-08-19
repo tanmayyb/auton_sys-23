@@ -40,6 +40,10 @@ class Metaclass_MinimalWalk_Goal(type):
             cls._TYPE_SUPPORT = module.type_support_msg__action__minimal_walk__goal
             cls._DESTROY_ROS_MESSAGE = module.destroy_ros_message_msg__action__minimal_walk__goal
 
+            from geometry_msgs.msg import Point
+            if Point.__class__._TYPE_SUPPORT is None:
+                Point.__class__.__import_type_support__()
+
     @classmethod
     def __prepare__(cls, name, bases, **kwargs):
         # list constant names here so that they appear in the help text of
@@ -53,22 +57,31 @@ class MinimalWalk_Goal(metaclass=Metaclass_MinimalWalk_Goal):
     """Message class 'MinimalWalk_Goal'."""
 
     __slots__ = [
-        '_goal_var',
+        '_coords',
+        '_use_guidance',
+        '_signal_and_wait',
     ]
 
     _fields_and_field_types = {
-        'goal_var': 'int32',
+        'coords': 'geometry_msgs/Point',
+        'use_guidance': 'boolean',
+        'signal_and_wait': 'boolean',
     }
 
     SLOT_TYPES = (
-        rosidl_parser.definition.BasicType('int32'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['geometry_msgs', 'msg'], 'Point'),  # noqa: E501
+        rosidl_parser.definition.BasicType('boolean'),  # noqa: E501
+        rosidl_parser.definition.BasicType('boolean'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
         assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
             'Invalid arguments passed to constructor: %s' % \
             ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
-        self.goal_var = kwargs.get('goal_var', int())
+        from geometry_msgs.msg import Point
+        self.coords = kwargs.get('coords', Point())
+        self.use_guidance = kwargs.get('use_guidance', bool())
+        self.signal_and_wait = kwargs.get('signal_and_wait', bool())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -99,7 +112,11 @@ class MinimalWalk_Goal(metaclass=Metaclass_MinimalWalk_Goal):
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
             return False
-        if self.goal_var != other.goal_var:
+        if self.coords != other.coords:
+            return False
+        if self.use_guidance != other.use_guidance:
+            return False
+        if self.signal_and_wait != other.signal_and_wait:
             return False
         return True
 
@@ -109,19 +126,44 @@ class MinimalWalk_Goal(metaclass=Metaclass_MinimalWalk_Goal):
         return copy(cls._fields_and_field_types)
 
     @property
-    def goal_var(self):
-        """Message field 'goal_var'."""
-        return self._goal_var
+    def coords(self):
+        """Message field 'coords'."""
+        return self._coords
 
-    @goal_var.setter
-    def goal_var(self, value):
+    @coords.setter
+    def coords(self, value):
+        if __debug__:
+            from geometry_msgs.msg import Point
+            assert \
+                isinstance(value, Point), \
+                "The 'coords' field must be a sub message of type 'Point'"
+        self._coords = value
+
+    @property
+    def use_guidance(self):
+        """Message field 'use_guidance'."""
+        return self._use_guidance
+
+    @use_guidance.setter
+    def use_guidance(self, value):
         if __debug__:
             assert \
-                isinstance(value, int), \
-                "The 'goal_var' field must be of type 'int'"
-            assert value >= -2147483648 and value < 2147483648, \
-                "The 'goal_var' field must be an integer in [-2147483648, 2147483647]"
-        self._goal_var = value
+                isinstance(value, bool), \
+                "The 'use_guidance' field must be of type 'bool'"
+        self._use_guidance = value
+
+    @property
+    def signal_and_wait(self):
+        """Message field 'signal_and_wait'."""
+        return self._signal_and_wait
+
+    @signal_and_wait.setter
+    def signal_and_wait(self, value):
+        if __debug__:
+            assert \
+                isinstance(value, bool), \
+                "The 'signal_and_wait' field must be of type 'bool'"
+        self._signal_and_wait = value
 
 
 # Import statements for member types
@@ -179,18 +221,18 @@ class MinimalWalk_Result(metaclass=Metaclass_MinimalWalk_Result):
     ]
 
     _fields_and_field_types = {
-        'result': 'int32',
+        'result': 'boolean',
     }
 
     SLOT_TYPES = (
-        rosidl_parser.definition.BasicType('int32'),  # noqa: E501
+        rosidl_parser.definition.BasicType('boolean'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
         assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
             'Invalid arguments passed to constructor: %s' % \
             ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
-        self.result = kwargs.get('result', int())
+        self.result = kwargs.get('result', bool())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -239,10 +281,8 @@ class MinimalWalk_Result(metaclass=Metaclass_MinimalWalk_Result):
     def result(self, value):
         if __debug__:
             assert \
-                isinstance(value, int), \
-                "The 'result' field must be of type 'int'"
-            assert value >= -2147483648 and value < 2147483648, \
-                "The 'result' field must be an integer in [-2147483648, 2147483647]"
+                isinstance(value, bool), \
+                "The 'result' field must be of type 'bool'"
         self._result = value
 
 
@@ -297,22 +337,26 @@ class MinimalWalk_Feedback(metaclass=Metaclass_MinimalWalk_Feedback):
     """Message class 'MinimalWalk_Feedback'."""
 
     __slots__ = [
-        '_feedback',
+        '_d2t',
+        '_he',
     ]
 
     _fields_and_field_types = {
-        'feedback': 'int32',
+        'd2t': 'double',
+        'he': 'double',
     }
 
     SLOT_TYPES = (
-        rosidl_parser.definition.BasicType('int32'),  # noqa: E501
+        rosidl_parser.definition.BasicType('double'),  # noqa: E501
+        rosidl_parser.definition.BasicType('double'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
         assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
             'Invalid arguments passed to constructor: %s' % \
             ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
-        self.feedback = kwargs.get('feedback', int())
+        self.d2t = kwargs.get('d2t', float())
+        self.he = kwargs.get('he', float())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -343,7 +387,9 @@ class MinimalWalk_Feedback(metaclass=Metaclass_MinimalWalk_Feedback):
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
             return False
-        if self.feedback != other.feedback:
+        if self.d2t != other.d2t:
+            return False
+        if self.he != other.he:
             return False
         return True
 
@@ -353,19 +399,30 @@ class MinimalWalk_Feedback(metaclass=Metaclass_MinimalWalk_Feedback):
         return copy(cls._fields_and_field_types)
 
     @property
-    def feedback(self):
-        """Message field 'feedback'."""
-        return self._feedback
+    def d2t(self):
+        """Message field 'd2t'."""
+        return self._d2t
 
-    @feedback.setter
-    def feedback(self, value):
+    @d2t.setter
+    def d2t(self, value):
         if __debug__:
             assert \
-                isinstance(value, int), \
-                "The 'feedback' field must be of type 'int'"
-            assert value >= -2147483648 and value < 2147483648, \
-                "The 'feedback' field must be an integer in [-2147483648, 2147483647]"
-        self._feedback = value
+                isinstance(value, float), \
+                "The 'd2t' field must be of type 'float'"
+        self._d2t = value
+
+    @property
+    def he(self):
+        """Message field 'he'."""
+        return self._he
+
+    @he.setter
+    def he(self, value):
+        if __debug__:
+            assert \
+                isinstance(value, float), \
+                "The 'he' field must be of type 'float'"
+        self._he = value
 
 
 # Import statements for member types

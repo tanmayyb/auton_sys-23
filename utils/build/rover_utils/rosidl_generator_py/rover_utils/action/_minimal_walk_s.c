@@ -16,6 +16,10 @@
 #include "rover_utils/action/detail/minimal_walk__struct.h"
 #include "rover_utils/action/detail/minimal_walk__functions.h"
 
+ROSIDL_GENERATOR_C_IMPORT
+bool geometry_msgs__msg__point__convert_from_py(PyObject * _pymsg, void * _ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * geometry_msgs__msg__point__convert_to_py(void * raw_ros_message);
 
 ROSIDL_GENERATOR_C_EXPORT
 bool rover_utils__action__minimal_walk__goal__convert_from_py(PyObject * _pymsg, void * _ros_message)
@@ -50,13 +54,33 @@ bool rover_utils__action__minimal_walk__goal__convert_from_py(PyObject * _pymsg,
     assert(strncmp("rover_utils.action._minimal_walk.MinimalWalk_Goal", full_classname_dest, 49) == 0);
   }
   rover_utils__action__MinimalWalk_Goal * ros_message = _ros_message;
-  {  // goal_var
-    PyObject * field = PyObject_GetAttrString(_pymsg, "goal_var");
+  {  // coords
+    PyObject * field = PyObject_GetAttrString(_pymsg, "coords");
     if (!field) {
       return false;
     }
-    assert(PyLong_Check(field));
-    ros_message->goal_var = (int32_t)PyLong_AsLong(field);
+    if (!geometry_msgs__msg__point__convert_from_py(field, &ros_message->coords)) {
+      Py_DECREF(field);
+      return false;
+    }
+    Py_DECREF(field);
+  }
+  {  // use_guidance
+    PyObject * field = PyObject_GetAttrString(_pymsg, "use_guidance");
+    if (!field) {
+      return false;
+    }
+    assert(PyBool_Check(field));
+    ros_message->use_guidance = (Py_True == field);
+    Py_DECREF(field);
+  }
+  {  // signal_and_wait
+    PyObject * field = PyObject_GetAttrString(_pymsg, "signal_and_wait");
+    if (!field) {
+      return false;
+    }
+    assert(PyBool_Check(field));
+    ros_message->signal_and_wait = (Py_True == field);
     Py_DECREF(field);
   }
 
@@ -81,11 +105,36 @@ PyObject * rover_utils__action__minimal_walk__goal__convert_to_py(void * raw_ros
     }
   }
   rover_utils__action__MinimalWalk_Goal * ros_message = (rover_utils__action__MinimalWalk_Goal *)raw_ros_message;
-  {  // goal_var
+  {  // coords
     PyObject * field = NULL;
-    field = PyLong_FromLong(ros_message->goal_var);
+    field = geometry_msgs__msg__point__convert_to_py(&ros_message->coords);
+    if (!field) {
+      return NULL;
+    }
     {
-      int rc = PyObject_SetAttrString(_pymessage, "goal_var", field);
+      int rc = PyObject_SetAttrString(_pymessage, "coords", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // use_guidance
+    PyObject * field = NULL;
+    field = PyBool_FromLong(ros_message->use_guidance ? 1 : 0);
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "use_guidance", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // signal_and_wait
+    PyObject * field = NULL;
+    field = PyBool_FromLong(ros_message->signal_and_wait ? 1 : 0);
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "signal_and_wait", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;
@@ -150,8 +199,8 @@ bool rover_utils__action__minimal_walk__result__convert_from_py(PyObject * _pyms
     if (!field) {
       return false;
     }
-    assert(PyLong_Check(field));
-    ros_message->result = (int32_t)PyLong_AsLong(field);
+    assert(PyBool_Check(field));
+    ros_message->result = (Py_True == field);
     Py_DECREF(field);
   }
 
@@ -178,7 +227,7 @@ PyObject * rover_utils__action__minimal_walk__result__convert_to_py(void * raw_r
   rover_utils__action__MinimalWalk_Result * ros_message = (rover_utils__action__MinimalWalk_Result *)raw_ros_message;
   {  // result
     PyObject * field = NULL;
-    field = PyLong_FromLong(ros_message->result);
+    field = PyBool_FromLong(ros_message->result ? 1 : 0);
     {
       int rc = PyObject_SetAttrString(_pymessage, "result", field);
       Py_DECREF(field);
@@ -240,13 +289,22 @@ bool rover_utils__action__minimal_walk__feedback__convert_from_py(PyObject * _py
     assert(strncmp("rover_utils.action._minimal_walk.MinimalWalk_Feedback", full_classname_dest, 53) == 0);
   }
   rover_utils__action__MinimalWalk_Feedback * ros_message = _ros_message;
-  {  // feedback
-    PyObject * field = PyObject_GetAttrString(_pymsg, "feedback");
+  {  // d2t
+    PyObject * field = PyObject_GetAttrString(_pymsg, "d2t");
     if (!field) {
       return false;
     }
-    assert(PyLong_Check(field));
-    ros_message->feedback = (int32_t)PyLong_AsLong(field);
+    assert(PyFloat_Check(field));
+    ros_message->d2t = PyFloat_AS_DOUBLE(field);
+    Py_DECREF(field);
+  }
+  {  // he
+    PyObject * field = PyObject_GetAttrString(_pymsg, "he");
+    if (!field) {
+      return false;
+    }
+    assert(PyFloat_Check(field));
+    ros_message->he = PyFloat_AS_DOUBLE(field);
     Py_DECREF(field);
   }
 
@@ -271,11 +329,22 @@ PyObject * rover_utils__action__minimal_walk__feedback__convert_to_py(void * raw
     }
   }
   rover_utils__action__MinimalWalk_Feedback * ros_message = (rover_utils__action__MinimalWalk_Feedback *)raw_ros_message;
-  {  // feedback
+  {  // d2t
     PyObject * field = NULL;
-    field = PyLong_FromLong(ros_message->feedback);
+    field = PyFloat_FromDouble(ros_message->d2t);
     {
-      int rc = PyObject_SetAttrString(_pymessage, "feedback", field);
+      int rc = PyObject_SetAttrString(_pymessage, "d2t", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // he
+    PyObject * field = NULL;
+    field = PyFloat_FromDouble(ros_message->he);
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "he", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;

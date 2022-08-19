@@ -17,10 +17,16 @@ extern "C"
 
 // Constants defined in the message
 
+// Include directives for member types
+// Member 'coords'
+#include "geometry_msgs/msg/detail/point__struct.h"
+
 // Struct defined in action/MinimalWalk in the package rover_utils.
 typedef struct rover_utils__action__MinimalWalk_Goal
 {
-  int32_t goal_var;
+  geometry_msgs__msg__Point coords;
+  bool use_guidance;
+  bool signal_and_wait;
 } rover_utils__action__MinimalWalk_Goal;
 
 // Struct for a sequence of rover_utils__action__MinimalWalk_Goal.
@@ -39,7 +45,7 @@ typedef struct rover_utils__action__MinimalWalk_Goal__Sequence
 // Struct defined in action/MinimalWalk in the package rover_utils.
 typedef struct rover_utils__action__MinimalWalk_Result
 {
-  int32_t result;
+  bool result;
 } rover_utils__action__MinimalWalk_Result;
 
 // Struct for a sequence of rover_utils__action__MinimalWalk_Result.
@@ -58,7 +64,8 @@ typedef struct rover_utils__action__MinimalWalk_Result__Sequence
 // Struct defined in action/MinimalWalk in the package rover_utils.
 typedef struct rover_utils__action__MinimalWalk_Feedback
 {
-  int32_t feedback;
+  double d2t;
+  double he;
 } rover_utils__action__MinimalWalk_Feedback;
 
 // Struct for a sequence of rover_utils__action__MinimalWalk_Feedback.

@@ -2,17 +2,24 @@
 // with input from rover_utils/action/MinimalWalk.action
 // generated code does not contain a copyright notice
 
+#include "geometry_msgs/msg/Point.idl"
 
 module rover_utils {
   module action {
     struct MinimalWalk_Goal {
-      int32 goal_var;
+      geometry_msgs::msg::Point coords;
+
+      boolean use_guidance;
+
+      boolean signal_and_wait;
     };
     struct MinimalWalk_Result {
-      int32 result;
+      boolean result;
     };
     struct MinimalWalk_Feedback {
-      int32 feedback;
+      double d2t;
+
+      double he;
     };
   };
 };

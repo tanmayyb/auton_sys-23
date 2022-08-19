@@ -34,8 +34,22 @@ extern "C"
 {
 #endif
 
+#include "geometry_msgs/msg/detail/point__functions.h"  // coords
 
 // forward declare type support functions
+ROSIDL_TYPESUPPORT_FASTRTPS_C_IMPORT_rover_utils
+size_t get_serialized_size_geometry_msgs__msg__Point(
+  const void * untyped_ros_message,
+  size_t current_alignment);
+
+ROSIDL_TYPESUPPORT_FASTRTPS_C_IMPORT_rover_utils
+size_t max_serialized_size_geometry_msgs__msg__Point(
+  bool & full_bounded,
+  size_t current_alignment);
+
+ROSIDL_TYPESUPPORT_FASTRTPS_C_IMPORT_rover_utils
+const rosidl_message_type_support_t *
+  ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, geometry_msgs, msg, Point)();
 
 
 using _MinimalWalk_Goal__ros_msg_type = rover_utils__action__MinimalWalk_Goal;
@@ -49,9 +63,28 @@ static bool _MinimalWalk_Goal__cdr_serialize(
     return false;
   }
   const _MinimalWalk_Goal__ros_msg_type * ros_message = static_cast<const _MinimalWalk_Goal__ros_msg_type *>(untyped_ros_message);
-  // Field name: goal_var
+  // Field name: coords
   {
-    cdr << ros_message->goal_var;
+    const message_type_support_callbacks_t * callbacks =
+      static_cast<const message_type_support_callbacks_t *>(
+      ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(
+        rosidl_typesupport_fastrtps_c, geometry_msgs, msg, Point
+      )()->data);
+    if (!callbacks->cdr_serialize(
+        &ros_message->coords, cdr))
+    {
+      return false;
+    }
+  }
+
+  // Field name: use_guidance
+  {
+    cdr << (ros_message->use_guidance ? true : false);
+  }
+
+  // Field name: signal_and_wait
+  {
+    cdr << (ros_message->signal_and_wait ? true : false);
   }
 
   return true;
@@ -66,9 +99,32 @@ static bool _MinimalWalk_Goal__cdr_deserialize(
     return false;
   }
   _MinimalWalk_Goal__ros_msg_type * ros_message = static_cast<_MinimalWalk_Goal__ros_msg_type *>(untyped_ros_message);
-  // Field name: goal_var
+  // Field name: coords
   {
-    cdr >> ros_message->goal_var;
+    const message_type_support_callbacks_t * callbacks =
+      static_cast<const message_type_support_callbacks_t *>(
+      ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(
+        rosidl_typesupport_fastrtps_c, geometry_msgs, msg, Point
+      )()->data);
+    if (!callbacks->cdr_deserialize(
+        cdr, &ros_message->coords))
+    {
+      return false;
+    }
+  }
+
+  // Field name: use_guidance
+  {
+    uint8_t tmp;
+    cdr >> tmp;
+    ros_message->use_guidance = tmp ? true : false;
+  }
+
+  // Field name: signal_and_wait
+  {
+    uint8_t tmp;
+    cdr >> tmp;
+    ros_message->signal_and_wait = tmp ? true : false;
   }
 
   return true;
@@ -88,9 +144,19 @@ size_t get_serialized_size_rover_utils__action__MinimalWalk_Goal(
   (void)padding;
   (void)wchar_size;
 
-  // field.name goal_var
+  // field.name coords
+
+  current_alignment += get_serialized_size_geometry_msgs__msg__Point(
+    &(ros_message->coords), current_alignment);
+  // field.name use_guidance
   {
-    size_t item_size = sizeof(ros_message->goal_var);
+    size_t item_size = sizeof(ros_message->use_guidance);
+    current_alignment += item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
+  // field.name signal_and_wait
+  {
+    size_t item_size = sizeof(ros_message->signal_and_wait);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -118,12 +184,28 @@ size_t max_serialized_size_rover_utils__action__MinimalWalk_Goal(
   (void)wchar_size;
   (void)full_bounded;
 
-  // member: goal_var
+  // member: coords
   {
     size_t array_size = 1;
 
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
+
+    for (size_t index = 0; index < array_size; ++index) {
+      current_alignment +=
+        max_serialized_size_geometry_msgs__msg__Point(
+        full_bounded, current_alignment);
+    }
+  }
+  // member: use_guidance
+  {
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint8_t);
+  }
+  // member: signal_and_wait
+  {
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint8_t);
   }
 
   return current_alignment - initial_alignment;
@@ -217,7 +299,7 @@ static bool _MinimalWalk_Result__cdr_serialize(
   const _MinimalWalk_Result__ros_msg_type * ros_message = static_cast<const _MinimalWalk_Result__ros_msg_type *>(untyped_ros_message);
   // Field name: result
   {
-    cdr << ros_message->result;
+    cdr << (ros_message->result ? true : false);
   }
 
   return true;
@@ -234,7 +316,9 @@ static bool _MinimalWalk_Result__cdr_deserialize(
   _MinimalWalk_Result__ros_msg_type * ros_message = static_cast<_MinimalWalk_Result__ros_msg_type *>(untyped_ros_message);
   // Field name: result
   {
-    cdr >> ros_message->result;
+    uint8_t tmp;
+    cdr >> tmp;
+    ros_message->result = tmp ? true : false;
   }
 
   return true;
@@ -288,8 +372,7 @@ size_t max_serialized_size_rover_utils__action__MinimalWalk_Result(
   {
     size_t array_size = 1;
 
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
+    current_alignment += array_size * sizeof(uint8_t);
   }
 
   return current_alignment - initial_alignment;
@@ -381,9 +464,14 @@ static bool _MinimalWalk_Feedback__cdr_serialize(
     return false;
   }
   const _MinimalWalk_Feedback__ros_msg_type * ros_message = static_cast<const _MinimalWalk_Feedback__ros_msg_type *>(untyped_ros_message);
-  // Field name: feedback
+  // Field name: d2t
   {
-    cdr << ros_message->feedback;
+    cdr << ros_message->d2t;
+  }
+
+  // Field name: he
+  {
+    cdr << ros_message->he;
   }
 
   return true;
@@ -398,9 +486,14 @@ static bool _MinimalWalk_Feedback__cdr_deserialize(
     return false;
   }
   _MinimalWalk_Feedback__ros_msg_type * ros_message = static_cast<_MinimalWalk_Feedback__ros_msg_type *>(untyped_ros_message);
-  // Field name: feedback
+  // Field name: d2t
   {
-    cdr >> ros_message->feedback;
+    cdr >> ros_message->d2t;
+  }
+
+  // Field name: he
+  {
+    cdr >> ros_message->he;
   }
 
   return true;
@@ -420,9 +513,15 @@ size_t get_serialized_size_rover_utils__action__MinimalWalk_Feedback(
   (void)padding;
   (void)wchar_size;
 
-  // field.name feedback
+  // field.name d2t
   {
-    size_t item_size = sizeof(ros_message->feedback);
+    size_t item_size = sizeof(ros_message->d2t);
+    current_alignment += item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
+  // field.name he
+  {
+    size_t item_size = sizeof(ros_message->he);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -450,12 +549,19 @@ size_t max_serialized_size_rover_utils__action__MinimalWalk_Feedback(
   (void)wchar_size;
   (void)full_bounded;
 
-  // member: feedback
+  // member: d2t
   {
     size_t array_size = 1;
 
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
+    current_alignment += array_size * sizeof(uint64_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint64_t));
+  }
+  // member: he
+  {
+    size_t array_size = 1;
+
+    current_alignment += array_size * sizeof(uint64_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint64_t));
   }
 
   return current_alignment - initial_alignment;

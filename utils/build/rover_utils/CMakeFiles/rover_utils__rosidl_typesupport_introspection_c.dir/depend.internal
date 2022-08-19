@@ -10,6 +10,13 @@ CMakeFiles/rover_utils__rosidl_typesupport_introspection_c.dir/rosidl_typesuppor
  /home/ros-vm/ros2_foxy/ros2-linux/include/builtin_interfaces/msg/rosidl_generator_c__visibility_control.h
  /home/ros-vm/ros2_foxy/ros2-linux/include/builtin_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
  /home/ros-vm/ros2_foxy/ros2-linux/include/builtin_interfaces/msg/time.h
+ /home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/detail/point__functions.h
+ /home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/detail/point__rosidl_typesupport_introspection_c.h
+ /home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/detail/point__struct.h
+ /home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/detail/point__type_support.h
+ /home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/point.h
+ /home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/rosidl_generator_c__visibility_control.h
+ /home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h
  /home/ros-vm/ros2_foxy/ros2-linux/include/rosidl_runtime_c/action_type_support_struct.h
  /home/ros-vm/ros2_foxy/ros2-linux/include/rosidl_runtime_c/message_initialization.h
  /home/ros-vm/ros2_foxy/ros2-linux/include/rosidl_runtime_c/message_type_support_struct.h

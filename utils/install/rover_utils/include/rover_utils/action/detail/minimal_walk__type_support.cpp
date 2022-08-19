@@ -37,16 +37,46 @@ void MinimalWalk_Goal_fini_function(void * message_memory)
   typed_message->~MinimalWalk_Goal();
 }
 
-static const ::rosidl_typesupport_introspection_cpp::MessageMember MinimalWalk_Goal_message_member_array[1] = {
+static const ::rosidl_typesupport_introspection_cpp::MessageMember MinimalWalk_Goal_message_member_array[3] = {
   {
-    "goal_var",  // name
-    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT32,  // type
+    "coords",  // name
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE,  // type
+    0,  // upper bound of string
+    ::rosidl_typesupport_introspection_cpp::get_message_type_support_handle<geometry_msgs::msg::Point>(),  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(rover_utils::action::MinimalWalk_Goal, coords),  // bytes offset in struct
+    nullptr,  // default value
+    nullptr,  // size() function pointer
+    nullptr,  // get_const(index) function pointer
+    nullptr,  // get(index) function pointer
+    nullptr  // resize(index) function pointer
+  },
+  {
+    "use_guidance",  // name
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_BOOLEAN,  // type
     0,  // upper bound of string
     nullptr,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(rover_utils::action::MinimalWalk_Goal, goal_var),  // bytes offset in struct
+    offsetof(rover_utils::action::MinimalWalk_Goal, use_guidance),  // bytes offset in struct
+    nullptr,  // default value
+    nullptr,  // size() function pointer
+    nullptr,  // get_const(index) function pointer
+    nullptr,  // get(index) function pointer
+    nullptr  // resize(index) function pointer
+  },
+  {
+    "signal_and_wait",  // name
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_BOOLEAN,  // type
+    0,  // upper bound of string
+    nullptr,  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(rover_utils::action::MinimalWalk_Goal, signal_and_wait),  // bytes offset in struct
     nullptr,  // default value
     nullptr,  // size() function pointer
     nullptr,  // get_const(index) function pointer
@@ -58,7 +88,7 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMember MinimalWalk_G
 static const ::rosidl_typesupport_introspection_cpp::MessageMembers MinimalWalk_Goal_message_members = {
   "rover_utils::action",  // message namespace
   "MinimalWalk_Goal",  // message name
-  1,  // number of fields
+  3,  // number of fields
   sizeof(rover_utils::action::MinimalWalk_Goal),
   MinimalWalk_Goal_message_member_array,  // message members
   MinimalWalk_Goal_init_function,  // function to initialize message memory (memory has to be allocated)
@@ -157,7 +187,7 @@ void MinimalWalk_Result_fini_function(void * message_memory)
 static const ::rosidl_typesupport_introspection_cpp::MessageMember MinimalWalk_Result_message_member_array[1] = {
   {
     "result",  // name
-    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT32,  // type
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_BOOLEAN,  // type
     0,  // upper bound of string
     nullptr,  // members of sub message
     false,  // is array
@@ -271,16 +301,31 @@ void MinimalWalk_Feedback_fini_function(void * message_memory)
   typed_message->~MinimalWalk_Feedback();
 }
 
-static const ::rosidl_typesupport_introspection_cpp::MessageMember MinimalWalk_Feedback_message_member_array[1] = {
+static const ::rosidl_typesupport_introspection_cpp::MessageMember MinimalWalk_Feedback_message_member_array[2] = {
   {
-    "feedback",  // name
-    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT32,  // type
+    "d2t",  // name
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_DOUBLE,  // type
     0,  // upper bound of string
     nullptr,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(rover_utils::action::MinimalWalk_Feedback, feedback),  // bytes offset in struct
+    offsetof(rover_utils::action::MinimalWalk_Feedback, d2t),  // bytes offset in struct
+    nullptr,  // default value
+    nullptr,  // size() function pointer
+    nullptr,  // get_const(index) function pointer
+    nullptr,  // get(index) function pointer
+    nullptr  // resize(index) function pointer
+  },
+  {
+    "he",  // name
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_DOUBLE,  // type
+    0,  // upper bound of string
+    nullptr,  // members of sub message
+    false,  // is array
+    0,  // array size
+    false,  // is upper bound
+    offsetof(rover_utils::action::MinimalWalk_Feedback, he),  // bytes offset in struct
     nullptr,  // default value
     nullptr,  // size() function pointer
     nullptr,  // get_const(index) function pointer
@@ -292,7 +337,7 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMember MinimalWalk_F
 static const ::rosidl_typesupport_introspection_cpp::MessageMembers MinimalWalk_Feedback_message_members = {
   "rover_utils::action",  // message namespace
   "MinimalWalk_Feedback",  // message name
-  1,  // number of fields
+  2,  // number of fields
   sizeof(rover_utils::action::MinimalWalk_Feedback),
   MinimalWalk_Feedback_message_member_array,  // message members
   MinimalWalk_Feedback_init_function,  // function to initialize message memory (memory has to be allocated)

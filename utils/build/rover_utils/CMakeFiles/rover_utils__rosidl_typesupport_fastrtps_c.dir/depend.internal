@@ -13,6 +13,9 @@ CMakeFiles/rover_utils__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fas
  /home/ros-vm/ros2_foxy/ros2-linux/include/fastcdr/exceptions/Exception.h
  /home/ros-vm/ros2_foxy/ros2-linux/include/fastcdr/exceptions/NotEnoughMemoryException.h
  /home/ros-vm/ros2_foxy/ros2-linux/include/fastcdr/fastcdr_dll.h
+ /home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/detail/point__functions.h
+ /home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/detail/point__struct.h
+ /home/ros-vm/ros2_foxy/ros2-linux/include/geometry_msgs/msg/rosidl_generator_c__visibility_control.h
  /home/ros-vm/ros2_foxy/ros2-linux/include/rcutils/allocator.h
  /home/ros-vm/ros2_foxy/ros2-linux/include/rcutils/error_handling.h
  /home/ros-vm/ros2_foxy/ros2-linux/include/rcutils/logging.h

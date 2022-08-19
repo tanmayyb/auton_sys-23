@@ -9,13 +9,23 @@
 #include <string.h>
 
 
+// Include directives for member types
+// Member `coords`
+#include "geometry_msgs/msg/detail/point__functions.h"
+
 bool
 rover_utils__action__MinimalWalk_Goal__init(rover_utils__action__MinimalWalk_Goal * msg)
 {
   if (!msg) {
     return false;
   }
-  // goal_var
+  // coords
+  if (!geometry_msgs__msg__Point__init(&msg->coords)) {
+    rover_utils__action__MinimalWalk_Goal__fini(msg);
+    return false;
+  }
+  // use_guidance
+  // signal_and_wait
   return true;
 }
 
@@ -25,7 +35,10 @@ rover_utils__action__MinimalWalk_Goal__fini(rover_utils__action__MinimalWalk_Goa
   if (!msg) {
     return;
   }
-  // goal_var
+  // coords
+  geometry_msgs__msg__Point__fini(&msg->coords);
+  // use_guidance
+  // signal_and_wait
 }
 
 rover_utils__action__MinimalWalk_Goal *
@@ -273,7 +286,8 @@ rover_utils__action__MinimalWalk_Feedback__init(rover_utils__action__MinimalWalk
   if (!msg) {
     return false;
   }
-  // feedback
+  // d2t
+  // he
   return true;
 }
 
@@ -283,7 +297,8 @@ rover_utils__action__MinimalWalk_Feedback__fini(rover_utils__action__MinimalWalk
   if (!msg) {
     return;
   }
-  // feedback
+  // d2t
+  // he
 }
 
 rover_utils__action__MinimalWalk_Feedback *

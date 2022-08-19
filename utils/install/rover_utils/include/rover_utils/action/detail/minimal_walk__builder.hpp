@@ -20,16 +20,48 @@ namespace action
 namespace builder
 {
 
-class Init_MinimalWalk_Goal_goal_var
+class Init_MinimalWalk_Goal_signal_and_wait
 {
 public:
-  Init_MinimalWalk_Goal_goal_var()
+  explicit Init_MinimalWalk_Goal_signal_and_wait(::rover_utils::action::MinimalWalk_Goal & msg)
+  : msg_(msg)
+  {}
+  ::rover_utils::action::MinimalWalk_Goal signal_and_wait(::rover_utils::action::MinimalWalk_Goal::_signal_and_wait_type arg)
+  {
+    msg_.signal_and_wait = std::move(arg);
+    return std::move(msg_);
+  }
+
+private:
+  ::rover_utils::action::MinimalWalk_Goal msg_;
+};
+
+class Init_MinimalWalk_Goal_use_guidance
+{
+public:
+  explicit Init_MinimalWalk_Goal_use_guidance(::rover_utils::action::MinimalWalk_Goal & msg)
+  : msg_(msg)
+  {}
+  Init_MinimalWalk_Goal_signal_and_wait use_guidance(::rover_utils::action::MinimalWalk_Goal::_use_guidance_type arg)
+  {
+    msg_.use_guidance = std::move(arg);
+    return Init_MinimalWalk_Goal_signal_and_wait(msg_);
+  }
+
+private:
+  ::rover_utils::action::MinimalWalk_Goal msg_;
+};
+
+class Init_MinimalWalk_Goal_coords
+{
+public:
+  Init_MinimalWalk_Goal_coords()
   : msg_(::rosidl_runtime_cpp::MessageInitialization::SKIP)
   {}
-  ::rover_utils::action::MinimalWalk_Goal goal_var(::rover_utils::action::MinimalWalk_Goal::_goal_var_type arg)
+  Init_MinimalWalk_Goal_use_guidance coords(::rover_utils::action::MinimalWalk_Goal::_coords_type arg)
   {
-    msg_.goal_var = std::move(arg);
-    return std::move(msg_);
+    msg_.coords = std::move(arg);
+    return Init_MinimalWalk_Goal_use_guidance(msg_);
   }
 
 private:
@@ -47,7 +79,7 @@ template<>
 inline
 auto build<::rover_utils::action::MinimalWalk_Goal>()
 {
-  return rover_utils::action::builder::Init_MinimalWalk_Goal_goal_var();
+  return rover_utils::action::builder::Init_MinimalWalk_Goal_coords();
 }
 
 }  // namespace rover_utils
@@ -104,16 +136,32 @@ namespace action
 namespace builder
 {
 
-class Init_MinimalWalk_Feedback_feedback
+class Init_MinimalWalk_Feedback_he
 {
 public:
-  Init_MinimalWalk_Feedback_feedback()
+  explicit Init_MinimalWalk_Feedback_he(::rover_utils::action::MinimalWalk_Feedback & msg)
+  : msg_(msg)
+  {}
+  ::rover_utils::action::MinimalWalk_Feedback he(::rover_utils::action::MinimalWalk_Feedback::_he_type arg)
+  {
+    msg_.he = std::move(arg);
+    return std::move(msg_);
+  }
+
+private:
+  ::rover_utils::action::MinimalWalk_Feedback msg_;
+};
+
+class Init_MinimalWalk_Feedback_d2t
+{
+public:
+  Init_MinimalWalk_Feedback_d2t()
   : msg_(::rosidl_runtime_cpp::MessageInitialization::SKIP)
   {}
-  ::rover_utils::action::MinimalWalk_Feedback feedback(::rover_utils::action::MinimalWalk_Feedback::_feedback_type arg)
+  Init_MinimalWalk_Feedback_he d2t(::rover_utils::action::MinimalWalk_Feedback::_d2t_type arg)
   {
-    msg_.feedback = std::move(arg);
-    return std::move(msg_);
+    msg_.d2t = std::move(arg);
+    return Init_MinimalWalk_Feedback_he(msg_);
   }
 
 private:
@@ -131,7 +179,7 @@ template<>
 inline
 auto build<::rover_utils::action::MinimalWalk_Feedback>()
 {
-  return rover_utils::action::builder::Init_MinimalWalk_Feedback_feedback();
+  return rover_utils::action::builder::Init_MinimalWalk_Feedback_d2t();
 }
 
 }  // namespace rover_utils
