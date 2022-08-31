@@ -100,18 +100,20 @@ class gui(Thread):
     
     
         
-    def button1(self):
+    def simple_pub_button_1(self):
         self.base_node.do_pub()    #fix message type
 
-    def a_button_1(self):
+    def action_button_1(self):
         self.base_node.send_goal(10)
 
-    def a_button_2(self):
+    def action_button_2(self):
         self.base_node.send_minimal_walk_goal(10.0,12.5)
     
     def a_button_3(self):
          self.base_node.send_minimal_walk_goal(10.0,12.5)
 
+    def cancel_action_button_1(self):
+        self.base_node.cancel_minimal_walk_goal()
         
     def show_buttons(self):
         #button pub sub buttons
@@ -127,7 +129,7 @@ class gui(Thread):
         self.pub_button = Button(
             self.button_label_frame, 
             text="Send Simple Pub", 
-            command=self.button1).pack()
+            command=self.simple_pub_button_1).pack()
             # .grid(
             #     row=7, 
             #     column=5, 
@@ -137,7 +139,7 @@ class gui(Thread):
         self.action_button = Button(
             self.button_label_frame, 
             text="Do Fibo Action",  
-            command=self.a_button_1).pack()
+            command=self.action_button_1).pack()
             # .grid(
             #     row=10, 
             #     column=5, 
@@ -145,12 +147,12 @@ class gui(Thread):
         self.action_button_2 = Button(
             self.button_label_frame, 
             text="Do Custom Action",  
-            command=self.a_button_2).pack()
+            command=self.action_button_2).pack()
 
         self.cancel_action_button = Button(
             self.button_label_frame, 
             text="Cancel Custom Action",  
-            command=self.a_button_1).pack()
+            command=self.cancel_action_button_1).pack()
             # .grid(
             #     row=10, 
             #     column=5, 

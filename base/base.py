@@ -1,6 +1,5 @@
 from rclpy.node import Node
 from rclpy.action import ActionClient
-from rclpy.action import ClientGoal
 
 
 
@@ -20,34 +19,12 @@ class baseNode(Node):
         
         self.parent = parent
 
-        self.teensy_publisher = self.create_publisher(
-            TankDriveMsg, 
-            'pwm_to_teensy', 
-            10)
-        
-        # self.subscription = self.create_subscription(
-        #     Int32,
-        #     'topic_result',
-        #     self.sub_callback,
-        #     8)
-
-        # self.state_subscription = self.create_subscription(
-        #     Int32,
-        #     'state_topic',
-        #     self.sub_callback,
-        #     8)
-
-        # self._action_client = ActionClient(
-        #     self, 
-        #     Fibonacci, 
-        #     'fibonacci')
-        
         self.minimal_walk_action_client = ActionClient(
             self, 
             MinimalWalk, 
             'mini_walk_act')
+        
 
-        self.goal_handle = ClientGoalHandle
     
     def send_minimal_walk_goal(self,tlat,tlon):
         coords  = Point()
@@ -78,7 +55,10 @@ class baseNode(Node):
 
         self.get_logger().info('Goal accepted :)')
 
-        get_result_future = goal_handle.get_result_async()
+        self._goal_handle = goal_handle
+
+
+        get_result_future = goal_handle.get_result_async() #requesting result
         get_result_future.add_done_callback(self.minimal_walk_goal_result_callback)
 
     def minimal_walk_goal_result_callback(self, future):
@@ -86,12 +66,40 @@ class baseNode(Node):
         self.parent.fetch_result("minimal client", result)
         self.parent.insert_in_scroll(result)
 
-    def do_pub(self):
-        msg = TankDriveMsg()
-        msg.lpwm = 127
-        msg.rpwm = 127
+
+    def cancel_minimal_walk_goal(self):
+        """
+        https://blog.csdn.net/qq_27865227/article/details/121207085
+        https://answers.ros.org/question/361666/ros2-action-goal-canceling-problem/
+        https://github.com/ros2/examples/tree/rolling/rclpy/actions/minimal_action_server 
+        """
+        cancel_future  = self._goal_handle.cancel_goal_async() #requesting cancel
+        print("tryna cancel")
+        cancel_future.add_done_callback(self.cancel_callback)
+
+    def cancel_callback(self, future):
+        cancel_response = future.result()
+        if len(cancel_response.goals_canceling) > 0:
+            self.get_logger().info('Cancelling of goal complete')
+        else:
+            self.get_logger().warning('Goal failed to cancel')
+
+    # def do_pub(self):
+    #     msg = TankDriveMsg()
+    #     msg.lpwm = 127
+    #     msg.rpwm = 127
         
-        self.teensy_publisher.publish(msg)
+    #     self.teensy_publisher.publish(msg)
+  
+    def feedback_callback(self, feedback_msg):
+        feedback = feedback_msg.feedback
+        #self.get_logger().info('Received feedback: {0}'.format(feedback.partial_sequence))
+        self.parent.display_action_feedback("action_client", feedback.d2t)
+        self.parent.display_action_feedback("action_client", feedback.he)
+
+
+
+
         #self.get_logger().info('Publishing: "%d"' % msg)
 
         #print("Publishing: ")
@@ -130,9 +138,27 @@ class baseNode(Node):
     # def get_result_callback(self, future):
     #     result = future.result().result
     #     self.get_logger().info('Result: {0}'.format(result.sequence))
+      
+
+        # self.teensy_publisher = self.create_publisher(
+        #     TankDriveMsg, 
+        #     'pwm_to_teensy', 
+        #     10)
         
-    def feedback_callback(self, feedback_msg):
-        feedback = feedback_msg.feedback
-        #self.get_logger().info('Received feedback: {0}'.format(feedback.partial_sequence))
-        self.parent.display_action_feedback("action_client", feedback.d2t)
-        self.parent.display_action_feedback("action_client", feedback.he)
+        # self.subscription = self.create_subscription(
+        #     Int32,
+        #     'topic_result',
+        #     self.sub_callback,
+        #     8)
+
+        # self.state_subscription = self.create_subscription(
+        #     Int32,
+        #     'state_topic',
+        #     self.sub_callback,
+        #     8)
+
+        # self._action_client = ActionClient(
+        #     self, 
+        #     Fibonacci, 
+        #     'fibonacci')
+        

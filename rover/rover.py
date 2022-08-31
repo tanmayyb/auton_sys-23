@@ -5,9 +5,10 @@ https://levelup.gitconnected.com/ros-spinning-threading-queuing-aac9c0a793f
 
 import rclpy
 from rclpy.node import Node
-from rclpy.action import ActionServer
+from rclpy.action import ActionServer, CancelResponse, GoalResponse
+from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.executors import MultiThreadedExecutor
 
-#from geometry_msgs.msg import Point
 
 from action_tutorials_interfaces.action import Fibonacci
 from rover_utils.action import MinimalWalk
@@ -18,16 +19,77 @@ import time
 class Rover(Node):
     def __init__(self):
         super().__init__('rover_node')
+
+        print("rover_node initialised")
+
+        self.min_walk_act_server = ActionServer(
+            self,
+            MinimalWalk,
+            'mini_walk_act',
+            execute_callback=self.minimal_walk_callback,
+            cancel_callback=self.cancel_callback,
+            callback_group=ReentrantCallbackGroup())
+
+    def cancel_callback(self, cancel_request):
+        print("got cancel request lol")
+        print(cancel_request)
+        return CancelResponse.ACCEPT
+
+
+    async def minimal_walk_callback(self, goal_handle):
+
+        print("received goal request", goal_handle.request)
+        coords = goal_handle.request.coords
+        print("received coords: ", coords.x, coords.y)
+
+        self.get_logger().info('Executing Goal...')
+
+        feedback_msg = MinimalWalk.Feedback()
+
+        
+        for i in range(10):
+            
+            feedback_msg.d2t = float(i*4.2)
+            feedback_msg.he = float(i*6.9)
+
+            goal_handle.publish_feedback(feedback_msg)
+            time.sleep(.5)
+
+        goal_handle.succeed()
+
+        result = MinimalWalk.Result()
+        result.result = True
+
+        self.get_logger().info('Goal Executed!...')
+
+        return result
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    rover_node = Rover()
+
+    rclpy.spin(rover_node)
+
+
+if __name__ == '__main__':
+    
+    main()
+
+
+
+
         # self.state = 0
         # self.state_dict = {
         #     "Initializing": 0,
         #     "Standby": 1,
         #     "Transit": 2,
         #     "Teleop": 3}
-
-        """
-        location and attitude trackers
-        """
+ 
+        # """
+        # location and attitude trackers
+        # """
         # self.rover_lat = None
         # self.rover_lon = None
 
@@ -42,11 +104,8 @@ class Rover(Node):
         #     self.update_pose_trackers,
         #     10)
 
-        self.min_walk_act_server = ActionServer(
-            self,
-            MinimalWalk,
-            'mini_walk_act',
-            self.minimal_walk_callback)
+
+
 
         # self.msg_sub = self.create_subscription(
         #     TestMsg,
@@ -60,37 +119,12 @@ class Rover(Node):
         #     'fibonacci',
         #     self.execute_callback)
 
-        print("rover_node initialised")
 
     
     # def handle_sub(self, msg):
     #     self.get_logger().info('Got Result: "%d"' % msg.my_float)
     #     print(msg.point)
 
-    def minimal_walk_callback(self, goal_handle):
-
-        print("received goal request", goal_handle.request)
-        coords = goal_handle.request.coords
-        print("received coords: ", coords.x, coords.y)
-
-        self.get_logger().info('Executing Goal...')
-
-        feedback_msg = MinimalWalk.Feedback()
-
-        for i in range(10):
-            
-            feedback_msg.d2t = float(i*4.2)
-            feedback_msg.he = float(i*6.9)
-
-            goal_handle.publish_feedback(feedback_msg)
-            time.sleep(1)
-
-        goal_handle.succeed()
-
-        result = MinimalWalk.Result()
-        result.result = True
-
-        return result
 
     # def execute_callback(self, goal_handle):
     #     self.get_logger().info('Executing goal...')
@@ -114,14 +148,3 @@ class Rover(Node):
     # def update_pose_trackers(self, msg):
     #     pass
     
-
-def main(args=None):
-    rclpy.init(args=args)
-
-    rover_node = Rover()
-
-    rclpy.spin(rover_node)
-
-
-if __name__ == '__main__':
-    main()
