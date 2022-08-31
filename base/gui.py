@@ -107,13 +107,13 @@ class gui(Thread):
         self.base_node.send_goal(10)
 
     def action_button_2(self):
-        self.base_node.send_minimal_walk_goal(10.0,12.5)
+        self.base_node.send_goal_miniwalk(10.0,12.5)
     
-    def a_button_3(self):
-         self.base_node.send_minimal_walk_goal(10.0,12.5)
+    def action_button_3(self):
+         self.base_node.send_goal_miniwalk(10.0,12.5)
 
     def cancel_action_button_1(self):
-        self.base_node.cancel_minimal_walk_goal()
+        self.base_node.cancel_miniwalk_goal()
         
     def show_buttons(self):
         #button pub sub buttons

@@ -26,17 +26,22 @@ class Rover(Node):
             self,
             MinimalWalk,
             'mini_walk_act',
-            execute_callback=self.minimal_walk_callback,
-            cancel_callback=self.cancel_callback,
-            callback_group=ReentrantCallbackGroup())
+            execute_callback=self.exec_callback,
+            callback_group=ReentrantCallbackGroup(),
+            goal_callback=self.goal_callback,
+            cancel_callback=self.cancel_callback,)
 
-    def cancel_callback(self, cancel_request):
-        print("got cancel request lol")
-        print(cancel_request)
+    def goal_callback(self, goal_request):
+        """Accept or reject a client request to begin an action."""
+        # This server allows multiple goals in parallel
+        self.get_logger().info('Received goal request')
+        return GoalResponse.ACCEPT
+
+    def cancel_callback(self, goal_handle):
+        self.get_logger().info('Received cancel request')
         return CancelResponse.ACCEPT
 
-
-    async def minimal_walk_callback(self, goal_handle):
+    async def exec_callback(self, goal_handle):
 
         print("received goal request", goal_handle.request)
         coords = goal_handle.request.coords
@@ -48,7 +53,14 @@ class Rover(Node):
 
         
         for i in range(10):
-            
+
+            """cancel codition to close callback w/o execution blocking"""
+            if goal_handle.is_cancel_requested:
+                goal_handle.canceled()
+                self.get_logger().info('Goal canceled')
+                return MinimalWalk.Result()
+
+
             feedback_msg.d2t = float(i*4.2)
             feedback_msg.he = float(i*6.9)
 
@@ -70,8 +82,12 @@ def main(args=None):
 
     rover_node = Rover()
 
-    rclpy.spin(rover_node)
+    executor = MultiThreadedExecutor()
 
+    try:
+        rclpy.spin(rover_node, executor=executor)
+    except:
+        rclpy.shutdown()
 
 if __name__ == '__main__':
     
