@@ -31,23 +31,33 @@ __version__ = "1.0.0"
 __maintainer__ = "Joshua Nelson"
 __status__ = "Done"
 
-# packetTool = PacketTool()
-controllerTool = ControllerTool()
+
 
 # kill commands
 defaultDriveMsg: str = "D_0_128_0_128"
 
 
 class teleop_processor(Thread):
-    def __init__(self):
+    def __init__(self, parent):
         Thread.__init__(self)
+
+        # packetTool = PacketTool()
+        self.controllerTool = ControllerTool(self)
         self.controllerCount = 1
         self.leftY = None
         self.rightY = None
 
         self.leftY_ = None 
         self.rightY_ = None
+        
+        self.parent = parent
 
+    def set_status_bar_controller_state(self, msg):
+        self.parent.set_status_bar_controller_state(msg)
+    
+    def status_bar_info_text(self, msg):
+        self.parent.set_status_bar_controller_info(msg)
+    
     def run(self):
         """
         The main loop - starts the program
@@ -58,8 +68,8 @@ class teleop_processor(Thread):
         timerWatchdog = 0
 
         # sender: socket = packetTool.udp_init()
-        controller: Joystick = controllerTool.getController()
-        self.controllerCount = controllerTool.CONTROLLER_COUNT
+        controller: Joystick = self.controllerTool.getController()
+        self.controllerCount = self.controllerTool.CONTROLLER_COUNT
 
         running = True
 
@@ -71,26 +81,29 @@ class teleop_processor(Thread):
                 print("Disconnection detected - sending 'kill' message...")
                 # will stop all DRIVE movement
                 # sender.sendto(defaultDriveMsg.encode(), (UDP_IP, UDP_PORT))
-                controller = controllerTool.getController()
+                controller = self.controllerTool.getController()
                 running = False
 
             else:
+                
+                self.parent.set_status_bar_controller_state("\tConnected")
+                
                 # The strings to be sent
                 self.leftY: str = "0"
                 self.rightY: str = "0"
 
-                self.leftY = controllerTool.yoinkControllerReadings(
+                self.leftY = self.controllerTool.yoinkControllerReadings(
                     controller, 1)
                 self.rightY = str(
-                    controllerTool.yoinkControllerReadings(controller, 3))
+                    self.controllerTool.yoinkControllerReadings(controller, 3))
 
-                L2: str = controllerTool.yoinkBumperReadings(controller, 4)
-                R2: str = controllerTool.yoinkBumperReadings(controller, 5)
+                L2: str = self.controllerTool.yoinkBumperReadings(controller, 4)
+                R2: str = self.controllerTool.yoinkBumperReadings(controller, 5)
 
                 if int(R2) > MAX * .9:
-                    controllerTool.SPEED.revUp()
+                    self.controllerTool.SPEED.revUp()
                 elif int(L2) > MAX * .9:
-                    controllerTool.SPEED.revDown()
+                    self.controllerTool.SPEED.revDown()
 
                 msg = "D_"
 
@@ -122,61 +135,61 @@ class teleop_processor(Thread):
                             BTN 4 - Slow
                         """
 
-                        if btn == controllerTool.MAP.BTN1:
+                        if btn == self.controllerTool.MAP.BTN1:
                             btn1 = "1"
-                            controllerTool.SPEED.setSpeed(0)
-                        if btn == controllerTool.MAP.BTN2:
+                            self.controllerTool.SPEED.setSpeed(0)
+                        if btn == self.controllerTool.MAP.BTN2:
                             btn2 = "1"
-                            controllerTool.SPEED.setSpeed(0.75)
-                        if btn == controllerTool.MAP.BTN3:
+                            self.controllerTool.SPEED.setSpeed(0.75)
+                        if btn == self.controllerTool.MAP.BTN3:
                             btn3 = "1"
-                            controllerTool.SPEED.setSpeed(0.25)
-                        if btn == controllerTool.MAP.BTN4:
+                            self.controllerTool.SPEED.setSpeed(0.25)
+                        if btn == self.controllerTool.MAP.BTN4:
                             btn4 = "1"
-                            controllerTool.SPEED.setSpeed(0.10)
+                            self.controllerTool.SPEED.setSpeed(0.10)
 
-                        if btn == controllerTool.MAP.BTNL1:
+                        if btn == self.controllerTool.MAP.BTNL1:
                             L1 = "1"
-                            controllerTool.SPEED.gearDown()
-                        if btn == controllerTool.MAP.BTNR1:
+                            self.controllerTool.SPEED.gearDown()
+                        if btn == self.controllerTool.MAP.BTNR1:
                             R1 = "1"
-                            controllerTool.SPEED.gearUp()
+                            self.controllerTool.SPEED.gearUp()
 
-                        if btn == controllerTool.MAP.BTNSTART:
+                        if btn == self.controllerTool.MAP.BTNSTART:
                             start = "1"
 
                     if event.type == pygame.JOYBUTTONUP:
                         btn = event.__getattribute__('button')
 
-                        if btn == controllerTool.MAP.BTNLB:
+                        if btn == self.controllerTool.MAP.BTNLB:
                             leftBtn = "0"
-                        if btn == controllerTool.MAP.BTNRB:
+                        if btn == self.controllerTool.MAP.BTNRB:
                             rightBtn = "0"
-                        if btn == controllerTool.MAP.BTNDUP:
+                        if btn == self.controllerTool.MAP.BTNDUP:
                             dUp = "0"
-                        if btn == controllerTool.MAP.BTNDDOWN:
+                        if btn == self.controllerTool.MAP.BTNDDOWN:
                             dDown = "0"
-                        if btn == controllerTool.MAP.BTNDLEFT:
+                        if btn == self.controllerTool.MAP.BTNDLEFT:
                             dLeft = "0"
-                        if btn == controllerTool.MAP.BTNDRIGHT:
+                        if btn == self.controllerTool.MAP.BTNDRIGHT:
                             dRight = "0"
-                        if btn == controllerTool.MAP.BTN1:
+                        if btn == self.controllerTool.MAP.BTN1:
                             btn1 = "0"
-                        if btn == controllerTool.MAP.BTN2:
+                        if btn == self.controllerTool.MAP.BTN2:
                             btn2 = "0"
-                        if btn == controllerTool.MAP.BTN3:
+                        if btn == self.controllerTool.MAP.BTN3:
                             btn3 = "0"
-                        if btn == controllerTool.MAP.BTN4:
+                        if btn == self.controllerTool.MAP.BTN4:
                             btn4 = "0"
-                        if btn == controllerTool.MAP.BTNL1:
+                        if btn == self.controllerTool.MAP.BTNL1:
                             L1 = "0"
-                        if btn == controllerTool.MAP.BTNR1:
+                        if btn == self.controllerTool.MAP.BTNR1:
                             R1 = "0"
-                        if btn == controllerTool.MAP.BTNBACK:
+                        if btn == self.controllerTool.MAP.BTNBACK:
                             back = "0"
-                        if btn == controllerTool.MAP.BTNSTART:
+                        if btn == self.controllerTool.MAP.BTNSTART:
                             start = "0"
-                        if btn == controllerTool.MAP.BTNHOME:
+                        if btn == self.controllerTool.MAP.BTNHOME:
                             home = "0"
 
                 # construct message
@@ -191,6 +204,9 @@ class teleop_processor(Thread):
                 }
                 self.leftY_, self.rightY_ = self.leftY, self.rightY
                 if lastMsg != msg:
+                    paren_controller_info_msg = f"  lpwm:{str(self.leftY_)}  rpwm: {str(self.rightY_)}"
+                    self.parent.set_status_bar_controller_info("\t"+paren_controller_info_msg)
+                    
                     msg = json.dumps(msg)
                     # only needs to print/send the message if there is a change
                     # sender.sendto(msg.encode(), (UDP_IP, UDP_PORT))

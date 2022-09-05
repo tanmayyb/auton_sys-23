@@ -70,7 +70,7 @@ class gui(Thread):
             daemon=True)
         self.executor_thread.start()
 
-        self.teleop = teleop_processor()
+        self.teleop = teleop_processor(self)
         self.teleop.daemon = True
         self.teleop.start()
 
@@ -115,21 +115,14 @@ class gui(Thread):
                 row=ACTION_CONSOLE_FRAME_ROW, 
                 column=ACTION_CONSOLE_FRAME_COLUMN,
                 rowspan=ACTION_CONSOLE_FRAME_ROWSPAN,
-                columnspan=ACTION_CONSOLE_FRAME_COLUMNSPAN,)
-            #   sticky="W")
+                columnspan=ACTION_CONSOLE_FRAME_COLUMNSPAN,
+                sticky=ACTION_CONSOLE_FRAME_STICKY)
 
         self.show_text_fields(self.action_console_frame)
         self.show_buttons(self.action_console_frame)
 
     
     def show_text_fields(self, frame):
-        
-        # self.text_field_label_frame = LabelFrame(self.window)
-        # self.text_field_label_frame.grid(
-        #         row=TEXT_FIELD_FRAME_ROW, 
-        #         column=TEXT_FIELD_FRAME_COLUMN,
-        #         rowspan=TEXT_FIELD_ROWSPAN,
-        #         columnspan=TEXT_FIELD_FRAME_COLUMNSPAN,)
         
         self.text_field_labels = LabelFrame(frame)
         self.text_fields = LabelFrame(frame)
@@ -307,26 +300,6 @@ class gui(Thread):
             padx=5, 
             pady=5)
 
-    def show_status_bar(self):
-        self.bottom_status_bar_frame = LabelFrame(
-            self.window,
-            text="status bar")
-        self.text_field_label_frame.grid(
-                row=8, 
-                column=0,
-                rowspan=5,
-                columnspan=10, 
-                sticky="S")
-
-        self.controller_status = Label(
-            self.bottom_status_bar_frame,
-            text="Controller Status")
-        
-        self.controller_status.pack(
-            padx=5, 
-            pady=5)
-
-
     """DISPLAY FUNCTIONS FOR TEXT FIELDS """
     def display_action_feedback(self, caller, msg, show_type=TRUE):
         id = None
@@ -351,11 +324,55 @@ class gui(Thread):
         self.event_scroll.insert(END,"rec:   "+data+'\n')
         self.event_scroll.see('end')
 
+
+    def show_status_bar(self):
+        self.status_bar_frame = LabelFrame(
+            self.window,
+            text="Controller Connection/Status")
+        self.status_bar_frame.grid(
+                row=STATUS_BAR_FRAME_ROW, 
+                column=STATUS_BAR_FRAME_COLUMN,
+                rowspan=STATUS_BAR_FRAME_ROWSPAN,
+                columnspan=STATUS_BAR_FRAME_COLUMNSPAN, 
+                sticky=STATUS_BAR_FRAME_STICKY)
+
+        self.controller_status = Label(
+            self.status_bar_frame,
+            text="Controller Status")
+        
+        self.controller_status.pack(
+            padx=5, 
+            pady=5,
+            side=LEFT)
+
+        self.controller_info = Label(
+            self.status_bar_frame,
+            text="Info")
+        
+        self.controller_info.pack(
+            padx=5, 
+            pady=5,
+            side=LEFT)
+
+
+    def set_status_bar_controller_state(self, msg):
+        self.controller_status.configure(text="Controller Status: "+msg)
+
+    def set_status_bar_controller_info(self, msg):
+        self.controller_info.configure(text="Info: "+msg)
+
+
+
+
+
     def draw_gui(self):
         self.show_map()
         
         self.show_scroll()
 
         self.show_action_console()
+
+        self.show_status_bar()
+
 
     

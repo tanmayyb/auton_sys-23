@@ -1,6 +1,8 @@
 import pygame
 from pygame.joystick import Joystick
 
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
 from plugins.teleop.Utils.Consts import BUMPER_VAL, DEFAULT_DRIVE_SPEED, DRIFT_VAL, MAX, MIN, NEUTRAL
 from plugins.teleop.Utils.ControllerMapping import Mapping
@@ -15,20 +17,23 @@ __version__ = "1.0.0"
 __maintainer__ = "Joshua Nelson"
 __status__ = "Done"
 
-
 class ControllerTool:
+    
     CONTROLLER_COUNT = 0
     SPEED: DrivingSpeed = DrivingSpeed(DEFAULT_DRIVE_SPEED)
 
-    # error checking
-    if DRIFT_VAL >= 1 or DRIFT_VAL < 0:
-        print("Error - DRIFT_VAl is out of bounds\nAborting...")
-        exit(1)
+    def __init__(self, parent):
+        self.parent = parent        
+        self.verbose = False
+        # error checking
+        if DRIFT_VAL >= 1 or DRIFT_VAL < 0:
+            print("Error - DRIFT_VAl is out of bounds\nAborting...")
+            exit(1)
 
-    # error checking
-    if BUMPER_VAL != -0.05:
-        print("Error - BUMPER_VAl is out of bounds\nAborting...")
-        exit(1)
+        # error checking
+        if BUMPER_VAL != -0.05:
+            print("Error - BUMPER_VAl is out of bounds\nAborting...")
+            exit(1)
 
     def getController(self) -> Joystick:
         """
@@ -72,11 +77,18 @@ class ControllerTool:
             self.__mapPS4()
         elif name == "Controller (Gamepad F310)":
             self.__mapGamepadF310()
+        elif name == "Xbox One S Controller":
+            self.__mapXBOX360()
+            
         else:
-            print("ERROR - " + name + " is not supported\nAborting...")
+            msg = "ERROR - " + name + " is not supported"
+            #print(msg)
+            self.parent.status_bar_info_text(msg)
+            
+            print("Aborting Tool")
             exit(1)
-        print("Mapping successful!\n\tNOTE: If you notice any irregularities in the controls, it is LIKELY a mapping "
-              "issue...")
+        #print("Mapping successful!\n\tNOTE: If you notice any irregularities in the controls, it is LIKELY a mapping "
+        #      "issue...")
 
     def __mapPS4(self):
         """
@@ -169,15 +181,18 @@ class ControllerTool:
         """
 
         if pygame.joystick.get_count() == 0:
-            print("\tConnection Error - No Connected Joysticks Found")
+            print("Connection Error - No Connected Joysticks Found")
+            self.parent.set_status_bar_controller_state("\tDisconnected")
             i = 0
             while pygame.joystick.get_count() == 0:
                 pygame.joystick.quit()
                 pygame.joystick.init()
                 pygame.time.wait(1000)
-                print(self.__connectionMsg(0, i))
+                self.parent.status_bar_info_text(self.__connectionMsg(0, i))
                 i = self.__messageInfo(i)
             if pygame.joystick.get_count() > 0:
+                self.parent.set_status_bar_controller_state("\tConnected")
+
                 print("\tConnection found!")
                 pygame.joystick.init()  # this MUST be called here
                 return pygame.joystick.Joystick
@@ -225,7 +240,7 @@ class ControllerTool:
         :param x:
         :return: message
         """
-        msg = "\t\tWaiting for Controller "
+        msg = "\twaiting for controller "
         if msgNum == 0:
             msg += "connection"
         if msgNum == 1:
@@ -248,14 +263,14 @@ class ControllerTool:
         numBalls = controller.get_numballs()
         numButtons = controller.get_numbuttons()
         numHats = controller.get_numhats()
-
-        print("Controller Information")
-        print("\tName: " + str(name))
-        print("\tID: " + str(idValue))
-        print("\t\tNumber of Axes: " + str(numAxes))
-        print("\t\tNumber of Balls: " + str(numBalls))
-        print("\t\tNumber of Buttons: " + str(numButtons))
-        print("\t\tNumber of Hats: " + str(numHats))
+        if self.verbose == True:
+            print("Controller Information")
+            print("\tName: " + str(name))
+            print("\tID: " + str(idValue))
+            print("\t\tNumber of Axes: " + str(numAxes))
+            print("\t\tNumber of Balls: " + str(numBalls))
+            print("\t\tNumber of Buttons: " + str(numButtons))
+            print("\t\tNumber of Hats: " + str(numHats))
 
     def __getAllControllers(self) -> list:
         """

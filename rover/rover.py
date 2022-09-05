@@ -87,7 +87,8 @@ class Rover(Node):
         return GoalResponse.ACCEPT
 
     def miniwalk_cancel_callback(self, goal_handle):
-        self.get_logger().info('Received cancel request')
+        self.get_logger().warn('Received cancel request!')
+        self.set_rover_to_neutral()
         return CancelResponse.ACCEPT
 
     async def miniwalk_exec_callback(self, goal_handle):
@@ -96,7 +97,7 @@ class Rover(Node):
         coords = goal_handle.request.coords
         print("received coords: ", coords.x, coords.y)
 
-        self.get_logger().info('Walking to Target...')
+        self.get_logger().warn('Walking to Target...')
 
         feedback_msg = MinimalWalk.Feedback()
 
@@ -137,14 +138,16 @@ class Rover(Node):
                 loop = False
 
         goal_handle.succeed()
-        
-        self.send_to_teensy(self.neutral_pwms)
+        self.set_rover_to_neutral()
         result = MinimalWalk.Result()
         result.result = True
 
         self.get_logger().info('Goal Executed!...')
 
         return result
+    
+    def set_rover_to_neutral(self):
+        self.send_to_teensy(self.neutral_pwms)
 
     def send_to_teensy(self, c2mm):
         msg = TankDriveMsg()
