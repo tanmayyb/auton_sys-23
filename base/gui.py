@@ -1,6 +1,8 @@
 from tkinter import *
+#import tkinter as tk # for textfields
 from tkinter.ttk import *
 from tkinter import Label, scrolledtext
+from turtle import width
 
 import tkintermapview
 from threading import *
@@ -98,7 +100,84 @@ class gui(Thread):
             text="Ryerson Uni")
         self.map_widget.set_zoom(20)
     
-    
+    def show_text_fields(self):
+
+        self.text_field_label_frame = LabelFrame(self.window)
+        self.text_field_label_frame.grid(
+                row=7, 
+                column=2,
+                rowspan=3,
+                columnspan=7, 
+                sticky="W")
+
+        self.text_field_labels = LabelFrame(self.text_field_label_frame)
+        self.text_field_label_frame_text_fields = LabelFrame(self.text_field_label_frame)
+
+
+        """TEXT FIELD LABELS"""
+        self.text_field_labels.grid(
+                row=0, 
+                column=0)
+
+        self.input_geofence_label = Label(
+            self.text_field_labels, 
+            text="Input Geofence")
+        self.input_geofence_label.pack(
+            padx=5,
+            pady=5)
+
+        self.input_tlat_label = Label(
+            self.text_field_labels, 
+            text="Input Target Lat")
+        self.input_tlat_label.pack(
+            padx=5,
+            pady=5)
+
+
+        self.input_tlat_label = Label(
+            self.text_field_labels, 
+            text="Input Target Lon")
+        self.input_tlat_label.pack(
+            padx=5,
+            pady=5)
+
+
+        """TEXT FIELDS"""
+        self.text_field_label_frame_text_fields.grid(
+                row=0, 
+                column=1)
+
+        self.input_geofence = StringVar()
+        self.input_geofence_textbox = Entry(
+            self.text_field_label_frame_text_fields, 
+            textvariable=self.input_geofence)
+        self.input_geofence_textbox.pack(
+            padx=5,
+            pady=5)
+
+        self.input_tlat = StringVar()
+        self.input_tlat_textbox = Entry(
+            self.text_field_label_frame_text_fields, 
+            textvariable=self.input_tlat)
+        self.input_tlat_textbox.pack(
+            padx=5,
+            pady=5)
+
+        self.input_tlon = StringVar()
+        self.input_tlon_textbox = Entry(
+            self.text_field_label_frame_text_fields, 
+            textvariable=self.input_tlon)
+        self.input_tlon_textbox.pack(
+            padx=5,
+            pady=5)
+
+        self.input_geofence.set("2.0")
+        self.input_tlat.set("43.6587021")
+        self.input_tlon.set("-79.3792810")
+
+        #KWAD CENTER
+        #43.6587021
+        #-79.3792810
         
     def simple_pub_button_1(self):
         self.base_node.do_pub()    #fix message type
@@ -107,11 +186,10 @@ class gui(Thread):
         self.base_node.send_goal(10)
 
     def action_button_2(self):
-        self.base_node.send_goal_miniwalk(10.0,12.5)
+        self.base_node.send_goal_miniwalk(
+            float(self.input_tlat.get()),
+            float(self.input_tlon.get()))
     
-    def action_button_3(self):
-         self.base_node.send_goal_miniwalk(10.0,12.5)
-
     def cancel_action_button_1(self):
         self.base_node.cancel_miniwalk_goal()
         
@@ -146,12 +224,12 @@ class gui(Thread):
             #     columnspan=3)
         self.action_button_2 = Button(
             self.button_label_frame, 
-            text="Do Custom Action",  
+            text="Do MiniWalk/Simple Transit",  
             command=self.action_button_2).pack()
 
         self.cancel_action_button = Button(
             self.button_label_frame, 
-            text="Cancel Custom Action",  
+            text="Cancel MiniWalk",  
             command=self.cancel_action_button_1).pack()
             # .grid(
             #     row=10, 
@@ -162,7 +240,7 @@ class gui(Thread):
         
         self.scroll_frame = LabelFrame(
             self.window, 
-            text="scrolls")
+            text="feed")
         
         self.scroll_frame.grid(
                 row=0, 
@@ -222,5 +300,7 @@ class gui(Thread):
         self.show_map()
         
         self.show_scroll()
+
+        self.show_text_fields()
         self.show_buttons()
     

@@ -12,6 +12,12 @@ from rclpy.executors import MultiThreadedExecutor
 
 from action_tutorials_interfaces.action import Fibonacci
 from rover_utils.action import MinimalWalk
+from rover_utils.msg import TankDriveMsg
+
+from nvc.nvc import nv_calc  
+from pid.error import heading_error
+from pid.pid import pid_controller
+
 
 import time
 
@@ -22,37 +28,83 @@ class Rover(Node):
 
         print("rover_node initialised")
 
+
+        self.pid_controller = None
+
+        """
+        Operational Variable Initialisations
+        ab2t:   Absolute Bearing to Target
+        d2t:    Distance to Target
+        arb:    Absolute Rover Bearing
+        rc:     Rover Coordinates
+        """
+        self.ab2t = None
+        self.d2t = None
+        self.arb = None
+        self.rc = None
+        
+
+        
+        #tunining variable initialisations
+        self.neutral_pwms = (127,127)
+        self.pid_const  = (0.6,  0.0, 0.1) # good for kerr 
+        self.drift_and_control_output_pwms = (20, 40) # quad grass 
+
+        self.pid_controller = pid_controller(
+            self.pid_const, 
+            self.drift_and_control_output_pwms)
+
+        
+        """LAUNCH ROS2 ACTION SERVER, PUB, SUB """
+
         self.min_walk_act_server = ActionServer(
             self,
             MinimalWalk,
-            'mini_walk_act',
-            execute_callback=self.exec_callback,
+            'point_to_point_minimal_walk',
+            execute_callback=self.miniwalk_exec_callback,
             callback_group=ReentrantCallbackGroup(),
-            goal_callback=self.goal_callback,
-            cancel_callback=self.cancel_callback,)
+            goal_callback=self.miniwalk_goal_callback,
+            cancel_callback=self.miniwalk_cancel_callback,)
 
-    def goal_callback(self, goal_request):
+        self.teensy_pub = self.create_publisher(
+            TankDriveMsg,
+            'pwm_to_teensy',
+            10)
+
+        # self.vectornav_sub = self.create_subscription(
+        #     SensorMsg,
+        #     'VectorNavSensorData',
+        #     self.update_sensor_data)
+
+
+    def update_sensor_data(self, msg):
+        pass
+
+    def miniwalk_goal_callback(self, goal_request):
         """Accept or reject a client request to begin an action."""
         # This server allows multiple goals in parallel
         self.get_logger().info('Received goal request')
         return GoalResponse.ACCEPT
 
-    def cancel_callback(self, goal_handle):
+    def miniwalk_cancel_callback(self, goal_handle):
         self.get_logger().info('Received cancel request')
         return CancelResponse.ACCEPT
 
-    async def exec_callback(self, goal_handle):
+    async def miniwalk_exec_callback(self, goal_handle):
 
         print("received goal request", goal_handle.request)
         coords = goal_handle.request.coords
         print("received coords: ", coords.x, coords.y)
 
-        self.get_logger().info('Executing Goal...')
+        self.get_logger().info('Walking to Target...')
 
         feedback_msg = MinimalWalk.Feedback()
 
-        
-        for i in range(10):
+
+        time_ = time.time()
+
+        loop = True
+        while loop:
 
             """cancel codition to close callback w/o execution blocking"""
             if goal_handle.is_cancel_requested:
@@ -60,12 +112,29 @@ class Rover(Node):
                 self.get_logger().info('Goal canceled')
                 return MinimalWalk.Result()
 
+            self.rc = (43.65897373429778, -79.37932931217927)
 
-            feedback_msg.d2t = float(i*4.2)
-            feedback_msg.he = float(i*6.9)
+            self.arb = 30.000
+
+            """logic of walk"""
+            tc = (coords.x, coords.y)
+            ab2t, d2t = nv_calc(self.rc, tc)
+            error = heading_error(self.arb, ab2t)
+            control = self.pid_controller.do_pid(error)
+            
+            """send signal to teensy"""
+            c2mm = self.pid_controller.do_c2mm(control)
+            self.send_to_teensy(c2mm)
+            
+
+            feedback_msg.d2t = d2t
+            feedback_msg.he = error
 
             goal_handle.publish_feedback(feedback_msg)
             time.sleep(.5)
+
+            if time.time() - time_ > 5.0:
+                loop = False
 
         goal_handle.succeed()
 
@@ -75,6 +144,14 @@ class Rover(Node):
         self.get_logger().info('Goal Executed!...')
 
         return result
+
+    def send_to_teensy(self, c2mm):
+        msg = TankDriveMsg()
+        msg.lpwm = c2mm[0]
+        msg.rpwm = c2mm[1]
+        self.teensy_pub.publish(msg)
+        """leds have to be accounted for"""
+
 
 
 def main(args=None):

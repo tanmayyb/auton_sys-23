@@ -22,7 +22,7 @@ class baseNode(Node):
         self.minimal_walk_action_client = ActionClient(
             self, 
             MinimalWalk, 
-            'mini_walk_act')
+            'point_to_point_minimal_walk')
     
     def send_goal_miniwalk(self,tlat,tlon):
         coords  = Point()

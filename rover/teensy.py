@@ -11,7 +11,11 @@ class Teensy(Node):
         self.UDP_PORT = 8080  # port
         self.default_msg = 'D_0_128_0_128_0_0_0_0_0_0_0_0_0_0_0_0_128_128_0_0_0'
         self.teensy = 0
-        
+
+        self.teleop_id = 1
+        self.auton_id = 2
+        #self.msg_select = True
+
         try:
             self.teensy = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             self.teensy.sendto(self.default_msg.encode(), (  self.UDP_IP, 
@@ -29,6 +33,7 @@ class Teensy(Node):
         print("teensy server operational")
 
     def subscription_callback(self, msg):
+        #if self.msg_select:
         self.send_to_teensy(msg.lpwm, msg.rpwm)
         
     def send_to_teensy(self, lpwm, rpwm):
