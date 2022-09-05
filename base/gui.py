@@ -15,6 +15,7 @@ from window import *
 import rclpy
 
 from rclpy.executors import MultiThreadedExecutor
+from plugins.teleop.teleop import teleop_processor
 
 
 class gui(Thread):
@@ -68,6 +69,8 @@ class gui(Thread):
             target=self.executor.spin, 
             daemon=True)
         self.executor_thread.start()
+
+
 
     def show_map(self):
         
@@ -208,33 +211,22 @@ class gui(Thread):
             self.button_label_frame, 
             text="Send Simple Pub", 
             command=self.simple_pub_button_1).pack()
-            # .grid(
-            #     row=7, 
-            #     column=5, 
-            #     columnspan=3)
-        
+            
         #action service buttons
         self.action_button = Button(
             self.button_label_frame, 
-            text="Do Fibo Action",  
+            text="Do Teleop",  
             command=self.action_button_1).pack()
-            # .grid(
-            #     row=10, 
-            #     column=5, 
-            #     columnspan=3)
+
         self.action_button_2 = Button(
             self.button_label_frame, 
-            text="Do MiniWalk/Simple Transit",  
+            text="Do MiniWalk",  
             command=self.action_button_2).pack()
 
         self.cancel_action_button = Button(
             self.button_label_frame, 
             text="Cancel MiniWalk",  
             command=self.cancel_action_button_1).pack()
-            # .grid(
-            #     row=10, 
-            #     column=5, 
-            #     columnspan=3)
     
     def show_scroll(self):
         
@@ -250,46 +242,42 @@ class gui(Thread):
         
         self.event_scroll = scrolledtext.ScrolledText(
             self.scroll_frame, 
-            height=8, 
-            width=32, 
-            font=('Arial 14'), 
+            height=10, 
+            width=40, 
+            font=('Arial 12'), 
             borderwidth=0,)
         
         self.event_scroll.pack(
             padx=5, 
             pady=5)
-        # self.scroll.grid(
-        #         row=0, 
-        #         column=8, 
-        #         columnspan=3, 
-        #         rowspan=2, 
-        #         pady=(10, 0))
-        
+
         self.feedback_scroll = scrolledtext.ScrolledText(
             self.scroll_frame, 
-            height=8, 
-            width=32, 
-            font=('Arial 14'), 
+            height=10, 
+            width=40, 
+            font=('Arial 12'), 
             borderwidth=0,)
         self.feedback_scroll.pack(
             padx=5, 
             pady=5)
-        
-        # self.action_scroll.grid(
-        #         row=3, 
-        #         column=8, 
-        #         columnspan=3, 
-        #         rowspan=2, 
-        #         pady=(10, 0))
 
     def fetch_result(self, caller, result):
         print(f"{caller}", result)
 
-    def display_action_feedback(self, caller, msg):
-        self.feedback_scroll.insert(
-            END,
-            f"[ {str(caller)} ]: {str(msg)}"+'\n')
-        self.feedback_scroll.see('end')
+    def display_action_feedback(self, caller, msg, show_type=TRUE):
+        id = None
+        
+        if caller == "miniwalk_feedback":
+            if show_type == b'I01\n':
+                id = "[feedback]"
+            
+            d2t = str(msg.d2t)[:6]
+            he = str(msg.he)[:6]
+            
+            self.feedback_scroll.insert(
+                END,
+                f"{id}:    {d2t}     {he}"+'\n')
+            self.feedback_scroll.see('end')
 
     def insert_in_scroll(self, data):
         data = str(data)

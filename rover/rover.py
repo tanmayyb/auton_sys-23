@@ -131,13 +131,14 @@ class Rover(Node):
             feedback_msg.he = error
 
             goal_handle.publish_feedback(feedback_msg)
-            time.sleep(.5)
+            time.sleep(.05)
 
             if time.time() - time_ > 5.0:
                 loop = False
 
         goal_handle.succeed()
-
+        
+        self.send_to_teensy(self.neutral_pwms)
         result = MinimalWalk.Result()
         result.result = True
 
