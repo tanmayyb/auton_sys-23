@@ -2,10 +2,10 @@ import pygame
 from pygame.joystick import Joystick
 
 
-from teleop_plugin.Utils.Consts import BUMPER_VAL, DEFAULT_DRIVE_SPEED, DRIFT_VAL, MAX, MIN, NEUTRAL
-from teleop_plugin.Utils.ControllerMapping import Mapping
+from plugins.teleop.Utils.Consts import BUMPER_VAL, DEFAULT_DRIVE_SPEED, DRIFT_VAL, MAX, MIN, NEUTRAL
+from plugins.teleop.Utils.ControllerMapping import Mapping
 
-from teleop_plugin.Utils.DrivingSpeed import DrivingSpeed
+from plugins.teleop.Utils.DrivingSpeed import DrivingSpeed
 
 __author__ = "Joshua Nelson"
 __copyright__ = "Copyright 2022, R3 - Ryerson RAMS Robotics"

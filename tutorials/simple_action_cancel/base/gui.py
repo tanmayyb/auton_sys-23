@@ -1,7 +1,8 @@
-from cgitb import text
 from tkinter import *
+#import tkinter as tk # for textfields
 from tkinter.ttk import *
 from tkinter import Label, scrolledtext
+from turtle import width
 
 import tkintermapview
 from threading import *
@@ -9,8 +10,7 @@ import time
 
 from base import baseNode
 
-from settings.window import *
-from settings.grid import *
+from window import *
 
 import rclpy
 
@@ -82,16 +82,16 @@ class gui(Thread):
             self.window,
             text="map")
         self.map_frame.grid(
-                row=MAP_FRAME_ROW, 
-                column=MAP_FRAME_COLUMN,
-                rowspan=MAP_FRAME_ROWSPAN,
-                columnspan=MAP_FRAME_COLUMNSPAN)
+                row=0, 
+                column=0,
+                rowspan=5,
+                columnspan=5)
 
         self.map_widget = tkintermapview.TkinterMapView(
             self.map_frame, 
-            width=MAP_WIDTH, 
-            height=MAP_HEIGHT, 
-            corner_radius=MAP_CORNER_RADIUS)
+            width=400, 
+            height=400, 
+            corner_radius=0)
 
         self.map_widget.grid(
             row=0,
@@ -107,94 +107,77 @@ class gui(Thread):
             text="Ryerson Uni")
         self.map_widget.set_zoom(20)
 
-    def show_action_console(self):
-        self.action_console_frame = LabelFrame(
-            self.window,
-            text="action console")
-        self.action_console_frame.grid(
-                row=ACTION_CONSOLE_FRAME_ROW, 
-                column=ACTION_CONSOLE_FRAME_COLUMN,
-                rowspan=ACTION_CONSOLE_FRAME_ROWSPAN,
-                columnspan=ACTION_CONSOLE_FRAME_COLUMNSPAN,)
-            #   sticky="W")
-
-        self.show_text_fields(self.action_console_frame)
-        self.show_buttons(self.action_console_frame)
-
     
-    def show_text_fields(self, frame):
-        
-        # self.text_field_label_frame = LabelFrame(self.window)
-        # self.text_field_label_frame.grid(
-        #         row=TEXT_FIELD_FRAME_ROW, 
-        #         column=TEXT_FIELD_FRAME_COLUMN,
-        #         rowspan=TEXT_FIELD_ROWSPAN,
-        #         columnspan=TEXT_FIELD_FRAME_COLUMNSPAN,)
-        
-        self.text_field_labels = LabelFrame(frame)
-        self.text_fields = LabelFrame(frame)
+    def show_text_fields(self):
+
+        self.text_field_label_frame = LabelFrame(self.window)
+        self.text_field_label_frame.grid(
+                row=7, 
+                column=2,
+                rowspan=3,
+                columnspan=7, 
+                sticky="W")
+
+        self.text_field_labels = LabelFrame(self.text_field_label_frame)
+        self.text_field_label_frame_text_fields = LabelFrame(self.text_field_label_frame)
 
 
         """TEXT FIELD LABELS"""
         self.text_field_labels.grid(
-                row=TEXT_FIELD_LABEL_FRAME_ROW, 
-                column=TEXT_FIELD_LABEL_FRAME_ROW, 
-                padx=ACTION_CONSOLE_FRAME_INNER_PADDING_X,
-                pady=ACTION_CONSOLE_FRAME_INNER_PADDING_Y)
+                row=0, 
+                column=0)
 
         self.input_geofence_label = Label(
             self.text_field_labels, 
             text="Input Geofence")
         self.input_geofence_label.pack(
-            padx=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_Y)
+            padx=5,
+            pady=5)
 
         self.input_tlat_label = Label(
             self.text_field_labels, 
             text="Input Target Lat")
         self.input_tlat_label.pack(
-            padx=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_Y)
+            padx=5,
+            pady=5)
 
 
         self.input_tlat_label = Label(
             self.text_field_labels, 
             text="Input Target Lon")
         self.input_tlat_label.pack(
-            padx=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_Y)
+            padx=5,
+            pady=5)
 
 
         """TEXT FIELDS"""
-        self.text_fields.grid(
-                row=TEXT_FIELDS_FRAME_ROW, 
-                column=TEXT_FIELDS_FRAME_COLUMN, 
-                padx=ACTION_CONSOLE_FRAME_INNER_PADDING_X,
-                pady=ACTION_CONSOLE_FRAME_INNER_PADDING_Y)
+        self.text_field_label_frame_text_fields.grid(
+                row=0, 
+                column=1)
 
         self.input_geofence = StringVar()
         self.input_geofence_textbox = Entry(
-            self.text_fields, 
+            self.text_field_label_frame_text_fields, 
             textvariable=self.input_geofence)
         self.input_geofence_textbox.pack(
-            padx=TEXT_FIELDS_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELDS_FRAME_INNER_PADDING_Y)
+            padx=5,
+            pady=5)
 
         self.input_tlat = StringVar()
         self.input_tlat_textbox = Entry(
-            self.text_fields, 
+            self.text_field_label_frame_text_fields, 
             textvariable=self.input_tlat)
         self.input_tlat_textbox.pack(
-            padx=TEXT_FIELDS_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELDS_FRAME_INNER_PADDING_Y)
+            padx=5,
+            pady=5)
 
         self.input_tlon = StringVar()
         self.input_tlon_textbox = Entry(
-            self.text_fields, 
+            self.text_field_label_frame_text_fields, 
             textvariable=self.input_tlon)
         self.input_tlon_textbox.pack(
-            padx=TEXT_FIELDS_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELDS_FRAME_INNER_PADDING_Y)
+            padx=5,
+            pady=5)
 
         self.input_geofence.set("2.0")
         self.input_tlat.set("43.6587021")
@@ -219,60 +202,37 @@ class gui(Thread):
 
         self.base_node.cancel_miniwalk_goal()
         
-    def show_buttons(self, frame):
+    def show_buttons(self):
         #button pub sub buttons
         
-        self.button_label_frame = LabelFrame(frame)
+        self.button_label_frame = LabelFrame(self.window)
 
         self.button_label_frame.grid(
-                row=BUTTON_FRAME_ROW, 
-                column=BUTTON_FRAME_COLUMN,
-                rowspan=BUTTON_FRAME_ROWSPAN,
-                columnspan=BUTTON_FRAME_COLUMNSPAN,
-                padx=ACTION_CONSOLE_FRAME_INNER_PADDING_X,
-                pady=ACTION_CONSOLE_FRAME_INNER_PADDING_Y)
-
-
-        self.action_button_2 = Button(
-            self.button_label_frame, 
-            text="  Do MiniWalk  ",  
-            command=self.action_button_2).grid(
-                row=ACTION_CONSOLE_BUTTON_MATRIX[0][0],
-                column=ACTION_CONSOLE_BUTTON_MATRIX[0][1],
-                padx=BUTTON_FRAME_INNER_PADDING_X,
-                pady=BUTTON_FRAME_INNER_PADDING_Y,)
-
-        self.cancel_action_button = Button(
-            self.button_label_frame, 
-            text="Cancel MiniWalk",  
-            command=self.cancel_action_button_1).grid(
-                row=ACTION_CONSOLE_BUTTON_MATRIX[1][0],
-                column=ACTION_CONSOLE_BUTTON_MATRIX[1][1],
-                padx=BUTTON_FRAME_INNER_PADDING_X,
-                pady=BUTTON_FRAME_INNER_PADDING_Y,)
-
+                row=7, 
+                column=5,
+                rowspan=3,
+                columnspan=4)
 
         self.pub_button = Button(
             self.button_label_frame, 
-            text=" Stop/Standby", 
-            command=self.simple_pub_button_1).grid(
-                row=ACTION_CONSOLE_BUTTON_MATRIX[2][0],
-                column=ACTION_CONSOLE_BUTTON_MATRIX[2][1],
-                padx=BUTTON_FRAME_INNER_PADDING_X,
-                pady=BUTTON_FRAME_INNER_PADDING_Y,
-            )
+            text="Send Simple Pub", 
+            command=self.simple_pub_button_1).pack()
             
         #action service buttons
         self.action_button = Button(
             self.button_label_frame, 
-            text="  Do Teleop  ",  
-            command=self.action_button_1).grid(
-                row=ACTION_CONSOLE_BUTTON_MATRIX[3][0],
-                column=ACTION_CONSOLE_BUTTON_MATRIX[3][1],
-                padx=BUTTON_FRAME_INNER_PADDING_X,
-                pady=BUTTON_FRAME_INNER_PADDING_Y,)
+            text="Do Teleop",  
+            command=self.action_button_1).pack()
 
-        
+        self.action_button_2 = Button(
+            self.button_label_frame, 
+            text="Do MiniWalk",  
+            command=self.action_button_2).pack()
+
+        self.cancel_action_button = Button(
+            self.button_label_frame, 
+            text="Cancel MiniWalk",  
+            command=self.cancel_action_button_1).pack()
     
     def show_scroll(self):
         
@@ -281,10 +241,10 @@ class gui(Thread):
             text="feed")
         
         self.scroll_frame.grid(
-                row=SCROLL_FRAME_ROW, 
-                column=SCROLL_FRAME_COLUMN,
-                rowspan=SCROLL_FRAME_ROWSPAN,
-                columnspan=SCROLL_FRAME_COLUMNSPAN)
+                row=0, 
+                column=5,
+                rowspan=2,
+                columnspan=3)
         
         self.event_scroll = scrolledtext.ScrolledText(
             self.scroll_frame, 
@@ -356,6 +316,8 @@ class gui(Thread):
         
         self.show_scroll()
 
-        self.show_action_console()
+        self.show_text_fields()
+        self.show_buttons()
 
+        self.show_status_bar()
     

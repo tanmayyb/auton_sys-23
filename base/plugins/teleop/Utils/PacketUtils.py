@@ -1,6 +1,6 @@
 import socket
 
-from teleop_plugin.Utils.Consts import UDP_IP, UDP_PORT
+from plugins.teleop.Utils.Consts import UDP_IP, UDP_PORT
 
 __author__ = "Joshua Nelson"
 __copyright__ = "Copyright 2022, R3 - Ryerson RAMS Robotics"

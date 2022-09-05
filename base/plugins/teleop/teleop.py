@@ -5,8 +5,8 @@ from pygame.joystick import Joystick
 
 from threading import *
 
-from teleop.Utils.Consts import DRIFT_VAL, MAX, NEUTRAL, UDP_IP, UDP_PORT, WATCHDOG_TIME
-from teleop.Utils.ControllerUtils import ControllerTool
+from plugins.teleop.Utils.Consts import DRIFT_VAL, MAX, NEUTRAL, UDP_IP, UDP_PORT, WATCHDOG_TIME
+from plugins.teleop.Utils.ControllerUtils import ControllerTool
 # from Utils.PacketUtils import PacketTool
 
 """
