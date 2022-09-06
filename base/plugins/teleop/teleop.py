@@ -49,6 +49,8 @@ class teleop_processor(Thread):
 
         self.leftY_ = None 
         self.rightY_ = None
+
+        self.do_teleop = False
         
         self.parent = parent
 
@@ -203,11 +205,17 @@ class teleop_processor(Thread):
                     "rpwm": self.rightY,
                 }
                 self.leftY_, self.rightY_ = self.leftY, self.rightY
+                
+                self.parent.set_status_bar_speed_info(str(self.controllerTool.SPEED.speed()))
+                
                 if lastMsg != msg:
                     paren_controller_info_msg = f"  lpwm:{str(self.leftY_)}  rpwm: {str(self.rightY_)}"
                     self.parent.set_status_bar_controller_info("\t"+paren_controller_info_msg)
                     
                     msg = json.dumps(msg)
+
+                    if self.do_teleop == True:
+                        self.parent.send_pwm_msg(int(self.leftY_), int(self.rightY_))
                     # only needs to print/send the message if there is a change
                     # sender.sendto(msg.encode(), (UDP_IP, UDP_PORT))
                     #print("\tData: " + msg)
@@ -224,3 +232,6 @@ class teleop_processor(Thread):
 
     def get_pwms(self):
         return self.leftY_, self.rightY_
+
+    def do_teleop_func(self, value):
+        self.do_teleop = value

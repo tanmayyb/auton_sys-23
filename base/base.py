@@ -91,4 +91,8 @@ class baseNode(Node):
         
         self.parent.display_action_feedback("miniwalk_feedback", feedback, show_type = 1)
 
-        
+    def do_teleop(self, lpwm, rpwm):
+        msg = TankDriveMsg()
+        msg.lpwm=lpwm
+        msg.rpwm=rpwm
+        self.teensy_teleop.publish(msg)

@@ -17,6 +17,8 @@ import rclpy
 from rclpy.executors import MultiThreadedExecutor
 from plugins.teleop.teleop import teleop_processor
 
+import os
+
 
 class gui(Thread):
 
@@ -77,7 +79,9 @@ class gui(Thread):
 
 
     def show_map(self):
-        
+        script_directory = os.path.dirname(os.path.abspath(__file__))
+        database_path = os.path.join(script_directory,"database", "offline_tiles_tmu.db")
+
         self.map_frame = LabelFrame(
             self.window,
             text="map")
@@ -91,11 +95,15 @@ class gui(Thread):
             self.map_frame, 
             width=MAP_WIDTH, 
             height=MAP_HEIGHT, 
-            corner_radius=MAP_CORNER_RADIUS)
+            corner_radius=MAP_CORNER_RADIUS,
+            use_database_only=True,
+            max_zoom=19,
+            database_path=database_path)
 
         self.map_widget.grid(
-            row=0,
-            column=0)
+            row=MAP_WIDGET_ROW,
+            column=MAP_WIDGET_COLUMN,
+            sticky = MAP_STICKY)
 
         # set current widget position and zoom
         self.map_widget.set_position(
@@ -104,8 +112,21 @@ class gui(Thread):
         self.map_widget.set_marker(
             43.65897373429778, 
             -79.37932931217927, 
-            text="Ryerson Uni")
-        self.map_widget.set_zoom(20)
+            text="TMU")
+        self.map_widget.set_zoom(19)
+
+
+        self.map_widget.add_right_click_menu_command(label="load coordinates",
+                                        command=self.load_coords,
+                                        pass_coords=True)
+
+        # self.map_widget.add_right_click_menu_command(label="go here",
+        #                         command=self.load_coords,
+        #                         pass_coords=True)
+
+    def load_coords(self, coords):
+        self.input_tlat.set(str(coords[0]))
+        self.input_tlon.set(str(coords[1]))
 
     def show_action_console(self):
         self.action_console_frame = LabelFrame(
@@ -120,6 +141,7 @@ class gui(Thread):
 
         self.show_text_fields(self.action_console_frame)
         self.show_buttons(self.action_console_frame)
+        self.show_rover_info_labels(self.action_console_frame)
 
     
     def show_text_fields(self, frame):
@@ -197,20 +219,33 @@ class gui(Thread):
         #43.6587021
         #-79.3792810
         
-    def simple_pub_button_1(self):
-        self.base_node.do_pub()    #fix message type
+    def do_teleop_button_4(self):
+        #stop/standby everything
+        self.teleop.do_teleop_func(True)    #fix message type
 
-    def action_button_1(self):
-        self.base_node.send_goal(10)
+    def stop_standby_button_3(self):
+        #self.base_node.send_goal(10)
+        self.teleop.do_teleop_func(False)    #fix message type
+        self.base_node.do_teleop(127,127)
+        try:
+            self.base_node.cancel_miniwalk_goal()
+        except:
+            print("no goal set")
 
-    def action_button_2(self):
+
+    def miniwalk_action_button_1(self):
         self.base_node.send_goal_miniwalk(
             float(self.input_tlat.get()),
             float(self.input_tlon.get()))
     
-    def cancel_action_button_1(self):
-
+    def cancel_action_button_2(self):
         self.base_node.cancel_miniwalk_goal()
+
+    def send_pwm_msg(self, lpwm, rpwm):
+        self.base_node.do_teleop(lpwm, rpwm)
+
+    
+
         
     def show_buttons(self, frame):
         #button pub sub buttons
@@ -229,7 +264,7 @@ class gui(Thread):
         self.action_button_2 = Button(
             self.button_label_frame, 
             text="  Do MiniWalk  ",  
-            command=self.action_button_2).grid(
+            command=self.miniwalk_action_button_1).grid(
                 row=ACTION_CONSOLE_BUTTON_MATRIX[0][0],
                 column=ACTION_CONSOLE_BUTTON_MATRIX[0][1],
                 padx=BUTTON_FRAME_INNER_PADDING_X,
@@ -238,7 +273,7 @@ class gui(Thread):
         self.cancel_action_button = Button(
             self.button_label_frame, 
             text="Cancel MiniWalk",  
-            command=self.cancel_action_button_1).grid(
+            command=self.cancel_action_button_2).grid(
                 row=ACTION_CONSOLE_BUTTON_MATRIX[1][0],
                 column=ACTION_CONSOLE_BUTTON_MATRIX[1][1],
                 padx=BUTTON_FRAME_INNER_PADDING_X,
@@ -248,7 +283,7 @@ class gui(Thread):
         self.pub_button = Button(
             self.button_label_frame, 
             text=" Stop/Standby", 
-            command=self.simple_pub_button_1).grid(
+            command=self.stop_standby_button_3).grid(
                 row=ACTION_CONSOLE_BUTTON_MATRIX[2][0],
                 column=ACTION_CONSOLE_BUTTON_MATRIX[2][1],
                 padx=BUTTON_FRAME_INNER_PADDING_X,
@@ -259,11 +294,49 @@ class gui(Thread):
         self.action_button = Button(
             self.button_label_frame, 
             text="  Do Teleop  ",  
-            command=self.action_button_1).grid(
+            command=self.do_teleop_button_4).grid(
                 row=ACTION_CONSOLE_BUTTON_MATRIX[3][0],
                 column=ACTION_CONSOLE_BUTTON_MATRIX[3][1],
                 padx=BUTTON_FRAME_INNER_PADDING_X,
                 pady=BUTTON_FRAME_INNER_PADDING_Y,)
+
+    def show_rover_info_labels(self, frame):
+        self.rover_info_label_frame = LabelFrame(frame)
+
+        self.rover_info_label_frame.grid(
+                row=ROVER_INFO_LABEL_FRAME_ROW, 
+                column=ROVER_INFO_LABEL_FRAME_COLUMN,
+                rowspan=ROVER_INFO_LABEL_FRAME_ROWSPAN,
+                columnspan=ROVER_INFO_LABEL_FRAME_COLUMNSPAN,
+                padx=ROVER_INFO_FRAME_INNER_PADDING_X,
+                pady=ROVER_INFO_FRAME_INNER_PADDING_Y)
+
+        self.rover_lat_label = Label(
+            self.rover_info_label_frame,
+            text="rlat:\t\t")
+        self.rover_lat_label.grid(
+            row=ROVER_LAT_LABEL_ROW,
+            column=ROVER_LAT_LABEL_COLUMN,
+            padx=ROVER_LAT_LABEL_PADDING_X,
+            pady=ROVER_LAT_LABEL_PADDING_Y)
+
+        self.rover_lon_label = Label(
+            self.rover_info_label_frame,
+            text="rlon:\t\t")
+        self.rover_lon_label.grid(
+            row=ROVER_LON_LABEL_ROW,
+            column=ROVER_LON_LABEL_COLUMN,
+            padx=ROVER_LON_LABEL_PADDING_X,
+            pady=ROVER_LON_LABEL_PADDING_Y)
+
+        self.rover_arb_label = Label(
+            self.rover_info_label_frame,
+            text="arb:\t\t")
+        self.rover_arb_label.grid(
+            row=ROVER_ARB_LABEL_ROW,
+            column=ROVER_ARB_LABEL_COLUMN,
+            padx=ROVER_ARB_LABEL_PADDING_X,
+            pady=ROVER_ARB_LABEL_PADDING_Y)
 
         
     
@@ -347,21 +420,31 @@ class gui(Thread):
 
         self.controller_info = Label(
             self.status_bar_frame,
-            text="Info")
+            text="\tInfo")
         
         self.controller_info.pack(
             padx=5, 
             pady=5,
             side=LEFT)
 
+        self.teleop_speed_info = Label(
+            self.status_bar_frame,
+            text="Speed:\t \t")
+        
+        self.teleop_speed_info.pack(
+            padx=5, 
+            pady=5,
+            side=RIGHT)
+
 
     def set_status_bar_controller_state(self, msg):
         self.controller_status.configure(text="Controller Status: "+msg)
 
     def set_status_bar_controller_info(self, msg):
-        self.controller_info.configure(text="Info: "+msg)
+        self.controller_info.configure(text="\tInfo: "+msg)
 
-
+    def set_status_bar_speed_info(self, msg):
+        self.teleop_speed_info.configure(text="Speed:\t"+msg+"\t")
 
 
 

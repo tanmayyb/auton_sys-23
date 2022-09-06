@@ -1,8 +1,12 @@
+
+#import os
+#os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 1
+
+from os import environ
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
+
 import pygame
 from pygame.joystick import Joystick
-
-import os
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
 from plugins.teleop.Utils.Consts import BUMPER_VAL, DEFAULT_DRIVE_SPEED, DRIFT_VAL, MAX, MIN, NEUTRAL
 from plugins.teleop.Utils.ControllerMapping import Mapping
@@ -42,7 +46,8 @@ class ControllerTool:
         to use by pressing a button on the preferred device
         :return: Controller (Joystick)
         """
-        print("Initializing Hardware")
+        
+        if self.verbose: print("Initializing Hardware")
 
         pygame.joystick.init()
 
@@ -63,14 +68,14 @@ class ControllerTool:
         # assigning button mappings
         self.__assigningButtonMappings(ctr.get_name())
 
-        print("The following Controller will be used")
+        if self.verbose: print("The following Controller will be used")
         self.__displayControllerInfo(ctr)
-        print("The Controller is ready for use!")
+        print("controller ready for use")
 
         return ctr
 
     def __assigningButtonMappings(self, name: str):
-        print("Attempting to map buttons for " + name + "...")
+        if self.verbose: print("Attempting to map buttons for " + name + "...")
         if name == "Controller (XBOX 360 For Windows)":
             self.__mapXBOX360()
         elif name == "PS4 Controller":
