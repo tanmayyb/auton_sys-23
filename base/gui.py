@@ -7,7 +7,7 @@ import tkintermapview
 from threading import *
 import time
 
-from base import baseNode
+from base.base import baseNode
 
 from settings.window import *
 from settings.grid import *
