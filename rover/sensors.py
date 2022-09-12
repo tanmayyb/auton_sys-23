@@ -14,7 +14,7 @@ class SensorPub(Node):
     def __init__(self):
         super().__init__('nav_sensors_node')
         
-        sudoPassword = 'ros-vm'
+        sudoPassword = 'jetson'
         command = 'chmod 666 /dev/ttyUSB0'
         devpath = '/dev/ttyUSB0'
         self.vn = None
@@ -41,7 +41,7 @@ class SensorPub(Node):
                 time.sleep(1)
 
         self.publisher = self.create_publisher(
-            Point(),
+            Point,
             'nav_sensor_data',
             10)
 
@@ -52,17 +52,21 @@ class SensorPub(Node):
     def timer_callback(self):
         """READ SENSOR DATA"""
 
-        lat = self.vn.gps_lla().x,
-        lon = self.vn.gps_lla().y,
-        yaw = self.vn.ypr().x
+        lat = self.gps_lla().x,
+        lon = self.gps_lla().y,
+        yaw = self.ypr().x
+
+        #print(lat, lon, yaw, type(lat), type(lon), type(yaw))
 
         """PUBLISH SENSOR DATA"""
         msg = Point()
-        msg.x = lat
-        msg.y = lon
-        msg.z = yaw
-
+        msg.x = float(lat[0])
+        msg.y = float(lon[0])
+        msg.z = float(yaw)
+        
         self.publisher.publish(msg)
+        print(msg)
+
     
     def ypr(self):
         return self.vn.read_yaw_pitch_roll()
