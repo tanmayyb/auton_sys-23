@@ -6,8 +6,6 @@ from rclpy.timer import Timer
 from rclpy.executors import MultiThreadedExecutor
 from geometry_msgs.msg import Point
 
-
-
 from vnpy import *
 import time, os
 

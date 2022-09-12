@@ -82,6 +82,8 @@ class ControllerTool:
             self.__mapPS4()
         elif name == "Controller (Gamepad F310)":
             self.__mapGamepadF310()
+        elif name == "Logitech Gamepad F310":
+            self.__mapGamepadF310()
         elif name == "Xbox One S Controller":
             self.__mapXBOX360()
             
