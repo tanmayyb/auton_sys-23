@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_FLAGS = -fPIC   -Wall -std=gnu++14
 
-CXX_DEFINES = -DROS_PACKAGE_NAME=\"rover_utils\" -Drover_utils__rosidl_typesupport_cpp_EXPORTS
+CXX_DEFINES = -DRCUTILS_ENABLE_FAULT_INJECTION -DROS_PACKAGE_NAME=\"rover_utils\" -Drover_utils__rosidl_typesupport_cpp_EXPORTS
 
-CXX_INCLUDES = -I/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_cpp -isystem /home/ros-vm/ros2_foxy/ros2-linux/include 
+CXX_INCLUDES = -I/home/jetson/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_cpp -isystem /opt/ros/foxy/include 
 

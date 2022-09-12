@@ -1,7 +1,7 @@
 {
   "package_name": "rover_utils",
   "non_idl_tuples": [
-    "/home/ros-vm/github/auton_sys-23/utils/src/rover_utils:action/MinimalWalk.action",
-    "/home/ros-vm/github/auton_sys-23/utils/src/rover_utils:msg/TankDriveMsg.msg"
+    "/home/jetson/github/auton_sys-23/utils/src/rover_utils:action/MinimalWalk.action",
+    "/home/jetson/github/auton_sys-23/utils/src/rover_utils:msg/TankDriveMsg.msg"
   ]
 }

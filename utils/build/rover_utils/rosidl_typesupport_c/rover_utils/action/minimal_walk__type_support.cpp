@@ -23,12 +23,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _MinimalWalk_Goal_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _MinimalWalk_Goal_type_support_ids_t;
 
 static const _MinimalWalk_Goal_type_support_ids_t _MinimalWalk_Goal_message_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -36,7 +35,7 @@ static const _MinimalWalk_Goal_type_support_ids_t _MinimalWalk_Goal_message_type
 
 typedef struct _MinimalWalk_Goal_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _MinimalWalk_Goal_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -44,7 +43,6 @@ typedef struct _MinimalWalk_Goal_type_support_symbol_names_t
 
 static const _MinimalWalk_Goal_type_support_symbol_names_t _MinimalWalk_Goal_message_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_connext_c, rover_utils, action, MinimalWalk_Goal)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, rover_utils, action, MinimalWalk_Goal)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_Goal)),
   }
@@ -52,19 +50,18 @@ static const _MinimalWalk_Goal_type_support_symbol_names_t _MinimalWalk_Goal_mes
 
 typedef struct _MinimalWalk_Goal_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _MinimalWalk_Goal_type_support_data_t;
 
 static _MinimalWalk_Goal_type_support_data_t _MinimalWalk_Goal_message_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _MinimalWalk_Goal_message_typesupport_map = {
-  3,
+  2,
   "rover_utils",
   &_MinimalWalk_Goal_message_typesupport_ids.typesupport_identifier[0],
   &_MinimalWalk_Goal_message_typesupport_symbol_names.symbol_name[0],
@@ -128,12 +125,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _MinimalWalk_Result_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _MinimalWalk_Result_type_support_ids_t;
 
 static const _MinimalWalk_Result_type_support_ids_t _MinimalWalk_Result_message_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -141,7 +137,7 @@ static const _MinimalWalk_Result_type_support_ids_t _MinimalWalk_Result_message_
 
 typedef struct _MinimalWalk_Result_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _MinimalWalk_Result_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -149,7 +145,6 @@ typedef struct _MinimalWalk_Result_type_support_symbol_names_t
 
 static const _MinimalWalk_Result_type_support_symbol_names_t _MinimalWalk_Result_message_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_connext_c, rover_utils, action, MinimalWalk_Result)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, rover_utils, action, MinimalWalk_Result)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_Result)),
   }
@@ -157,19 +152,18 @@ static const _MinimalWalk_Result_type_support_symbol_names_t _MinimalWalk_Result
 
 typedef struct _MinimalWalk_Result_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _MinimalWalk_Result_type_support_data_t;
 
 static _MinimalWalk_Result_type_support_data_t _MinimalWalk_Result_message_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _MinimalWalk_Result_message_typesupport_map = {
-  3,
+  2,
   "rover_utils",
   &_MinimalWalk_Result_message_typesupport_ids.typesupport_identifier[0],
   &_MinimalWalk_Result_message_typesupport_symbol_names.symbol_name[0],
@@ -233,12 +227,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _MinimalWalk_Feedback_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _MinimalWalk_Feedback_type_support_ids_t;
 
 static const _MinimalWalk_Feedback_type_support_ids_t _MinimalWalk_Feedback_message_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -246,7 +239,7 @@ static const _MinimalWalk_Feedback_type_support_ids_t _MinimalWalk_Feedback_mess
 
 typedef struct _MinimalWalk_Feedback_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _MinimalWalk_Feedback_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -254,7 +247,6 @@ typedef struct _MinimalWalk_Feedback_type_support_symbol_names_t
 
 static const _MinimalWalk_Feedback_type_support_symbol_names_t _MinimalWalk_Feedback_message_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_connext_c, rover_utils, action, MinimalWalk_Feedback)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, rover_utils, action, MinimalWalk_Feedback)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_Feedback)),
   }
@@ -262,19 +254,18 @@ static const _MinimalWalk_Feedback_type_support_symbol_names_t _MinimalWalk_Feed
 
 typedef struct _MinimalWalk_Feedback_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _MinimalWalk_Feedback_type_support_data_t;
 
 static _MinimalWalk_Feedback_type_support_data_t _MinimalWalk_Feedback_message_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _MinimalWalk_Feedback_message_typesupport_map = {
-  3,
+  2,
   "rover_utils",
   &_MinimalWalk_Feedback_message_typesupport_ids.typesupport_identifier[0],
   &_MinimalWalk_Feedback_message_typesupport_symbol_names.symbol_name[0],
@@ -338,12 +329,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _MinimalWalk_SendGoal_Request_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _MinimalWalk_SendGoal_Request_type_support_ids_t;
 
 static const _MinimalWalk_SendGoal_Request_type_support_ids_t _MinimalWalk_SendGoal_Request_message_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -351,7 +341,7 @@ static const _MinimalWalk_SendGoal_Request_type_support_ids_t _MinimalWalk_SendG
 
 typedef struct _MinimalWalk_SendGoal_Request_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _MinimalWalk_SendGoal_Request_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -359,7 +349,6 @@ typedef struct _MinimalWalk_SendGoal_Request_type_support_symbol_names_t
 
 static const _MinimalWalk_SendGoal_Request_type_support_symbol_names_t _MinimalWalk_SendGoal_Request_message_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_connext_c, rover_utils, action, MinimalWalk_SendGoal_Request)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, rover_utils, action, MinimalWalk_SendGoal_Request)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_SendGoal_Request)),
   }
@@ -367,19 +356,18 @@ static const _MinimalWalk_SendGoal_Request_type_support_symbol_names_t _MinimalW
 
 typedef struct _MinimalWalk_SendGoal_Request_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _MinimalWalk_SendGoal_Request_type_support_data_t;
 
 static _MinimalWalk_SendGoal_Request_type_support_data_t _MinimalWalk_SendGoal_Request_message_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _MinimalWalk_SendGoal_Request_message_typesupport_map = {
-  3,
+  2,
   "rover_utils",
   &_MinimalWalk_SendGoal_Request_message_typesupport_ids.typesupport_identifier[0],
   &_MinimalWalk_SendGoal_Request_message_typesupport_symbol_names.symbol_name[0],
@@ -443,12 +431,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _MinimalWalk_SendGoal_Response_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _MinimalWalk_SendGoal_Response_type_support_ids_t;
 
 static const _MinimalWalk_SendGoal_Response_type_support_ids_t _MinimalWalk_SendGoal_Response_message_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -456,7 +443,7 @@ static const _MinimalWalk_SendGoal_Response_type_support_ids_t _MinimalWalk_Send
 
 typedef struct _MinimalWalk_SendGoal_Response_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _MinimalWalk_SendGoal_Response_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -464,7 +451,6 @@ typedef struct _MinimalWalk_SendGoal_Response_type_support_symbol_names_t
 
 static const _MinimalWalk_SendGoal_Response_type_support_symbol_names_t _MinimalWalk_SendGoal_Response_message_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_connext_c, rover_utils, action, MinimalWalk_SendGoal_Response)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, rover_utils, action, MinimalWalk_SendGoal_Response)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_SendGoal_Response)),
   }
@@ -472,19 +458,18 @@ static const _MinimalWalk_SendGoal_Response_type_support_symbol_names_t _Minimal
 
 typedef struct _MinimalWalk_SendGoal_Response_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _MinimalWalk_SendGoal_Response_type_support_data_t;
 
 static _MinimalWalk_SendGoal_Response_type_support_data_t _MinimalWalk_SendGoal_Response_message_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _MinimalWalk_SendGoal_Response_message_typesupport_map = {
-  3,
+  2,
   "rover_utils",
   &_MinimalWalk_SendGoal_Response_message_typesupport_ids.typesupport_identifier[0],
   &_MinimalWalk_SendGoal_Response_message_typesupport_symbol_names.symbol_name[0],
@@ -542,12 +527,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _MinimalWalk_SendGoal_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _MinimalWalk_SendGoal_type_support_ids_t;
 
 static const _MinimalWalk_SendGoal_type_support_ids_t _MinimalWalk_SendGoal_service_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -555,7 +539,7 @@ static const _MinimalWalk_SendGoal_type_support_ids_t _MinimalWalk_SendGoal_serv
 
 typedef struct _MinimalWalk_SendGoal_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _MinimalWalk_SendGoal_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -563,7 +547,6 @@ typedef struct _MinimalWalk_SendGoal_type_support_symbol_names_t
 
 static const _MinimalWalk_SendGoal_type_support_symbol_names_t _MinimalWalk_SendGoal_service_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_connext_c, rover_utils, action, MinimalWalk_SendGoal)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, rover_utils, action, MinimalWalk_SendGoal)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_SendGoal)),
   }
@@ -571,19 +554,18 @@ static const _MinimalWalk_SendGoal_type_support_symbol_names_t _MinimalWalk_Send
 
 typedef struct _MinimalWalk_SendGoal_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _MinimalWalk_SendGoal_type_support_data_t;
 
 static _MinimalWalk_SendGoal_type_support_data_t _MinimalWalk_SendGoal_service_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _MinimalWalk_SendGoal_service_typesupport_map = {
-  3,
+  2,
   "rover_utils",
   &_MinimalWalk_SendGoal_service_typesupport_ids.typesupport_identifier[0],
   &_MinimalWalk_SendGoal_service_typesupport_symbol_names.symbol_name[0],
@@ -647,12 +629,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _MinimalWalk_GetResult_Request_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _MinimalWalk_GetResult_Request_type_support_ids_t;
 
 static const _MinimalWalk_GetResult_Request_type_support_ids_t _MinimalWalk_GetResult_Request_message_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -660,7 +641,7 @@ static const _MinimalWalk_GetResult_Request_type_support_ids_t _MinimalWalk_GetR
 
 typedef struct _MinimalWalk_GetResult_Request_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _MinimalWalk_GetResult_Request_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -668,7 +649,6 @@ typedef struct _MinimalWalk_GetResult_Request_type_support_symbol_names_t
 
 static const _MinimalWalk_GetResult_Request_type_support_symbol_names_t _MinimalWalk_GetResult_Request_message_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_connext_c, rover_utils, action, MinimalWalk_GetResult_Request)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, rover_utils, action, MinimalWalk_GetResult_Request)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_GetResult_Request)),
   }
@@ -676,19 +656,18 @@ static const _MinimalWalk_GetResult_Request_type_support_symbol_names_t _Minimal
 
 typedef struct _MinimalWalk_GetResult_Request_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _MinimalWalk_GetResult_Request_type_support_data_t;
 
 static _MinimalWalk_GetResult_Request_type_support_data_t _MinimalWalk_GetResult_Request_message_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _MinimalWalk_GetResult_Request_message_typesupport_map = {
-  3,
+  2,
   "rover_utils",
   &_MinimalWalk_GetResult_Request_message_typesupport_ids.typesupport_identifier[0],
   &_MinimalWalk_GetResult_Request_message_typesupport_symbol_names.symbol_name[0],
@@ -752,12 +731,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _MinimalWalk_GetResult_Response_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _MinimalWalk_GetResult_Response_type_support_ids_t;
 
 static const _MinimalWalk_GetResult_Response_type_support_ids_t _MinimalWalk_GetResult_Response_message_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -765,7 +743,7 @@ static const _MinimalWalk_GetResult_Response_type_support_ids_t _MinimalWalk_Get
 
 typedef struct _MinimalWalk_GetResult_Response_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _MinimalWalk_GetResult_Response_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -773,7 +751,6 @@ typedef struct _MinimalWalk_GetResult_Response_type_support_symbol_names_t
 
 static const _MinimalWalk_GetResult_Response_type_support_symbol_names_t _MinimalWalk_GetResult_Response_message_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_connext_c, rover_utils, action, MinimalWalk_GetResult_Response)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, rover_utils, action, MinimalWalk_GetResult_Response)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_GetResult_Response)),
   }
@@ -781,19 +758,18 @@ static const _MinimalWalk_GetResult_Response_type_support_symbol_names_t _Minima
 
 typedef struct _MinimalWalk_GetResult_Response_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _MinimalWalk_GetResult_Response_type_support_data_t;
 
 static _MinimalWalk_GetResult_Response_type_support_data_t _MinimalWalk_GetResult_Response_message_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _MinimalWalk_GetResult_Response_message_typesupport_map = {
-  3,
+  2,
   "rover_utils",
   &_MinimalWalk_GetResult_Response_message_typesupport_ids.typesupport_identifier[0],
   &_MinimalWalk_GetResult_Response_message_typesupport_symbol_names.symbol_name[0],
@@ -853,12 +829,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _MinimalWalk_GetResult_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _MinimalWalk_GetResult_type_support_ids_t;
 
 static const _MinimalWalk_GetResult_type_support_ids_t _MinimalWalk_GetResult_service_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -866,7 +841,7 @@ static const _MinimalWalk_GetResult_type_support_ids_t _MinimalWalk_GetResult_se
 
 typedef struct _MinimalWalk_GetResult_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _MinimalWalk_GetResult_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -874,7 +849,6 @@ typedef struct _MinimalWalk_GetResult_type_support_symbol_names_t
 
 static const _MinimalWalk_GetResult_type_support_symbol_names_t _MinimalWalk_GetResult_service_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_connext_c, rover_utils, action, MinimalWalk_GetResult)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, rover_utils, action, MinimalWalk_GetResult)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_GetResult)),
   }
@@ -882,19 +856,18 @@ static const _MinimalWalk_GetResult_type_support_symbol_names_t _MinimalWalk_Get
 
 typedef struct _MinimalWalk_GetResult_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _MinimalWalk_GetResult_type_support_data_t;
 
 static _MinimalWalk_GetResult_type_support_data_t _MinimalWalk_GetResult_service_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _MinimalWalk_GetResult_service_typesupport_map = {
-  3,
+  2,
   "rover_utils",
   &_MinimalWalk_GetResult_service_typesupport_ids.typesupport_identifier[0],
   &_MinimalWalk_GetResult_service_typesupport_symbol_names.symbol_name[0],
@@ -958,12 +931,11 @@ namespace rosidl_typesupport_c
 
 typedef struct _MinimalWalk_FeedbackMessage_type_support_ids_t
 {
-  const char * typesupport_identifier[3];
+  const char * typesupport_identifier[2];
 } _MinimalWalk_FeedbackMessage_type_support_ids_t;
 
 static const _MinimalWalk_FeedbackMessage_type_support_ids_t _MinimalWalk_FeedbackMessage_message_typesupport_ids = {
   {
-    "rosidl_typesupport_connext_c",  // ::rosidl_typesupport_connext_c::typesupport_identifier,
     "rosidl_typesupport_fastrtps_c",  // ::rosidl_typesupport_fastrtps_c::typesupport_identifier,
     "rosidl_typesupport_introspection_c",  // ::rosidl_typesupport_introspection_c::typesupport_identifier,
   }
@@ -971,7 +943,7 @@ static const _MinimalWalk_FeedbackMessage_type_support_ids_t _MinimalWalk_Feedba
 
 typedef struct _MinimalWalk_FeedbackMessage_type_support_symbol_names_t
 {
-  const char * symbol_name[3];
+  const char * symbol_name[2];
 } _MinimalWalk_FeedbackMessage_type_support_symbol_names_t;
 
 #define STRINGIFY_(s) #s
@@ -979,7 +951,6 @@ typedef struct _MinimalWalk_FeedbackMessage_type_support_symbol_names_t
 
 static const _MinimalWalk_FeedbackMessage_type_support_symbol_names_t _MinimalWalk_FeedbackMessage_message_typesupport_symbol_names = {
   {
-    STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_connext_c, rover_utils, action, MinimalWalk_FeedbackMessage)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, rover_utils, action, MinimalWalk_FeedbackMessage)),
     STRINGIFY(ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, rover_utils, action, MinimalWalk_FeedbackMessage)),
   }
@@ -987,19 +958,18 @@ static const _MinimalWalk_FeedbackMessage_type_support_symbol_names_t _MinimalWa
 
 typedef struct _MinimalWalk_FeedbackMessage_type_support_data_t
 {
-  void * data[3];
+  void * data[2];
 } _MinimalWalk_FeedbackMessage_type_support_data_t;
 
 static _MinimalWalk_FeedbackMessage_type_support_data_t _MinimalWalk_FeedbackMessage_message_typesupport_data = {
   {
     0,  // will store the shared library later
     0,  // will store the shared library later
-    0,  // will store the shared library later
   }
 };
 
 static const type_support_map_t _MinimalWalk_FeedbackMessage_message_typesupport_map = {
-  3,
+  2,
   "rover_utils",
   &_MinimalWalk_FeedbackMessage_message_typesupport_ids.typesupport_identifier[0],
   &_MinimalWalk_FeedbackMessage_message_typesupport_symbol_names.symbol_name[0],

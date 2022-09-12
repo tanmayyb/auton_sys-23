@@ -1,0 +1,161 @@
+[0.524s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.524s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f96106640>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=4, paths=None, symlink_install=False, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f96106640>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f96106b80>)
+[0.608s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.608s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.608s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.608s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.608s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.609s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.609s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/jetson/github/auton_sys-23/utils'
+[0.609s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.609s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.610s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.610s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.610s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.610s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.610s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.610s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.610s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.653s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.654s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.655s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.655s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.655s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.656s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.657s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.658s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/rover_utils) by extensions ['ignore', 'ignore_ament_install']
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/rover_utils) by extension 'ignore'
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/rover_utils) by extension 'ignore_ament_install'
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/rover_utils) by extensions ['colcon_pkg']
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/rover_utils) by extension 'colcon_pkg'
+[0.660s] Level 1:colcon.colcon_core.package_identification:_identify(src/rover_utils) by extensions ['colcon_meta']
+[0.660s] Level 1:colcon.colcon_core.package_identification:_identify(src/rover_utils) by extension 'colcon_meta'
+[0.660s] Level 1:colcon.colcon_core.package_identification:_identify(src/rover_utils) by extensions ['ros']
+[0.660s] Level 1:colcon.colcon_core.package_identification:_identify(src/rover_utils) by extension 'ros'
+[0.673s] DEBUG:colcon.colcon_core.package_identification:Package 'src/rover_utils' with type 'ros.ament_cmake' and name 'rover_utils'
+[0.674s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.674s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.674s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.674s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.674s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.776s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.776s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.780s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/jetson/github/auton_sys-23/utils/install/rover_utils' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.781s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/jetson/github/auton_sys-23/utils/install/rover_utils' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.785s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 0 installed packages in /home/jetson/github/auton_sys-23/utils/install
+[0.792s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 256 installed packages in /opt/ros/foxy
+[0.799s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[1.044s] Level 5:colcon.colcon_core.verb:set package 'rover_utils' build argument 'cmake_args' from command line to 'None'
+[1.044s] Level 5:colcon.colcon_core.verb:set package 'rover_utils' build argument 'cmake_target' from command line to 'None'
+[1.044s] Level 5:colcon.colcon_core.verb:set package 'rover_utils' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.044s] Level 5:colcon.colcon_core.verb:set package 'rover_utils' build argument 'cmake_clean_cache' from command line to 'False'
+[1.045s] Level 5:colcon.colcon_core.verb:set package 'rover_utils' build argument 'cmake_clean_first' from command line to 'False'
+[1.045s] Level 5:colcon.colcon_core.verb:set package 'rover_utils' build argument 'cmake_force_configure' from command line to 'False'
+[1.045s] Level 5:colcon.colcon_core.verb:set package 'rover_utils' build argument 'ament_cmake_args' from command line to 'None'
+[1.045s] Level 5:colcon.colcon_core.verb:set package 'rover_utils' build argument 'catkin_cmake_args' from command line to 'None'
+[1.045s] Level 5:colcon.colcon_core.verb:set package 'rover_utils' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.045s] DEBUG:colcon.colcon_core.verb:Building package 'rover_utils' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/jetson/github/auton_sys-23/utils/build/rover_utils', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/jetson/github/auton_sys-23/utils/install/rover_utils', 'merge_install': False, 'path': '/home/jetson/github/auton_sys-23/utils/src/rover_utils', 'symlink_install': False, 'test_result_base': None}
+[1.049s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[1.064s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[1.065s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/jetson/github/auton_sys-23/utils/src/rover_utils' with build type 'ament_cmake'
+[1.065s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/jetson/github/auton_sys-23/utils/src/rover_utils'
+[1.080s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[1.081s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.081s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.109s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/jetson/github/auton_sys-23/utils/build/rover_utils': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake /home/jetson/github/auton_sys-23/utils/src/rover_utils -DCMAKE_INSTALL_PREFIX=/home/jetson/github/auton_sys-23/utils/install/rover_utils
+[8.568s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/jetson/github/auton_sys-23/utils/build/rover_utils' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake /home/jetson/github/auton_sys-23/utils/src/rover_utils -DCMAKE_INSTALL_PREFIX=/home/jetson/github/auton_sys-23/utils/install/rover_utils
+[8.569s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/jetson/github/auton_sys-23/utils/build/rover_utils': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/jetson/github/auton_sys-23/utils/build/rover_utils -- -j4 -l4
+[24.525s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/jetson/github/auton_sys-23/utils/build/rover_utils' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/jetson/github/auton_sys-23/utils/build/rover_utils -- -j4 -l4
+[24.757s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/jetson/github/auton_sys-23/utils/build/rover_utils': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/jetson/github/auton_sys-23/utils/build/rover_utils
+[24.969s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(rover_utils)
+[24.972s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/jetson/github/auton_sys-23/utils/build/rover_utils' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/jetson/github/auton_sys-23/utils/build/rover_utils
+[24.988s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils' for CMake module files
+[24.991s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils' for CMake config files
+[24.993s] Level 1:colcon.colcon_core.shell:create_environment_hook('rover_utils', 'cmake_prefix_path')
+[24.998s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/cmake_prefix_path.ps1'
+[25.000s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/cmake_prefix_path.dsv'
+[25.001s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/cmake_prefix_path.sh'
+[25.004s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils/lib'
+[25.004s] Level 1:colcon.colcon_core.shell:create_environment_hook('rover_utils', 'ld_library_path_lib')
+[25.010s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/ld_library_path_lib.ps1'
+[25.011s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/ld_library_path_lib.dsv'
+[25.012s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/ld_library_path_lib.sh'
+[25.013s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils/bin'
+[25.014s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils/lib/pkgconfig/rover_utils.pc'
+[25.014s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages'
+[25.015s] Level 1:colcon.colcon_core.shell:create_environment_hook('rover_utils', 'pythonpath')
+[25.020s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/pythonpath.ps1'
+[25.022s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/pythonpath.dsv'
+[25.022s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/pythonpath.sh'
+[25.024s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils/bin'
+[25.031s] INFO:colcon.colcon_core.shell:Creating package script '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.ps1'
+[25.034s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.dsv'
+[25.037s] INFO:colcon.colcon_core.shell:Creating package script '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.sh'
+[25.039s] INFO:colcon.colcon_core.shell:Creating package script '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.bash'
+[25.042s] INFO:colcon.colcon_core.shell:Creating package script '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.zsh'
+[25.044s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/colcon-core/packages/rover_utils)
+[25.220s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(rover_utils)
+[25.228s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils' for CMake module files
+[25.231s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils' for CMake config files
+[25.234s] Level 1:colcon.colcon_core.shell:create_environment_hook('rover_utils', 'cmake_prefix_path')
+[25.239s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/cmake_prefix_path.ps1'
+[25.240s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/cmake_prefix_path.dsv'
+[25.241s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/cmake_prefix_path.sh'
+[25.243s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils/lib'
+[25.243s] Level 1:colcon.colcon_core.shell:create_environment_hook('rover_utils', 'ld_library_path_lib')
+[25.249s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/ld_library_path_lib.ps1'
+[25.250s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/ld_library_path_lib.dsv'
+[25.251s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/ld_library_path_lib.sh'
+[25.252s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils/bin'
+[25.252s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils/lib/pkgconfig/rover_utils.pc'
+[25.253s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils/lib/python3.8/site-packages'
+[25.253s] Level 1:colcon.colcon_core.shell:create_environment_hook('rover_utils', 'pythonpath')
+[25.258s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/pythonpath.ps1'
+[25.259s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/pythonpath.dsv'
+[25.260s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/hook/pythonpath.sh'
+[25.262s] Level 1:colcon.colcon_core.environment:checking '/home/jetson/github/auton_sys-23/utils/install/rover_utils/bin'
+[25.267s] INFO:colcon.colcon_core.shell:Creating package script '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.ps1'
+[25.269s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.dsv'
+[25.271s] INFO:colcon.colcon_core.shell:Creating package script '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.sh'
+[25.273s] INFO:colcon.colcon_core.shell:Creating package script '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.bash'
+[25.274s] INFO:colcon.colcon_core.shell:Creating package script '/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/rover_utils/package.zsh'
+[25.275s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/jetson/github/auton_sys-23/utils/install/rover_utils/share/colcon-core/packages/rover_utils)
+[25.276s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[25.277s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[25.277s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[25.277s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[25.297s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[25.298s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[25.298s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[25.321s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[25.328s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/jetson/github/auton_sys-23/utils/install/local_setup.ps1'
+[25.331s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/jetson/github/auton_sys-23/utils/install/_local_setup_util_ps1.py'
+[25.336s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/jetson/github/auton_sys-23/utils/install/setup.ps1'
+[25.341s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/jetson/github/auton_sys-23/utils/install/local_setup.sh'
+[25.343s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/jetson/github/auton_sys-23/utils/install/_local_setup_util_sh.py'
+[25.344s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/jetson/github/auton_sys-23/utils/install/setup.sh'
+[25.349s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/jetson/github/auton_sys-23/utils/install/local_setup.bash'
+[25.350s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/jetson/github/auton_sys-23/utils/install/setup.bash'
+[25.354s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/jetson/github/auton_sys-23/utils/install/local_setup.zsh'
+[25.356s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/jetson/github/auton_sys-23/utils/install/setup.zsh'

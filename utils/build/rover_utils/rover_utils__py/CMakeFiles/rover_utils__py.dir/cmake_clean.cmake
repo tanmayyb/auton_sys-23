@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "../rosidl_generator_py/rover_utils/_rover_utils_s.ep.rosidl_typesupport_c.c"
-  "../rosidl_generator_py/rover_utils/_rover_utils_s.ep.rosidl_typesupport_connext_c.c"
   "../rosidl_generator_py/rover_utils/_rover_utils_s.ep.rosidl_typesupport_fastrtps_c.c"
   "../rosidl_generator_py/rover_utils/_rover_utils_s.ep.rosidl_typesupport_introspection_c.c"
   "../rosidl_generator_py/rover_utils/action/__init__.py"

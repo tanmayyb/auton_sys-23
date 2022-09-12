@@ -1,8 +1,8 @@
-# Install script for directory: /home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rover_utils__py
+# Install script for directory: /home/jetson/github/auton_sys-23/utils/build/rover_utils/rover_utils__py
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/ros-vm/github/auton_sys-23/utils/install/rover_utils")
+  set(CMAKE_INSTALL_PREFIX "/home/jetson/github/auton_sys-23/utils/install/rover_utils")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

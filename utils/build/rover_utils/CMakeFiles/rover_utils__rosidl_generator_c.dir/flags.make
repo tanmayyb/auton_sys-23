@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_FLAGS = -fPIC   -Wall -std=gnu11
 
-C_DEFINES = -DROS_PACKAGE_NAME=\"rover_utils\" -Drover_utils__rosidl_generator_c_EXPORTS
+C_DEFINES = -DRCUTILS_ENABLE_FAULT_INJECTION -DROS_PACKAGE_NAME=\"rover_utils\" -Drover_utils__rosidl_generator_c_EXPORTS
 
-C_INCLUDES = -I/home/ros-vm/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c -isystem /home/ros-vm/ros2_foxy/ros2-linux/include 
+C_INCLUDES = -I/home/jetson/github/auton_sys-23/utils/build/rover_utils/rosidl_generator_c -isystem /opt/ros/foxy/include 
 
