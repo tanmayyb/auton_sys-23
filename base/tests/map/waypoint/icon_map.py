@@ -17,9 +17,12 @@ import tkinter as tk
 from tkinter import ANCHOR, ttk
 
 
-python_image = tk.PhotoImage(file='dot.png')
+#python_image = tk.PhotoImage(file='dot.png')
 
-home = map_widget.set_marker(43.65897373429778, -79.37932931217927, text="Ryerson Uni", image=python_image)
+#home = map_widget.set_marker(43.65897373429778, -79.37932931217927, text="Ryerson Uni", image=python_image)
+
+home = map_widget.set_marker(43.65897373429778, -79.37932931217927, text="Ryerson Uni")
+
 
 map_widget.set_zoom(20)
 
@@ -33,17 +36,26 @@ path = None
 def add_marker_event(coords):
     print("Add marker:", coords)
     global waypoint, path, markers
+    
     waypoint = waypoint+1
+    
     new_marker = map_widget.set_marker(coords[0], coords[1], text="wp: "+str(waypoint))
     markers.append(new_marker)
 
     if waypoint==1:
         path = map_widget.set_path([home.position,markers[0].position])
     if waypoint>1:
-        x = markers[-1].position[0]
-        y = markers[-1].position[1]
+        x = markers[waypoint-1].position[0]
+        y = markers[waypoint-1].position[1]
         print(x,y)
         path.add_position(x,y)
+
+        
+        path.add_position(x,y)
+        path.remove_position(x,y)
+
+
+
         
 
 def del_marker_event():

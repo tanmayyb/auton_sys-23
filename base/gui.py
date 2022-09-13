@@ -24,14 +24,21 @@ class gui(Thread):
 
     def __init__(self, window):
         Thread.__init__(self)
-        """
-        0 1 2 3 4 respectively
-        """
+        
+        
         self.state_array = ["Initializing","Standby/Idle","Moving","Manual"] 
-        self.state = None
+        
+        
+        """ MAPS AND WAYPOINTS"""
 
+        self.waypoints = 0
+        self.markers = []
+        self.path = None
+        
         self.window = window
         
+        self.home = (TMU_LAT, TMU_LON)
+
         self.setup_window()
         self.draw_gui()
 
@@ -80,7 +87,10 @@ class gui(Thread):
 
     def show_map(self):
         script_directory = os.path.dirname(os.path.abspath(__file__))
-        database_path = os.path.join(script_directory,"database", "offline_tiles_tmu.db")
+        database_path = os.path.join(
+            script_directory,
+            "database", 
+            "offline_tiles_tmu.db")
 
         self.map_frame = LabelFrame(
             self.window,
@@ -107,13 +117,26 @@ class gui(Thread):
 
         # set current widget position and zoom
         self.map_widget.set_position(
-            43.65897373429778, 
-            -79.37932931217927)  # Ryerson
+            LAT_FOR_MAP, 
+            LON_FOR_MAP)  # Ryerson
         self.map_widget.set_marker(
-            43.65897373429778, 
-            -79.37932931217927, 
+            LAT_FOR_MAP, 
+            LON_FOR_MAP, 
             text="TMU")
+
         self.map_widget.set_zoom(19)
+
+        self.map_widget.add_right_click_menu_command(label="add waypoint",
+                                                command=self.add_waypoint_on_map,
+                                                pass_coords=True)
+                                                
+        self.map_widget.add_right_click_menu_command(label="pop last waypoint",
+                                                command=self.pop_waypoints,
+                                                pass_coords=False)
+
+        self.map_widget.add_right_click_menu_command(label="go to coord",
+                                                command=self.send_rover_to_point,
+                                                pass_coords=True)
 
 
         self.map_widget.add_right_click_menu_command(label="load coordinates",
@@ -127,6 +150,63 @@ class gui(Thread):
     def load_coords(self, coords):
         self.input_tlat.set(str(coords[0]))
         self.input_tlon.set(str(coords[1]))
+
+    def send_rover_to_point(self, coords):
+
+
+        if self.waypoints == 0:
+            self.path = self.map_widget.set_path(
+                [self.home,
+                    (coords[0], coords[1])])
+            
+        if self.waypoints>0:
+            self.path = self.map_widget.set_path(
+                [self.markers[-1].position,
+                (coords[0], coords[1])])
+        
+        self.waypoints = self.waypoints + 1
+        new_marker = self.map_widget.set_marker(
+            coords[0], 
+            coords[1], 
+            text="wp:"+str(self.waypoints))
+        self.markers.append(new_marker)
+
+        self.base_node.send_goal_miniwalk(
+            float(coords[0]),
+            float(coords[1]))
+
+    def add_waypoint_on_map(self, coords):
+        self.waypoints = self.waypoints + 1
+        new_marker = self.map_widget.set_marker(
+            coords[0], 
+            coords[1], 
+            text="wp:"+str(self.waypoints))
+        self.markers.append(new_marker)
+        
+        if self.waypoints==1:
+            self.path = self.map_widget.set_path([self.home,self.markers[0].position])
+        if self.waypoints>1:
+            x = self.markers[self.waypoints-1].position[0]
+            y = self.markers[self.waypoints-1].position[1]
+            self.path.add_position(x,y)
+
+            """ needed for updating path """
+            self.path.add_position(x,y)
+            self.path.remove_position(x,y)
+
+    def pop_waypoints(self):
+        x = self.markers[-1].position[0]
+        y = self.markers[-1].position[1]
+        
+        if self.waypoints == 1:
+            self.path.delete()
+        if self.waypoints>1:
+            self.path.remove_position(x,y)
+
+        self.markers[-1].delete()
+        self.markers.pop()
+        self.waypoints= self.waypoints-1
+        
 
     def show_action_console(self):
         self.action_console_frame = LabelFrame(
@@ -234,6 +314,7 @@ class gui(Thread):
 
 
     def miniwalk_action_button_1(self):
+        self.teleop.do_teleop_func(False)
         self.base_node.send_goal_miniwalk(
             float(self.input_tlat.get()),
             float(self.input_tlon.get()))
@@ -311,9 +392,11 @@ class gui(Thread):
                 padx=ROVER_INFO_FRAME_INNER_PADDING_X,
                 pady=ROVER_INFO_FRAME_INNER_PADDING_Y)
 
+        """ labels """
+
         self.rover_lat_label = Label(
             self.rover_info_label_frame,
-            text="rlat:\t\t")
+            text="rlat:")
         self.rover_lat_label.grid(
             row=ROVER_LAT_LABEL_ROW,
             column=ROVER_LAT_LABEL_COLUMN,
@@ -322,7 +405,7 @@ class gui(Thread):
 
         self.rover_lon_label = Label(
             self.rover_info_label_frame,
-            text="rlon:\t\t")
+            text="rlon:")
         self.rover_lon_label.grid(
             row=ROVER_LON_LABEL_ROW,
             column=ROVER_LON_LABEL_COLUMN,
@@ -331,13 +414,48 @@ class gui(Thread):
 
         self.rover_arb_label = Label(
             self.rover_info_label_frame,
-            text="arb:\t\t")
+            text="arb:")
         self.rover_arb_label.grid(
             row=ROVER_ARB_LABEL_ROW,
             column=ROVER_ARB_LABEL_COLUMN,
             padx=ROVER_ARB_LABEL_PADDING_X,
             pady=ROVER_ARB_LABEL_PADDING_Y)
 
+
+        """ data """
+        
+        self.rover_lat_data = Label(
+            self.rover_info_label_frame,
+            text="")
+        self.rover_lat_data.grid(
+            row=ROVER_LAT_DATA_ROW,
+            column=ROVER_LAT_DATA_COLUMN,
+            padx=ROVER_LAT_DATA_PADDING_X,
+            pady=ROVER_LAT_DATA_PADDING_Y)
+
+        self.rover_lon_data = Label(
+            self.rover_info_label_frame,
+            text="")
+        self.rover_lon_data.grid(
+            row=ROVER_LON_DATA_ROW,
+            column=ROVER_LON_DATA_COLUMN,
+            padx=ROVER_LON_DATA_PADDING_X,
+            pady=ROVER_LON_DATA_PADDING_Y)
+
+        self.rover_arb_data = Label(
+            self.rover_info_label_frame,
+            text="")
+        self.rover_arb_data.grid(
+            row=ROVER_ARB_DATA_ROW,
+            column=ROVER_ARB_DATA_COLUMN,
+            padx=ROVER_ARB_DATA_PADDING_X,
+            pady=ROVER_ARB_DATA_PADDING_Y)
+
+
+    def update_rover_lla(self, x,y,z):
+        self.rover_lat_data.configure(text=f" {x:.5f} ")
+        self.rover_lon_data.configure(text=f" {y:.5f} ")
+        self.rover_arb_data.configure(text=f" {z:.4f} ")
         
     
     def show_scroll(self):
@@ -444,7 +562,7 @@ class gui(Thread):
         self.controller_info.configure(text="\tInfo: "+msg)
 
     def set_status_bar_speed_info(self, msg):
-        self.teleop_speed_info.configure(text="Speed:\t"+msg+"\t")
+        self.teleop_speed_info.configure(text=f"Speed:\t{10.0*float(msg):.1f}\t")
 
 
 

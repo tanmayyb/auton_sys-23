@@ -340,9 +340,15 @@ class ControllerTool:
         """
         raw = controller.get_axis(axis)
         if abs(raw) > DRIFT_VAL:
-            if axis % 2:
+            if axis == 4:
                 return str(MAX - self.mapDriveSpeed(raw))
+            
+            if axis % 2 and axis != 4:
+                return str(MAX - self.mapDriveSpeed(raw))
+
             return str(self.mapDriveSpeed(raw))
+
+        
         return str(NEUTRAL)
 
     def getHatValues(self, controller: Joystick, axis: int) -> tuple:
