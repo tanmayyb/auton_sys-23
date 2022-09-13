@@ -96,10 +96,11 @@ class teleop_processor(Thread):
 
                 self.leftY = self.controllerTool.yoinkControllerReadings(
                     controller, 1)
-                self.rightY = str(
-                    self.controllerTool.yoinkControllerReadings(controller, 3))
 
-                L2: str = self.controllerTool.yoinkBumperReadings(controller, 4)
+                self.rightY = str(
+                    self.controllerTool.yoinkControllerReadings(controller, 4))
+
+                L2: str = self.controllerTool.yoinkBumperReadings(controller, 0)
                 R2: str = self.controllerTool.yoinkBumperReadings(controller, 5)
 
                 if int(R2) > MAX * .9:

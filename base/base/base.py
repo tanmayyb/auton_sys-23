@@ -23,9 +23,15 @@ class baseNode(Node):
             MinimalWalk, 
             'point_to_point_minimal_walk')
 
-        self.teensy_teleop = self.create_publisher(
+        self.teleop_pub = self.create_publisher(
             TankDriveMsg,
             'pwm_to_teensy',
+            10)
+
+        self.sensor_sub = self.create_subscription(
+            Point,
+            'nav_sensor_data',
+            self.gui_update_rover_lla,
             10)
     
     def send_goal_miniwalk(self,tlat,tlon):
@@ -95,4 +101,11 @@ class baseNode(Node):
         msg = TankDriveMsg()
         msg.lpwm=lpwm
         msg.rpwm=rpwm
-        self.teensy_teleop.publish(msg)
+        self.teleop_pub.publish(msg)
+
+    def gui_update_rover_lla(self, msg):
+        x = msg.x
+        y = msg.y
+        z = msg.z
+        self.parent.update_rover_lla(x,y,z)
+        #print(x,y,z)
