@@ -71,10 +71,10 @@ class Rover(Node):
             'pwm_to_teensy',
             10)
 
-        # self.vectornav_sub = self.create_subscription(
-        #     SensorMsg,
-        #     'VectorNavSensorData',
-        #     self.update_sensor_data)
+        self.vectornav_sub = self.create_subscription(
+            SensorMsg,
+            'VectorNavSensorData',
+            self.update_sensor_data)
 
 
     def update_sensor_data(self, msg):
@@ -135,7 +135,7 @@ class Rover(Node):
             time.sleep(.05)
 
             if time.time() - time_ > 5.0:
-                loop = False
+                loop = True
 
         goal_handle.succeed()
         self.set_rover_to_neutral()
