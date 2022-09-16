@@ -27,7 +27,7 @@ class Teensy(Node):
         
         self.subscriber = self.create_subscription(
             TankDriveMsg,
-            'pwm_to_teensy',
+            'TeensySubscriberTopic',
             self.subscription_callback,
             10)
         
