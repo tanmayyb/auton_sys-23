@@ -1,4 +1,5 @@
 from simple_pid import PID
+from boost import boost_function
 
 class pid_controller():
     def __init__(self, pid_const, control_const):
@@ -14,6 +15,8 @@ class pid_controller():
         
         self.pid_error = None
         self.control = None
+        self.boost = None
+
         
         self.Kp = pid_const[0]
         self.Ki = pid_const[1]
@@ -30,10 +33,15 @@ class pid_controller():
         self.pid_error  = error
         self.control  = control 
         return control
+
+    def do_boost(self, error):
+        boost = boost_function(error)
+        self.boost = boost
+        return boost
     
-    def do_c2mm(self,  control):
-        left_pwm = self.neutral_pwm - int(control) + self.drift_pwm
-        right_pwm = self.neutral_pwm + int(control)+ self.drift_pwm
+    def do_c2mm(self,  control, boost):
+        left_pwm = self.neutral_pwm - int(control) + self.drift_pwm + boost
+        right_pwm = self.neutral_pwm + int(control)+ self.drift_pwm + boost
 
         return (left_pwm, right_pwm)
 

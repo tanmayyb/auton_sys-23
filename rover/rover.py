@@ -8,15 +8,15 @@ from rclpy.node import Node
 from rclpy.action import ActionServer, CancelResponse, GoalResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
-
-
-from action_tutorials_interfaces.action import Fibonacci
 from rover_utils.action import MinimalWalk
+
 from rover_utils.msg import TankDriveMsg
+from geometry_msgs.msg import Point
 
 from nvc.nvc import nv_calc  
 from pid.error import heading_error
 from pid.pid import pid_controller
+
 
 
 import time
@@ -43,7 +43,7 @@ class Rover(Node):
         self.arb = None
         self.rc = None
         
-
+        self.verbose = False
         
         #tunining variable initialisations
         self.neutral_pwms = (127,127)
@@ -60,7 +60,7 @@ class Rover(Node):
         self.min_walk_act_server = ActionServer(
             self,
             MinimalWalk,
-            'point_to_point_minimal_walk',
+            'MiniWalkTopic',
             execute_callback=self.miniwalk_exec_callback,
             callback_group=ReentrantCallbackGroup(),
             goal_callback=self.miniwalk_goal_callback,
@@ -68,17 +68,28 @@ class Rover(Node):
 
         self.teensy_pub = self.create_publisher(
             TankDriveMsg,
-            'pwm_to_teensy',
+            'TeensySubscriberTopic',
             10)
 
         self.vectornav_sub = self.create_subscription(
-            SensorMsg,
-            'VectorNavSensorData',
-            self.update_sensor_data)
+            Point,
+            'VectorNavPublisherTopic',
+            self.update_sensor_data,
+            10)
+
+        #VectorNavSensorData
 
 
     def update_sensor_data(self, msg):
-        pass
+        lat = msg.x
+        lon = msg.y
+        arb = msg.z
+
+        self.rc = (lat, lon)
+        self.arb = arb
+
+        if self.verbose == True:
+            print(msg)
 
     def miniwalk_goal_callback(self, goal_request):
         """Accept or reject a client request to begin an action."""
@@ -92,17 +103,20 @@ class Rover(Node):
         return CancelResponse.ACCEPT
 
     async def miniwalk_exec_callback(self, goal_handle):
-
         print("received goal request", goal_handle.request)
+        
         coords = goal_handle.request.coords
-        print("received coords: ", coords.x, coords.y)
+        tc = (coords.x, coords.y)   #get coordinates from msg
+        geofence = coords.z  #get geofence from msg
+        
+        #signal_and_wait = goal_handle.request.signal_and_wait
+        #use_guidance = goal_handle.request.use_guidance
 
+        print("received coords: ", coords.x, coords.y)
+        
         self.get_logger().warn('Walking to Target...')
 
         feedback_msg = MinimalWalk.Feedback()
-
-
-        time_ = time.time()
 
         loop = True
         while loop:
@@ -113,18 +127,13 @@ class Rover(Node):
                 self.get_logger().info('Goal canceled')
                 return MinimalWalk.Result()
 
-            self.rc = (43.65897373429778, -79.37932931217927)
-
-            self.arb = 30.000
-
             """logic of walk"""
-            tc = (coords.x, coords.y)
             ab2t, d2t = nv_calc(self.rc, tc)
             error = heading_error(self.arb, ab2t)
             control = self.pid_controller.do_pid(error)
-            
+            boost = self.pid_controller.do_boost(error)
             """send signal to teensy"""
-            c2mm = self.pid_controller.do_c2mm(control)
+            c2mm = self.pid_controller.do_c2mm(control, boost)
             self.send_to_teensy(c2mm)
             
 
@@ -132,10 +141,11 @@ class Rover(Node):
             feedback_msg.he = error
 
             goal_handle.publish_feedback(feedback_msg)
-            time.sleep(.05)
+            
+            #time.sleep(.05)
 
-            if time.time() - time_ > 5.0:
-                loop = True
+            if d2t<geofence:
+                loop = False
 
         goal_handle.succeed()
         self.set_rover_to_neutral()
