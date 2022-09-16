@@ -108,4 +108,5 @@ class baseNode(Node):
         y = msg.y
         z = msg.z
         self.parent.update_rover_lla(x,y,z)
+        self.parent.update_rover_marker(x,y)
         #print(x,y,z)
