@@ -317,7 +317,8 @@ class gui(Thread):
         self.teleop.do_teleop_func(False)
         self.base_node.send_goal_miniwalk(
             float(self.input_tlat.get()),
-            float(self.input_tlon.get()))
+            float(self.input_tlon.get()),
+            float(self.input_geofence.get()))
     
     def cancel_action_button_2(self):
         self.base_node.cancel_miniwalk_goal()
