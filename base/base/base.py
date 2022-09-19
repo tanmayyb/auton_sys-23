@@ -21,26 +21,26 @@ class baseNode(Node):
         self.minimal_walk_action_client = ActionClient(
             self, 
             MinimalWalk, 
-            'point_to_point_minimal_walk')
+            'MiniWalkTopic')
 
         self.teleop_pub = self.create_publisher(
             TankDriveMsg,
-            'pwm_to_teensy',
+            'TeensySubscriberTopic',
             10)
 
         self.sensor_sub = self.create_subscription(
             Point,
-            'nav_sensor_data',
+            'VectorNavPublisherTopic',
             self.gui_update_rover_lla,
             10)
     
-    def send_goal_miniwalk(self,tlat,tlon):
+    def send_goal_miniwalk(self,tlat,tlon, gf_rad):
         
         """CREATE GOAL MSG"""
         coords  = Point()
         coords.x = tlat
         coords.y = tlon
-        coords.z = 0.0
+        coords.z = gf_rad
 
         """SEND GOAL MSG"""
         minimal_walk_goal_msg = MinimalWalk.Goal()
@@ -108,4 +108,5 @@ class baseNode(Node):
         y = msg.y
         z = msg.z
         self.parent.update_rover_lla(x,y,z)
+        self.parent.update_rover_marker(x,y)
         #print(x,y,z)

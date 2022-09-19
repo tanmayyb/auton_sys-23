@@ -119,10 +119,10 @@ class gui(Thread):
         self.map_widget.set_position(
             LAT_FOR_MAP, 
             LON_FOR_MAP)  # Ryerson
-        self.map_widget.set_marker(
-            LAT_FOR_MAP, 
+        self.rover_marker = self.map_widget.set_marker(
+            LAT_FOR_MAP,
             LON_FOR_MAP, 
-            text="TMU")
+            text="Rover")
 
         self.map_widget.set_zoom(19)
 
@@ -173,7 +173,8 @@ class gui(Thread):
 
         self.base_node.send_goal_miniwalk(
             float(coords[0]),
-            float(coords[1]))
+            float(coords[1]),
+            float(self.input_geofence.get()))
 
     def add_waypoint_on_map(self, coords):
         self.waypoints = self.waypoints + 1
@@ -317,7 +318,8 @@ class gui(Thread):
         self.teleop.do_teleop_func(False)
         self.base_node.send_goal_miniwalk(
             float(self.input_tlat.get()),
-            float(self.input_tlon.get()))
+            float(self.input_tlon.get()),
+            float(self.input_geofence.get()))
     
     def cancel_action_button_2(self):
         self.base_node.cancel_miniwalk_goal()
@@ -456,6 +458,10 @@ class gui(Thread):
         self.rover_lat_data.configure(text=f" {x:.5f} ")
         self.rover_lon_data.configure(text=f" {y:.5f} ")
         self.rover_arb_data.configure(text=f" {z:.4f} ")
+    
+    
+    def update_rover_marker(self, x,y):
+        self.rover_marker.set_position(x,y)
         
     
     def show_scroll(self):
