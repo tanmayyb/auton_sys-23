@@ -6,6 +6,9 @@
 
 Auton redesign repo for URC 2022.
 
+UI Figma Link:
+https://www.figma.com/file/ip6mJr0MV8HCT5906CQ1Ye/Auton-ROS-GUI?node-id=0%3A1
+
 Goals:
 
 
