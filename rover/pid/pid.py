@@ -1,5 +1,5 @@
 from simple_pid import PID
-from boost import boost_function
+from pid.boost import boost_function
 
 class pid_controller():
     def __init__(self, pid_const, control_const):
