@@ -20,4 +20,10 @@ Goals:
 
 ![Screenshot 2022-09-15 201720](https://user-images.githubusercontent.com/72982560/190530379-7744850b-d36d-4233-8ec5-d695e7e2a66b.png)
 
-commit
+dependencies installation:
+```
+sudo apt-get install python3-pil python3-pil.imagetk
+pip install tkintermapview
+pip install pygame
+pip install tkinter
+```
