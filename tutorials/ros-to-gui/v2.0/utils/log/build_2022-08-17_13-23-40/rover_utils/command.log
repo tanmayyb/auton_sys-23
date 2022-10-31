@@ -1,4 +1,0 @@
-Invoking command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils': /usr/bin/cmake --build /home/ros-vm/github/auton_sys-23/utils/build/rover_utils -- -j2 -l2
-Invoked command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils' returned '0': /usr/bin/cmake --build /home/ros-vm/github/auton_sys-23/utils/build/rover_utils -- -j2 -l2
-Invoking command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils': /usr/bin/cmake --install /home/ros-vm/github/auton_sys-23/utils/build/rover_utils
-Invoked command in '/home/ros-vm/github/auton_sys-23/utils/build/rover_utils' returned '0': /usr/bin/cmake --install /home/ros-vm/github/auton_sys-23/utils/build/rover_utils
