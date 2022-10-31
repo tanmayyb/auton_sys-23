@@ -10,6 +10,7 @@ from cv2 import CAP_GSTREAMER
 
 from pipeline import *
 
+print(gst_command)
 
 cap = cv2.VideoCapture(gst_command, cv2.CAP_GSTREAMER)
 
@@ -23,9 +24,10 @@ while True:
     ret, frame = cap.read()
 
     if ret == False:
-         print("empty")
+        #print("empty")
+        pass
     else:
-        cv2.imshow("FrameREAD",frame)
+        cv2.imshow("GST_Stream",frame)
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
