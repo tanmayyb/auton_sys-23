@@ -36,8 +36,32 @@ class detection_handler():
 
         return topLeft, topRight, bottomRight, bottomLeft
 
-    ##def draw_corners(self):
+    def draw_corners(self, topLeft, topRight, bottomRight, bottomLeft):
+        #draw on frame
+        #draw the boundary box
+        sw = 5 #strokeweight
+        cv2.line(self.frame, topLeft, topRight, (0,255,0),sw)
+        cv2.line(self.frame, topRight, bottomRight, (0,255,0),sw)
+        cv2.line(self.frame, bottomRight, bottomLeft, (0,255,0),sw)
+        cv2.line(self.frame, bottomLeft, topLeft, (0,255,0),sw)
 
+    def process_center(self, topLeft, bottomRight):
+        #compute center
+        cX = int((topLeft[0] + bottomRight[0])/2.0)
+        cY = int((topLeft[1] + bottomRight[1])/2.0)
+        return cX, cY
+
+    def draw_center(self, cX, cY):
+        cv2.circle(self.frame, (cX,cY),4,(0,255,0),-1)
+    
+    def draw_text(self, topLeft, markerID):
+        fs = 2 #fontsize
+        fw = 5 #fontweight
+        cv2.putText(self.frame, 
+            str(markerID),
+            (topLeft[0],topLeft[1]-15),
+            cv2.FONT_HERSHEY_SIMPLEX, fs, (0,255,0), fw)
+        
     def detect_aruco_marker(self, frame):
         
         self.frame = frame
@@ -58,22 +82,11 @@ class detection_handler():
                 corners = markerCorners.reshape((4,2)) #markerCorners as a 4x2 array 
                 
                 topLeft, topRight, bottomRight, bottomLeft = self.process_corners(corners)
+                self.draw_corners(topLeft, topRight, bottomRight, bottomLeft)
+                cX,cY = self.process_center(topLeft, bottomRight)
+                self.draw_center(cX, cY)
+                self.draw_text(topLeft, markerID)
                 
-                #draw on frame
-                #draw the boundary box
-                cv2.line(self.frame, topLeft, topRight, (0,255,0),2)
-                cv2.line(self.frame, topRight, bottomRight, (0,255,0),2)
-                cv2.line(self.frame, bottomRight, bottomLeft, (0,255,0),2)
-                cv2.line(self.frame, bottomLeft, topLeft, (0,255,0),2)
-
-                #compute center
-                cX = int((topLeft[0] + bottomRight[0])/2.0)
-                cY = int((topLeft[1] + bottomRight[1])/2.0)
-                #draw center
-                cv2.circle(self.frame, (cX,cY),4,(0,255,0),-1)
-
-                #draw markerID on frame
-                cv2.putText(self.frame, str(markerID),(topLeft[0],topLeft[1]-15),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,0),2)
                 #print("[INFO] ArUco marker ID: {}".format(markerID))
 
         return flag, self.frame
