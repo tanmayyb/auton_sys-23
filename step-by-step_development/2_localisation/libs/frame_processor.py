@@ -80,4 +80,18 @@ class aruco_detector():
 
                 frame, cX, cY = self.draw_center(frame, topLeft, bottomRight)
                 self.draw_texts(frame, topLeft, markerID)
-                
+        return frame
+
+    def show_user_graphics(self, frame):
+        height = frame.shape[0]
+        width = frame.shape[1]
+        frame = self.put_midline(frame, width, height)
+
+        return frame
+
+    def put_midline(self,frame, width, height):
+        centerX = width/2.0
+        topCenter = (int(centerX), 0)
+        bottomCenter = (int(centerX), height)
+        cv2.line(frame, topCenter, bottomCenter, (0,0,255), 5)
+        return frame

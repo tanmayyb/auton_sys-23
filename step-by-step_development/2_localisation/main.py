@@ -12,10 +12,11 @@ def main():
     loop = True
     while loop:
         ret, frame = stream.get_frame()
-        detect_params = detector.detect_aruco_marker(frame)
-        detector.draw_bouding_boxes(frame, detect_params)
-
         
+        detect_params = detector.detect_aruco_marker(frame)
+        frame = detector.draw_bouding_boxes(frame, detect_params)
+        frame = detector.show_user_graphics(frame)
+
         stream.display_frames(frame)
         loop = stream.check_for_exit_keypresses()
 
