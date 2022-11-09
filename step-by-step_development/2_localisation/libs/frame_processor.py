@@ -36,8 +36,34 @@ class aruco_detector():
         (corners, ids, rejected) = cv2.aruco.detectMarkers(frame, self.arucoDict,
         parameters=self.arucoParams)
         return (corners, ids, rejected)
+
+    def draw_corners(self, frame, topLeft, topRight, bottomRight, bottomLeft):
+        #convert each x-y pairs to integers 
+        topLeft = (int(topLeft[0]), int(topLeft[1]))
+        topRight = (int(topRight[0]), int(topRight[1]))
+        bottomRight = (int(bottomRight[0]), int(bottomRight[1]))
+        bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
         
+        sw = 5#stroke weight
+        #draw the boundary box
+        cv2.line(frame, topLeft, topRight, (0,255,0),sw)
+        cv2.line(frame, topRight, bottomRight, (0,255,0),sw)
+        cv2.line(frame, bottomRight, bottomLeft, (0,255,0),sw)
+        cv2.line(frame, bottomLeft, topLeft, (0,255,0),sw)
+
+        return frame, topLeft, topRight, bottomRight, bottomLeft
         
+    def draw_center(self, frame, topLeft, bottomRight):
+        #compute and draw center
+        cX = int((topLeft[0] + bottomRight[0])/2.0)
+        cY = int((topLeft[1] + bottomRight[1])/2.0)
+        cv2.circle(frame, (cX,cY),4,(0,255,0),-1)
+        return frame, cX, cY
+
+    def draw_texts(self, frame, topLeft, markerID):
+        #draw markerID on frame
+        cv2.putText(frame, str(markerID),(topLeft[0],topLeft[1]-15),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,0),2)
+
     def draw_bouding_boxes(self,frame, detect_params):
         corners, ids, rejected = detect_params
         if len(corners) > 0:
@@ -50,22 +76,8 @@ class aruco_detector():
                 corners = markerCorners.reshape((4,2)) #markerCorners as a 4x2 array 
                 (topLeft, topRight, bottomRight, bottomLeft) = corners #1x1,2: topLeft, #2x1,2: topRight, etc 
 
-                #convert each x-y pairs to integers 
-                topLeft = (int(topLeft[0]), int(topLeft[1]))
-                topRight = (int(topRight[0]), int(topRight[1]))
-                bottomRight = (int(bottomRight[0]), int(bottomRight[1]))
-                bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
+                frame, topLeft, topRight, bottomRight, bottomLeft = self.draw_corners(frame, topLeft, topRight, bottomRight, bottomLeft)
+
+                frame, cX, cY = self.draw_center(frame, topLeft, bottomRight)
+                self.draw_texts(frame, topLeft, markerID)
                 
-                #draw the boundary box
-                cv2.line(frame, topLeft, topRight, (0,255,0),2)
-                cv2.line(frame, topRight, bottomRight, (0,255,0),2)
-                cv2.line(frame, bottomRight, bottomLeft, (0,255,0),2)
-                cv2.line(frame, bottomLeft, topLeft, (0,255,0),2)
-
-                #compute and draw center
-                cX = int((topLeft[0] + bottomRight[0])/2.0)
-                cY = int((topLeft[1] + bottomRight[1])/2.0)
-                cv2.circle(frame, (cX,cY),4,(0,255,0),-1)
-
-                #draw markerID on frame
-                cv2.putText(frame, str(markerID),(topLeft[0],topLeft[1]-15),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,0),2)
