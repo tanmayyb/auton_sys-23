@@ -2,20 +2,24 @@ import cv2,sys
 sys.path.append("..") 
 
 from libs.streamer import streamer
-from libs.frame_processor import aruco_detector
+from libs.detector import aruco_detector
+from libs.overlay import overlayer
 
 def main():
 
     detector = aruco_detector()
     stream = streamer()
+    overlay_handler = overlay_on(detector)
 
     loop = True
     while loop:
         ret, frame = stream.get_frame()
         
-        detect_params = detector.detect_aruco_marker(frame)
-        frame = detector.draw_bouding_boxes(frame, detect_params)
-        frame = detector.show_user_graphics(frame)
+        # detector detects 
+        detector.detect_aruco_marker(frame)
+
+        # overlay asked to zip and overlay data
+        frame = overlay_handler.put_overlay(frame)
 
         stream.display_frames(frame)
         loop = stream.check_for_exit_keypresses()
@@ -23,7 +27,7 @@ def main():
 
     #cleanup video pointers
     cv2.destroyAllWindows()
-    cap.stop()
+    stream.stop()
 
 if __name__ == "__main__":
     main()

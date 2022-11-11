@@ -27,3 +27,6 @@ class streamer():
         if key == ord("q"):
             return 0
         return 1
+
+    def stop(self):
+        self.cap.stop()
