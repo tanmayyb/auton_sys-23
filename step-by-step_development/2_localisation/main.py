@@ -3,7 +3,7 @@ sys.path.append("..")
 
 from libs.streamer import streamer
 from libs.detector import aruco_detector
-from libs.overlay import overlayer
+from libs.overlay import overlay_on
 
 def main():
 
