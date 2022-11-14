@@ -17,11 +17,9 @@ class aruco_localiser():
     
     def get_and_compute_center_params(self):
         self.corners, self.ids = self.detector.get_marker_params()
-        a = self.computer_cX_arr(self.corners, self.ids)
-        #print(a)
+        self.computer_centers(self.corners, self.ids)
 
-    def computer_cX_arr(self, corners,  ids):
-        '''
+    '''
         output of print(corners, ids):
 
         [array([[[1106.,  626.],
@@ -36,25 +34,27 @@ class aruco_localiser():
         [[4] [1]]
 
         '''
+    def computer_centers(self, corners,  ids):
+        
         self.cX_array  = []
         self.cY_array = []
         if(corners):
             for tag in corners:
-                topLeft = tag[0][0]
+                topLeft = tag[0][1]
                 bottomRight = tag[0][3]
                 #print(topLeft, topRight)
                 cX, cY = self.compute_marker_center(topLeft, bottomRight)
                 self.cX_array.append(cX)
                 self.cY_array.append(cY)
             #print(corners, ids)
-            print(self.cX_array)
-        return self.cX_array
-
-
+            #print(self.cX_array)
     
     def find_xpos_relative_to_midline(self):
         pass
     
+    def fetch_center_arrays(self):
+        return self.cX_array, self.cY_array
+
     def compute_marker_center(self, topLeft, bottomRight):
         cX = int((topLeft[0] + bottomRight[0])/2.0)
         cY = int((topLeft[1] + bottomRight[1])/2.0)

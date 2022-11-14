@@ -18,8 +18,9 @@ class overlay_on():
     def load_marker_params(self):
         self.marker_params = self.detector.get_marker_params()
 
-    def put_overlay(self, frame, draw_bounding_box=True, use_localiser=False):
+    def put_overlay(self, frame, draw_bounding_box=True, localiser=None, use_localiser=False):
         self.frame = frame
+        self.localiser = localiser
         self.load_marker_params() #fetch corners from marker
         self.put_overlay_for_each_marker(enable=draw_bounding_box)
         self.put_localiser_overlay(enable=use_localiser)
@@ -29,7 +30,17 @@ class overlay_on():
 
     def put_localiser_overlay(self, enable):
         if enable:
-            pass
+            cX, cY  = self.localiser.fetch_center_arrays()
+            if(cX and cY):
+                for center_of_each_tag in zip(cX, cY):
+                    sw = 2
+                    
+                    #line from midline to the tag
+                    cv2.line(self.frame, 
+                    (int(self.width/2.0), center_of_each_tag[1]), 
+                    (center_of_each_tag[0], center_of_each_tag[1]), 
+                    (255,0,0), sw)
+                #print(cX, cY)
 
     def put_overlay_for_each_marker(self, enable):
         if enable:
@@ -67,7 +78,7 @@ class overlay_on():
     def draw_center(self, topLeft, bottomRight):
         cX,cY = self.compute_marker_center(topLeft, bottomRight)
         cv2.circle(self.frame, (cX,cY),4,(0,255,0),-1)
-        print(cX, cY)
+        
 
     def draw_midline(self):
         centerX = self.width/2.0

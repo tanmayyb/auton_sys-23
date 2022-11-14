@@ -3,8 +3,9 @@ sys.path.append("..")
 
 from libs.streamer import streamer
 from libs.detector import aruco_detector
-from libs.overlay import overlay_on
 from libs.localiser import aruco_localiser
+
+from libs.overlay import overlay_on
 
 def main():
 
@@ -21,10 +22,10 @@ def main():
 
         # detector detects 
         detector.detect_aruco_marker(frame)
-        #localiser.do_localisation()
+        localiser.do_localisation()
         
         # overlay asked to zip and overlay data
-        frame = overlay_handler.put_overlay(frame)
+        frame = overlay_handler.put_overlay(frame,localiser=localiser, use_localiser=True)
 
         stream.display_frames(frame)
         loop = stream.check_for_exit_keypresses()
