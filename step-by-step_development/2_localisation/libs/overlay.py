@@ -33,13 +33,13 @@ class overlay_on():
             cX, cY  = self.localiser.fetch_center_arrays()
             if(cX and cY):
                 for center_of_each_tag in zip(cX, cY):
-                    sw = 2
-                    
-                    #line from midline to the tag
+                    sw = 4
+                    COLOR = (0, 0, 255) #BGR
+                    #line from midline to the tag                    
                     cv2.line(self.frame, 
                     (int(self.width/2.0), center_of_each_tag[1]), 
                     (center_of_each_tag[0], center_of_each_tag[1]), 
-                    (255,0,0), sw)
+                    COLOR, sw)
                 #print(cX, cY)
 
     def put_overlay_for_each_marker(self, enable):
@@ -84,7 +84,8 @@ class overlay_on():
         centerX = self.width/2.0
         topCenter = (int(centerX), 0)
         bottomCenter = (int(centerX), self.height)
-        cv2.line(self.frame, topCenter, bottomCenter, (0,0,255), 5)
+        COLOR = (255, 0, 0)
+        cv2.line(self.frame, topCenter, bottomCenter, COLOR, 5)
         
 
     def draw_texts(self, topLeft, markerID):
