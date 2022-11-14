@@ -5,7 +5,6 @@ class aruco_detector():
     def __init__(self):
         self.args = self.create_argument_parser()
         self.arucoDict, self.arucoParams = self.load_arcuo_dict(self.args);
-
         self.marker_params = None
 
     def create_argument_parser(self):

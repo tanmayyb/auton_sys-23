@@ -18,6 +18,9 @@ class streamer():
 
         return ret, frame
 
+    def get_frame_dims(self):
+        return VIDEO_RESIZE_DIMS
+
     def display_frames(self, frame):
         cv2.imshow("GST_Stream_for_Aruco",frame)
 
