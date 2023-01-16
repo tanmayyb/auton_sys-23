@@ -1,9 +1,9 @@
 from simple_pid import PID
 
 class pid_controller():
-    def __init__(self, localiser, dims, pid_const=(0.170,  0.0, 0.1), control_const=(0, 100)):
+    def __init__(self, localiser, dims, pid_const=(0.07,  0.01, 0.01), control_const=(0, 20)):
         
-        self.neutral_pwm = 0 
+        self.neutral_pwm = 127 
         self.drift_pwm = control_const[0]
         self.pid_lim = control_const[1] #limit of how high pid control can get
         self.output_limits = (-self.pid_lim,self.pid_lim)
@@ -24,6 +24,8 @@ class pid_controller():
         self.map_dim_x = dims[0]
         self.map_dim_y = dims[1]
 
+        self.center_of_mass = None
+
 
         self.pid = PID(self.Kp, self.Ki, self.Kd,
                         self.setpoint, self.sample_time, self.output_limits)        
@@ -31,25 +33,17 @@ class pid_controller():
     def calc_error(self):
         cX = self.localiser.get_cX()
         if(len(cX) != 0):
-            center_of_mass = sum(cX)/len(cX)
-            unmapped_error_relative_to_midline = center_of_mass - self.map_dim_x/2
+            self.center_of_mass = sum(cX)/len(cX)
+            unmapped_error_relative_to_midline = self.center_of_mass - self.map_dim_x/2
             #mapped_error = map_error(unmapped_error_relative_to_midline)
             #self.pid_error = mapped_error
-            self.pid_error =unmapped_error_relative_to_midline
+            self.pid_error = unmapped_error_relative_to_midline
             return 1
         else:
             return None
 
-    # def map_error(self, unmapped_error):
-    #     #https://stackoverflow.com/questions/1969240/mapping-a-range-of-values-to-another
-    #     leftSpan = leftMax - leftMin
-    #     rightSpan = rightMax - rightMin
-
-    #     valueScaled = float(value - leftMin) / float(leftSpan)
-    
-    #     mapped_error = rightMin + (valueScaled * rightSpan)
-
-    #     return mapped_error
+    def fetch_error(self):
+        return self.pid_error
 
     def do_pid(self):
         control = self.pid(self.pid_error)
@@ -67,7 +61,7 @@ class pid_controller():
         
     
     def do_c2mm(self,  control):
-        left_pwm = self.neutral_pwm - int(control) + self.drift_pwm 
+        left_pwm = self.neutral_pwm - int(control) + self.drift_pwm
         right_pwm = self.neutral_pwm + int(control)+ self.drift_pwm
 
         return (left_pwm, right_pwm)
@@ -81,3 +75,6 @@ class pid_controller():
         self.control  = control
     def get_control(self):
         return self.control
+
+    def get_center_of_mass(self):
+        return self.center_of_mass
