@@ -30,7 +30,6 @@ class gui(Thread):
         
         
         """ MAPS AND WAYPOINTS"""
-
         self.waypoints = 0
         self.markers = []
         self.path = None
@@ -53,7 +52,7 @@ class gui(Thread):
 
     def setup_window(self):
          # Window setup
-        self.window.title("Auton ROS GUI")
+        self.window.title("auton_sys-23 mission gui")
         self.window.geometry(SETUP_STRING)
         self.setup_styles()
 
@@ -210,96 +209,147 @@ class gui(Thread):
         
 
     def show_action_console(self):
-        self.action_console_frame = LabelFrame(
-            self.window,
-            text="action console")
-        self.action_console_frame.grid(
-                row=ACTION_CONSOLE_FRAME_ROW, 
-                column=ACTION_CONSOLE_FRAME_COLUMN,
-                rowspan=ACTION_CONSOLE_FRAME_ROWSPAN,
-                columnspan=ACTION_CONSOLE_FRAME_COLUMNSPAN,
-                sticky=ACTION_CONSOLE_FRAME_STICKY)
-
-        self.show_text_fields(self.action_console_frame)
-        self.show_buttons(self.action_console_frame)
-        self.show_rover_info_labels(self.action_console_frame)
-
-    
-    def show_text_fields(self, frame):
-        
-        self.text_field_labels = LabelFrame(frame)
-        self.text_fields = LabelFrame(frame)
-
-
-        """TEXT FIELD LABELS"""
-        self.text_field_labels.grid(
-                row=TEXT_FIELD_LABEL_FRAME_ROW, 
-                column=TEXT_FIELD_LABEL_FRAME_ROW, 
-                padx=ACTION_CONSOLE_FRAME_INNER_PADDING_X,
-                pady=ACTION_CONSOLE_FRAME_INNER_PADDING_Y)
-
-        self.input_geofence_label = Label(
-            self.text_field_labels, 
-            text="Input Geofence")
-        self.input_geofence_label.pack(
-            padx=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_Y)
-
-        self.input_tlat_label = Label(
-            self.text_field_labels, 
-            text="Input Target Lat")
-        self.input_tlat_label.pack(
-            padx=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_Y)
-
-
-        self.input_tlat_label = Label(
-            self.text_field_labels, 
-            text="Input Target Lon")
-        self.input_tlat_label.pack(
-            padx=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELD_LABEL_FRAME_INNER_PADDING_Y)
-
-
-        """TEXT FIELDS"""
-        self.text_fields.grid(
-                row=TEXT_FIELDS_FRAME_ROW, 
-                column=TEXT_FIELDS_FRAME_COLUMN, 
-                padx=ACTION_CONSOLE_FRAME_INNER_PADDING_X,
-                pady=ACTION_CONSOLE_FRAME_INNER_PADDING_Y)
-
-        self.input_geofence = StringVar()
-        self.input_geofence_textbox = Entry(
-            self.text_fields, 
-            textvariable=self.input_geofence)
-        self.input_geofence_textbox.pack(
-            padx=TEXT_FIELDS_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELDS_FRAME_INNER_PADDING_Y)
 
         self.input_tlat = StringVar()
-        self.input_tlat_textbox = Entry(
-            self.text_fields, 
-            textvariable=self.input_tlat)
-        self.input_tlat_textbox.pack(
-            padx=TEXT_FIELDS_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELDS_FRAME_INNER_PADDING_Y)
-
         self.input_tlon = StringVar()
-        self.input_tlon_textbox = Entry(
-            self.text_fields, 
-            textvariable=self.input_tlon)
-        self.input_tlon_textbox.pack(
-            padx=TEXT_FIELDS_FRAME_INNER_PADDING_X,
-            pady=TEXT_FIELDS_FRAME_INNER_PADDING_Y)
+        self.input_geof = StringVar()
 
-        self.input_geofence.set("2.0")
+        self.input_geof.set("2.0")
         self.input_tlat.set("43.6587021")
         self.input_tlon.set("-79.3792810")
 
-        #KWAD CENTER
-        #43.6587021
-        #-79.3792810
+        # create a notebook
+        self.actions_notebook = Notebook(self.window)
+        self.actions_notebook.grid(
+            row=ACTION_CONSOLE_FRAME_ROW, 
+            column=ACTION_CONSOLE_FRAME_COLUMN,
+            rowspan=ACTION_CONSOLE_FRAME_ROWSPAN,
+            columnspan=ACTION_CONSOLE_FRAME_COLUMNSPAN,
+            sticky=ACTION_CONSOLE_FRAME_STICKY)  
+
+        # create frames for action consoles
+        self.miniwalk_frame = Frame(self.actions_notebook, width=600, height=280)
+        self.srch_act_frame = Frame(self.actions_notebook, width=600, height=280)
+
+        self.draw_miniwalk_tab()
+        self.draw_searchwalk_tab()
         
+
+
+
+        #set frame placement
+        self.miniwalk_frame.pack(fill='both', expand=True)
+        self.srch_act_frame.pack(fill='both', expand=True)
+
+        # add frames to notebook
+        self.actions_notebook.add(self.miniwalk_frame, text='Miniwalk')
+        self.actions_notebook.add(self.srch_act_frame, text='Searchwalk')
+
+
+
+        #self.show_rover_info_labels(self.action_console_frame)
+
+    def draw_miniwalk_tab(self):
+        """
+        frames of miniwalk tab
+        """
+        self.frame1_miniwalk_frame = LabelFrame(self.miniwalk_frame)
+        self.frame2_miniwalk_frame = LabelFrame(self.miniwalk_frame)
+        self.frame1_miniwalk_frame.grid(row=0,column=0)
+        self.frame2_miniwalk_frame.grid(row=0,column=1)
+        """
+        elements of frame 1 of miniwalk
+        """
+        # labels 
+        self.input_srad_label1 = Label(self.frame1_miniwalk_frame, text = "Input GeoF")
+        self.input_tlat_label1 = Label(self.frame1_miniwalk_frame, text = "Input TLat")
+        self.input_tlon_label1 = Label(self.frame1_miniwalk_frame, text = "Input TLon")
+        self.input_srad_label1.grid(row=0,column=0)
+        self.input_tlat_label1.grid(row=1,column=0)
+        self.input_tlon_label1.grid(row=2,column=0)
+
+        #text fields
+        self.input_geof1 = Entry(self.frame1_miniwalk_frame,textvariable=self.input_geof)
+        self.input_tlat1 = Entry(self.frame1_miniwalk_frame,textvariable=self.input_tlat)
+        self.input_tlon1 = Entry(self.frame1_miniwalk_frame,textvariable=self.input_tlon)
+        # adjust elements in grid
+        self.input_geof1.grid(row=0,column=1,columnspan=4)
+        self.input_tlat1.grid(row=1,column=1,columnspan=4)
+        self.input_tlon1.grid(row=2,column=1,columnspan=4)
+
+        """
+        elements of frame 2 of miniwalk
+        """
+        self.do_miniwalk_bttn = Button(self.frame2_miniwalk_frame, text ="Do Miniwalk")
+        self.cancel_miniwalk_bttn = Button(self.frame2_miniwalk_frame, text ="Cancel Miniwalk")
+        # adjust elements in grid
+        self.do_miniwalk_bttn.grid(row=0,column=0)
+        self.cancel_miniwalk_bttn.grid(row=1,column=0)
+
+    def draw_searchwalk_tab(self):
+        """
+        frames of search tab
+        """
+        # add elements in the search action frame
+        self.frame1_srch_act_frame = LabelFrame(self.srch_act_frame) #left frame
+        self.frame2_srch_act_frame = LabelFrame(self.srch_act_frame) #right frame
+        # adjust frames in search action frame grid
+        self.frame1_srch_act_frame.grid(row=0, column=0)
+        self.frame2_srch_act_frame.grid(row=0, column=1)
+
+        """
+        elements of frame 1 of searchwalk
+        """
+        # labels 
+        self.input_tlat_label2 = Label(self.frame1_srch_act_frame, text = "Input TLat")
+        self.input_tlon_label2 = Label(self.frame1_srch_act_frame, text = "Input TLon")
+        self.input_srad_label2 = Label(self.frame1_srch_act_frame, text = "Input SRad")
+        self.input_tlat_label2.grid(row=0,column=0)
+        self.input_tlon_label2.grid(row=1,column=0)
+        self.input_srad_label2.grid(row=2,column=0)
+
+        #text fields
+        self.input_tlat2 = Entry(self.frame1_srch_act_frame, textvariable=self.input_tlat)
+        self.input_tlon2 = Entry(self.frame1_srch_act_frame, textvariable=self.input_tlon)
+        self.input_tlat2.grid(row=0,column=1,columnspan=4)
+        self.input_tlon2.grid(row=1,column=1,columnspan=4)
+
+        #radio buttons
+        self.srad = IntVar()
+        self.srad_radiobttn1 = Radiobutton(self.frame1_srch_act_frame, text="5m", variable=self.srad, value=5)
+        self.srad_radiobttn2 = Radiobutton(self.frame1_srch_act_frame, text="10m", variable=self.srad, value=10)
+        self.srad_radiobttn3 = Radiobutton(self.frame1_srch_act_frame, text="20m", variable=self.srad, value=20)
+        self.srad_radiobttn1.grid(row=2,column=1)
+        self.srad_radiobttn2.grid(row=2,column=2)
+        self.srad_radiobttn3.grid(row=2,column=3)
+
+        """
+        elements of frame2 of searchwalk
+        """
+        self.enable_artag = IntVar()
+        self.enable_obstacle_avoidance = IntVar()
+        self.spattern = IntVar()
+
+        self.artag_chkbttn = Checkbutton(self.frame2_srch_act_frame, text='enable_cv',variable=self.enable_artag, onvalue=1, offvalue=0)
+        self.obstacle_avoidance_chkbttn = Checkbutton(self.frame2_srch_act_frame, text='enable_oa',variable=self.enable_obstacle_avoidance, onvalue=1, offvalue=0)
+        # adjust elements in grid
+        self.artag_chkbttn.grid(row=0,column=0)
+        self.obstacle_avoidance_chkbttn.grid(row=1,column=0)
+
+        self.spattern_radiobttn1 = Radiobutton(self.frame2_srch_act_frame, text="triangle", variable=self.spattern, value=0)
+        self.spattern_radiobttn2 = Radiobutton(self.frame2_srch_act_frame, text="square", variable=self.spattern, value=1)
+        self.spattern_radiobttn3 = Radiobutton(self.frame2_srch_act_frame, text="pentagon", variable=self.spattern, value=2)
+        self.spattern_radiobttn1.grid(row=2,column=0)
+        self.spattern_radiobttn2.grid(row=2,column=1)
+        self.spattern_radiobttn3.grid(row=2,column=2)
+
+        self.do_search_bttn = Button(self.frame2_srch_act_frame, text ="Do Search")
+        self.cancel_search_bttn = Button(self.frame2_srch_act_frame, text ="Cancel Search")
+        # adjust elements in grid
+        self.do_search_bttn.grid(row=3,column=0)
+        self.cancel_search_bttn.grid(row=3,column=1)
+
+ 
     def do_teleop_button_4(self):
         #stop/standby everything
         self.teleop.do_teleop_func(True)    #fix message type
