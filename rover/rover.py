@@ -1,6 +1,11 @@
 """
-https://levelup.gitconnected.com/ros-spinning-threading-queuing-aac9c0a793f
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+Main 'rover' node with action logics
 
+    - Miniwalk action
+    - Approach action
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 
 import rclpy
@@ -24,7 +29,7 @@ import time
 
 class Rover(Node):
     def __init__(self):
-        super().__init__('rover_node')
+        super().__init__('rover')
 
         print("rover_node initialised")
 
@@ -36,12 +41,12 @@ class Rover(Node):
         ab2t:   Absolute Bearing to Target
         d2t:    Distance to Target
         arb:    Absolute Rover Bearing
-        rc:     Rover Coordinates
+        rcrds:     Rover Coordinates
         """
         self.ab2t = None
         self.d2t = None
         self.arb = None
-        self.rc = None
+        self.rcrds = None
         
         self.verbose = False
         
@@ -74,18 +79,17 @@ class Rover(Node):
         self.vectornav_sub = self.create_subscription(
             Point,
             'VectorNavPublisherTopic',
-            self.update_sensor_data,
+            self.update_sensor_data_callback,
             10)
-
         #VectorNavSensorData
 
 
-    def update_sensor_data(self, msg):
+    def update_sensor_data_callback(self, msg):
         lat = msg.x
         lon = msg.y
         arb = msg.z
 
-        self.rc = (lat, lon)
+        self.rcrds = (lat, lon)
         self.arb = arb
 
         if self.verbose == True:
@@ -94,11 +98,11 @@ class Rover(Node):
     def miniwalk_goal_callback(self, goal_request):
         """Accept or reject a client request to begin an action."""
         # This server allows multiple goals in parallel
-        self.get_logger().info('Received goal request')
+        self.get_logger().info('Received new goal request')
         return GoalResponse.ACCEPT
 
     def miniwalk_cancel_callback(self, goal_handle):
-        self.get_logger().warn('Received cancel request!')
+        self.get_logger().warn('Received cancel request for current goal!')
         self.set_rover_to_neutral()
         return CancelResponse.ACCEPT
 
@@ -106,11 +110,10 @@ class Rover(Node):
         print("received goal request", goal_handle.request)
         
         coords = goal_handle.request.coords
-        tc = (coords.x, coords.y)   #get coordinates from msg
+        tcrds = (coords.x, coords.y)   #get coordinates from msg
         geofence = coords.z  #get geofence from msg
-        
+
         #signal_and_wait = goal_handle.request.signal_and_wait
-        #use_guidance = goal_handle.request.use_guidance
 
         print("received coords: ", coords.x, coords.y)
         
@@ -118,8 +121,8 @@ class Rover(Node):
 
         feedback_msg = MinimalWalk.Feedback()
 
-        loop = True
-        while loop:
+        self.miniwalk_loop = True   
+        while self.miniwalk_loop:
 
             """cancel codition to close callback w/o execution blocking"""
             if goal_handle.is_cancel_requested:
@@ -127,8 +130,8 @@ class Rover(Node):
                 self.get_logger().info('Goal canceled')
                 return MinimalWalk.Result()
 
-            """logic of walk"""
-            ab2t, d2t = nv_calc(self.rc, tc)
+            """logic of mini walk"""
+            ab2t, d2t = nv_calc(self.rcrds, tcrds)
             error = heading_error(self.arb, ab2t)
             control = self.pid_controller.do_pid(error)
             boost = self.pid_controller.do_boost(error)
@@ -145,14 +148,17 @@ class Rover(Node):
             #time.sleep(.05)
 
             if d2t<geofence:
-                loop = False
+                self.miniwalk_loop = False
+
+        #if cvs2 interrupts and no false alarm detected stop miniwalk and execute approach behaviour
+        #if cvs2 false alarm, then continue on as you were
 
         goal_handle.succeed()
         self.set_rover_to_neutral()
         result = MinimalWalk.Result()
         result.result = True
 
-        self.get_logger().info('Goal Executed!...')
+        self.get_logger().info('Goal Finished Executing!...')
 
         return result
     
@@ -164,9 +170,7 @@ class Rover(Node):
         msg.lpwm = c2mm[0]
         msg.rpwm = c2mm[1]
         self.teensy_pub.publish(msg)
-        """leds have to be accounted for"""
-
-
+        """leds have to be programmed"""
 
 def main(args=None):
     rclpy.init(args=args)
@@ -183,75 +187,3 @@ def main(args=None):
 if __name__ == '__main__':
     
     main()
-
-
-
-
-        # self.state = 0
-        # self.state_dict = {
-        #     "Initializing": 0,
-        #     "Standby": 1,
-        #     "Transit": 2,
-        #     "Teleop": 3}
- 
-        # """
-        # location and attitude trackers
-        # """
-        # self.rover_lat = None
-        # self.rover_lon = None
-
-        # self.state_publisher = self.create_publisher(
-        #     Int16(),
-        #     'state_topic',
-        #     10)
-
-        # self.pose_subscriber = self.create_subscription(
-        #     Int16(),
-        #     'pose_topic',
-        #     self.update_pose_trackers,
-        #     10)
-
-
-
-
-        # self.msg_sub = self.create_subscription(
-        #     TestMsg,
-        #     'topic',
-        #     self.handle_sub,
-        #     10)
-
-        # self._action_server = ActionServer(
-        #     self,
-        #     Fibonacci,
-        #     'fibonacci',
-        #     self.execute_callback)
-
-
-    
-    # def handle_sub(self, msg):
-    #     self.get_logger().info('Got Result: "%d"' % msg.my_float)
-    #     print(msg.point)
-
-
-    # def execute_callback(self, goal_handle):
-    #     self.get_logger().info('Executing goal...')
-
-    #     feedback_msg = Fibonacci.Feedback()
-    #     feedback_msg.partial_sequence = [0, 1]
-
-    #     for i in range(1, goal_handle.request.order):
-    #         feedback_msg.partial_sequence.append(
-    #             feedback_msg.partial_sequence[i] + feedback_msg.partial_sequence[i-1])
-    #         self.get_logger().info('Feedback: {0}'.format(feedback_msg.partial_sequence))
-    #         goal_handle.publish_feedback(feedback_msg)
-    #         time.sleep(1)
-
-    #     goal_handle.succeed()
-
-    #     result = Fibonacci.Result()
-    #     result.sequence = feedback_msg.partial_sequence
-    #     return result
-
-    # def update_pose_trackers(self, msg):
-    #     pass
-    
