@@ -18,7 +18,6 @@ from std_srvs.srv import Trigger
 
 from rover_utils.action import MinimalWalk
 
-
 class SearchApproachActionManager(Node):
 
     def __init__(self):

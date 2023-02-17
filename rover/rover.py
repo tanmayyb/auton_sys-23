@@ -13,14 +13,14 @@ from rclpy.node import Node
 from rclpy.action import ActionServer, CancelResponse, GoalResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
-from rover_utils.action import MinimalWalk
 
+from rover_utils.action import MinimalWalk
 from rover_utils.msg import TankDriveMsg
 from geometry_msgs.msg import Point
 
-from nvc.nvc import nv_calc  
-from pid.error import heading_error
-from pid.pid import pid_controller
+from utils.nvc import nv_calc  
+from utils.error import heading_error
+from utils.pid import pid_controller
 
 
 
@@ -50,10 +50,14 @@ class Rover(Node):
         
         self.verbose = False
         
-        #tunining variable initialisations
+        #tunning variable initialisations
+        # <<<<< add load functionality here 
+        # miniwalk
         self.neutral_pwms = (127,127)
         self.pid_const  = (0.6,  0.0, 0.1) # good for kerr 
         self.drift_and_control_output_pwms = (20, 40) # quad grass 
+        # approach
+        
 
         self.pid_controller = pid_controller(
             self.pid_const, 
