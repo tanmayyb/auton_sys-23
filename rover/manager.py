@@ -1,11 +1,12 @@
 """
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Main Auth: Tanmay B.
+
 Search and Approach Action Manager (S.A.A.M.)
 
     - Search Action (Multiwalk)
-    - Approach Action
+    - Instructs 'rover' to perform Approach Action
     - Communicates with 'cvs2' and 'rover' nodes
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 import rclpy
@@ -13,144 +14,117 @@ from rclpy.node import Node
 from rclpy.action import ActionClient
 from rclpy.executors import MultiThreadedExecutor
 
-from std_msgs.msg import Int32MultiArray
 from std_srvs.srv import Trigger
 
-from rover_utils.action import MinimalWalk
+from rover_utils.action import MinimalWalk, Searchwalk
+
+import math
 
 class SearchApproachActionManager(Node):
 
     def __init__(self):
         super().__init__('action_manager')
 
-        self.goal_handle = None
-        self.goal_queue = []
-        self.goal_queue_last_index = -1
-        self.gid = 0
-        self.get_logger().info("!action manager created!") 
+        """
+        Searchwalk Variables
+        """
+        self.sw_goal_list = []
+        self.sw_goal_list_last_index = -1
+        self.sw_gid = 0
+        
 
         self.running_search = False
 
         self.miniwalk_action_client = ActionClient(
             self, 
             MinimalWalk, 
-            'MiniWalkTopic')
+            'miniwalk')
 
-        self.load_goals_and_execute_multifibo_subscriber = self.create_subscription(
-            Int32MultiArray,
-            'multiwalk_action_manager_goals',
-            self.load_goals_and_execute_multiwalk,
+        self.load_goals_and_execute_searchwalk_subscription = self.create_subscription(
+            Searchwalk,
+            'searchwalk',
+            self.load_goals_and_execute_searchwalk,
             10)
 
-        self.cancel_all_multifibo_goals_service = self.create_service(
+        self.searchwalk_interruption_service = self.create_service(
             Trigger, 
-            'cancel_all_multiwalk_goals', 
-            self.cancel_all_goals)
+            'halt_searchwalk', 
+            self.searchwalk_interruption_callbak)
 
-    def load_goals_and_execute_multiwalk(self, msg):
-        goals = msg.data
 
-        self.reset_goal_queue()
+        self.get_logger().info("!action manager created!") 
 
-        for i in goals:
-            self.add_goal_to_queue(i)
 
-        print(self.goal_queue)
-        self.get_logger().info("loaded {0} goals in queue, executing multifibo...".format(len(self.goal_queue)))
+    def load_goals_and_execute_searchwalk(self, msg):
+        lat,lon = msg.data.x, msg.data.y #this should be points = msg.data??
+        radius = msg.radius
+        pattern = msg.pattern
+        self.loop_searchwalk = msg.loop_searchwalk
 
+        """
+        create searchwalk goals
+        """
+        try: #this can be tested using a pub to the gui to plot the pattern
+            self.sw_goal_list = self.generateSearchPattern((lat, lon), radius, pattern)
+        except:
+            self.get_logger().error('load_goals_and_execute_searchwalk failed to create goal queue')
+        
         self.running_search = True
-        self.execute_all_goals_in_queue()
+        self.sw_goal_list_last_index = self.sw_goal_list_last_index + len(self.sw_goal_list)
+        self.searchwalk_goal_executor()
 
-    def add_goal_to_queue(self, order):
-        goal_msg = MinimalWalk.Goal()
-        goal_msg.order = order
-        self.goal_queue.append(goal_msg)
-        self.goal_queue_last_index=self.goal_queue_last_index+1
-
-    def pop_all_goals(self):
-        self.get_logger().info("popping all goals")
-        for i in range(0, self.goal_queue_last_index+1):
-            self.goal_queue.pop(0)
-        self.goal_queue_last_index = -1
-        self.get_logger().info("all goals popped")
-
-    def reset_goal_queue(self):
-        self.goal_queue = []
-        self.gid = 0
-        self.goal_queue_last_index = -1 
-
-    def execute_all_goals_in_queue(self): #goal manager function
+    def searchwalk_goal_executor(self): #searchwalk behaviour management function
         while not self.miniwalk_action_client.wait_for_server(timeout_sec=1.0):
-            self.get_logger().info('waiting for server to become available...')
+            self.get_logger().info('SearchWalk: waiting for MiniWalk action server to become available...')
         
         if(self.running_search):
-            if self.gid<=self.goal_queue_last_index:
-                goal = self.goal_queue[self.gid]
-                print(self.gid, goal)
-                self.get_logger().warning('sending fibonacci goal of order: %d' % (goal.order,))
+            if self.sw_gid<=self.sw_goal_list_last_index:
+                goal = self.sw_goal_list[self.sw_gid]
+                print("sw_gid", self.sw_gid, goal)
+                self.get_logger().warning('sending miniwalk goal:') #define goal here
                 self.send_goal(goal)
             
             else: #patch this part of code
                 self.get_logger().warning('all goals successfully completed: %d' % (goal.order,))
                 self.reset_goal_queue()
 
-    def send_goal(self, goal):
-        send_goal_future = self.miniwalk_action_client.send_goal_async(
-            goal, 
-            feedback_callback=self.feedback_callback)
-        send_goal_future.add_done_callback(self.goal_response_callback)
-
-    def goal_response_callback(self, future):
-        goal_handle = future.result()
-        if not goal_handle.accepted:
-            self.get_logger().info('Goal rejected :(')
-            return
+    def searchwalk_interruption_callbak(self):
+        #code for interruption of searchwalk by cvs2
         
-        self._goal_handle = goal_handle
-        self.get_logger().info('Goal accepted :)')
+        pass
 
-        get_result_future = goal_handle.get_result_async()
-        get_result_future.add_done_callback(self.get_result_callback)
-
-    def get_result_callback(self, future):
-        result = future.result().result
-        self.get_logger().warning('Result: {0}'.format(result.sequence))
+    def generateSearchPattern(self, center_coord, radius, step_angle):
+        """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Search pattern algorithm
+        Main Auth:  Niko Trivanovic
+        Created:    15 January, 2023
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        """        
+        """
+        algorithmic constants, determined by experimentation
+        """
+        slope = 0.2
+        scale = 0.00001
         
-        self.gid = self.gid + 1
-        self.execute_all_goals_in_queue()
+        step_depth = slope*radius + 1.0
 
-    def feedback_callback(self, feedback_msg):
-        feedback = feedback_msg.feedback
-        print(':{0}'.format(feedback.partial_sequence))
+        multiwalk_points = [center_coord]
+        num_search_points = (radius//step_depth) * (360//step_angle)
+        theta = 0
+        step = 1
 
-    def cancel_goal(self):
-        self.get_logger().error('Sending goal cancel request for Current Goal...')
-        cancel_future  = self._goal_handle.cancel_goal_async() #requesting cancel
-        cancel_future.add_done_callback(self.cancel_done)
-
-    def cancel_done(self, future):
-        cancel_response = future.result()
-        if len(cancel_response.goals_canceling) > 0:
-            self.get_logger().warning('Goal successfully canceled')
-        else:
-            self.get_logger().warning('Goal failed to cancel')
-
-
-    def cancel_all_goals(self, request, response):
-        self.get_logger().error('Cancel Request Received to Cancel All Goals...')
+        for n in range(num_search_points):
+            if theta >= 360:
+                theta = 0
+                step += 1
         
-        #stop current goal
-        self.cancel_goal()
+            lat = center_coord[0] + (((step * step_depth) * math.cos(math.radians(theta)))*scale) 
+            lon = center_coord[1] + (((step * step_depth) * math.sin(math.radians(theta)))*scale)
+            multiwalk_points.append((lat,lon))
+            theta += step_angle
 
-        #stop future goals
-        self.running_search = False
-
-        #reset goal_queue
-        self.reset_goal_queue()
-
-        self.get_logger().warning('All Goals Should Now Be Cancelled...')
-
-        return response
+        return multiwalk_points
 
 
 def main(args=None):

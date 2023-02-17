@@ -106,7 +106,7 @@ class gui(Thread):
             height=MAP_HEIGHT, 
             corner_radius=MAP_CORNER_RADIUS,
             use_database_only=True,
-            max_zoom=19,
+            max_zoom=22,
             database_path=database_path)
 
         self.map_widget.grid(

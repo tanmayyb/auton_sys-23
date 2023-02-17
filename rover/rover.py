@@ -15,7 +15,7 @@ from rclpy.action import ActionServer, CancelResponse, GoalResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 
-from rover_utils.action import MinimalWalk
+from rover_utils.action import MinimalWalk, Approach
 from rover_utils.msg import TankDriveMsg
 from geometry_msgs.msg import Point
 
@@ -23,10 +23,7 @@ from utils.nvc import nav_vec_calc
 from utils.error import heading_error
 from utils.pid import pid_controller
 
-
-
 import time
-
 
 class Rover(Node):
     def __init__(self):
@@ -38,11 +35,11 @@ class Rover(Node):
         self.pid_controller = None
 
         """
-        Operational Variable Initialisations
-        ab2t:   Absolute Bearing to Target
-        d2t:    Distance to Target
-        arb:    Absolute Rover Bearing
-        rcrds:     Rover Coordinates
+        Navigational Variables
+        ab2t:       Absolute Bearing to Target
+        d2t:        Distance to Target
+        arb:        Absolute Rover Bearing
+        rcrds:      Rover Coordinates
         """
         self.ab2t = None
         self.d2t = None
@@ -53,19 +50,17 @@ class Rover(Node):
         
         #tunning variable initialisations
         # <<<<< add load functionality here 
-        # miniwalk
+
+        # miniwalk tunings
         self.neutral_pwms = (127,127)
         self.pid_const  = (0.6,  0.0, 0.1) # good for kerr 
         self.drift_and_control_output_pwms = (20, 40) # quad grass 
-        # approach
+        # approach tunings
         
 
         self.pid_controller = pid_controller(
             self.pid_const, 
             self.drift_and_control_output_pwms)
-
-        
-        """LAUNCH ROS2 ACTION SERVER, PUB, SUB """
 
         self.min_walk_act_server = ActionServer(
             self,

@@ -1,5 +1,6 @@
 import cv2
 
+
 class aruco_localiser():
     def __init__(self, detector, dims=None):
         self.width = dims[0]
