@@ -1,11 +1,12 @@
 """
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Main Auth: Tanmay B.
+
 Main 'rover' node with action logics
 
     - Miniwalk action
     - Approach action
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 
 import rclpy
@@ -18,7 +19,7 @@ from rover_utils.action import MinimalWalk
 from rover_utils.msg import TankDriveMsg
 from geometry_msgs.msg import Point
 
-from utils.nvc import nv_calc  
+from utils.nvc import nav_vec_calc  
 from utils.error import heading_error
 from utils.pid import pid_controller
 
@@ -135,7 +136,7 @@ class Rover(Node):
                 return MinimalWalk.Result()
 
             """logic of mini walk"""
-            ab2t, d2t = nv_calc(self.rcrds, tcrds)
+            ab2t, d2t = nav_vec_calc(self.rcrds, tcrds)
             error = heading_error(self.arb, ab2t)
             control = self.pid_controller.do_pid(error)
             boost = self.pid_controller.do_boost(error)

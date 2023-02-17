@@ -1,12 +1,15 @@
 """
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Main Auth: Tanmay B.
 
+Code for calculating navigation vector
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 
 from math import sin, cos, atan2, radians, degrees, sqrt
 
 
-def nv_calc(current_coords, target_coords):
+def nav_vec_calc(current_coords, target_coords):
 
 
     R = 6371000.0  # radius of Earth in meters

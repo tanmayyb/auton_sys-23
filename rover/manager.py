@@ -1,12 +1,12 @@
 """
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Search and Approach Action Manager (S.A.A.M.)
 
     - Search Action (Multiwalk)
     - Approach Action
     - Communicates with 'cvs2' and 'rover' nodes
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 import rclpy
 from rclpy.node import Node

@@ -1,7 +1,11 @@
 """
-Developed by Kevin T.
-Modified by Tanmay B.
-15 Sep 2022
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Developed by:   Kevin Tran
+Integration:    Tanmay B.
+Date:           15 Sep 2022
+
+Code for 'boost' function of the rover
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 
 def boost_function(error_in_degs):

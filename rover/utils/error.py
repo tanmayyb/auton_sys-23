@@ -1,8 +1,12 @@
-from math import sin
+"""
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Main Auth: Tanmay B.
 
+    - Calculation of shortest turning angle between arb and target bearing (miniwalk)
+    - Cross track error (never used)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
-https://math.stackexchange.com/questions/110080/shortest-way-to-achieve-target-angle
-"""
+from math import sin
 
 
 def heading_error(current_bearing, target_bearing):
