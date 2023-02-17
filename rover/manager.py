@@ -16,7 +16,8 @@ from rclpy.executors import MultiThreadedExecutor
 
 from std_srvs.srv import Trigger
 
-from rover_utils.action import MinimalWalk, Searchwalk
+from rover_utils.action import MinimalWalk
+from rover_utils.msg import Searchwalk
 
 import math
 
