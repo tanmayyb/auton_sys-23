@@ -1,8 +1,0 @@
-geometry_msgs/Point coords
-bool use_guidance
-bool signal_and_wait
----
-bool result
----
-float64 d2t
-float64 he
