@@ -17,7 +17,7 @@ from rclpy.executors import MultiThreadedExecutor
 from std_srvs.srv import Trigger
 
 from rover_utils.action import MinimalWalk
-from rover_utils.msg import Searchwalk
+from rover_utils.msg import SearchWalk
 
 import math
 
@@ -41,10 +41,10 @@ class SearchApproachActionManager(Node):
             MinimalWalk, 
             'miniwalk')
 
-        self.load_goals_and_execute_searchwalk_subscription = self.create_subscription(
-            Searchwalk,
+        self.do_searchwalk = self.create_subscription(
+            SearchWalk,
             'searchwalk',
-            self.load_goals_and_execute_searchwalk,
+            self.do_searchwalk_callback,
             10)
 
         self.searchwalk_interruption_service = self.create_service(
@@ -53,48 +53,66 @@ class SearchApproachActionManager(Node):
             self.searchwalk_interruption_callbak)
 
 
-        self.get_logger().info("!action manager created!") 
+        print("------------ACTION MANAGER CREATED------------") 
 
+    def do_searchwalk_callback(self, msg):
+        self.get_logger().warn("searchwalk goal received...\n")
+        self.load_goals_and_execute_searchwalk(msg)
 
     def load_goals_and_execute_searchwalk(self, msg):
-        lat,lon = msg.data.x, msg.data.y #this should be points = msg.data??
-        radius = msg.radius
-        pattern = msg.pattern
-        self.loop_searchwalk = msg.loop_searchwalk
-
+        try:
+            lat = msg.coords.x #this should be points = msg.data??
+            lon = msg.coords.y
+            search_radius = msg.search_radius
+            search_pattern = msg.search_pattern
+            self.loop_searchwalk = msg.loop_searchwalk
+        except:
+            self.get_logger().error('load_goals_and_execute_searchwalk failed to read msg')
         """
         create searchwalk goals
         """
         try: #this can be tested using a pub to the gui to plot the pattern
-            self.sw_goal_list = self.generateSearchPattern((lat, lon), radius, pattern)
+            searchwalk_goal = ((lat, lon), search_radius, search_pattern)
+            self.sw_goal_list = self.create_searchwalk_goals(searchwalk_goal)
+            self.running_search = True
+            self.sw_goal_list_last_index = self.sw_goal_list_last_index + len(self.sw_goal_list)
+            #self.searchwalk_goal_executor()
         except:
             self.get_logger().error('load_goals_and_execute_searchwalk failed to create goal queue')
-        
-        self.running_search = True
-        self.sw_goal_list_last_index = self.sw_goal_list_last_index + len(self.sw_goal_list)
-        self.searchwalk_goal_executor()
-
-    def searchwalk_goal_executor(self): #searchwalk behaviour management function
-        while not self.miniwalk_action_client.wait_for_server(timeout_sec=1.0):
-            self.get_logger().info('SearchWalk: waiting for MiniWalk action server to become available...')
-        
-        if(self.running_search):
-            if self.sw_gid<=self.sw_goal_list_last_index:
-                goal = self.sw_goal_list[self.sw_gid]
-                print("sw_gid", self.sw_gid, goal)
-                self.get_logger().warning('sending miniwalk goal:') #define goal here
-                self.send_goal(goal)
             
-            else: #patch this part of code
-                self.get_logger().warning('all goals successfully completed: %d' % (goal.order,))
-                self.reset_goal_queue()
+    # def searchwalk_goal_executor(self): #searchwalk behaviour management function
+    #     while not self.miniwalk_action_client.wait_for_server(timeout_sec=1.0):
+    #         self.get_logger().info('SearchWalk: waiting for MiniWalk action server to become available...')
+        
+    #     if(self.running_search):
+    #         if self.sw_gid<=self.sw_goal_list_last_index:
+    #             goal = self.sw_goal_list[self.sw_gid]
+    #             print("sw_gid", self.sw_gid, goal)
+    #             self.get_logger().warning('sending miniwalk goal:') #define goal here
+    #             self.send_goal(goal)
+            
+    #         else: #patch this part of code
+    #             self.get_logger().warning('all goals successfully completed: %d' % (goal.order,))
+    #             self.reset_goal_queue()
 
     def searchwalk_interruption_callbak(self):
         #code for interruption of searchwalk by cvs2
-        
         pass
 
-    def generateSearchPattern(self, center_coord, radius, step_angle):
+    def create_searchwalk_goals(self, searchwalk_goal):
+        self.get_logger().info("searchwalk goal list CREATED:\n")
+        searchwalk_points = self.generateSearchPattern(searchwalk_goal)
+        for point in searchwalk_points:
+            """create miniwalk goal and add to goals list"""
+            goal = MinimalWalk()
+            goal.coords.x = point[0]
+            goal.coords.y = point[1]
+            goal.use_guidance = False
+            goal.signal_and_wait = False
+            self.sw_goal_list.append(goal)
+            print("lat: ", point[0], "\tlon: ", point[1])
+
+    def generateSearchPattern(self, searchwalk_goal):
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         Search pattern algorithm
@@ -103,30 +121,40 @@ class SearchApproachActionManager(Node):
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """        
         """
-        algorithmic constants, determined by experimentation
+        algorithm default constants, determined by experimentation
         """
+        center_coord, radius, pattern = searchwalk_goal
+        print(center_coord, radius, pattern)
+        #SearchWalk pattern constants
         slope = 0.2
         scale = 0.00001
-        
-        step_depth = slope*radius + 1.0
-
-        multiwalk_points = [center_coord]
-        num_search_points = (radius//step_depth) * (360//step_angle)
         theta = 0
+        step_jump = slope*radius + 1.0 #step jump scaling equation
         step = 1
-
-        for n in range(num_search_points):
-            if theta >= 360:
-                theta = 0
-                step += 1
-        
-            lat = center_coord[0] + (((step * step_depth) * math.cos(math.radians(theta)))*scale) 
-            lon = center_coord[1] + (((step * step_depth) * math.sin(math.radians(theta)))*scale)
-            multiwalk_points.append((lat,lon))
-            theta += step_angle
-
-        return multiwalk_points
-
+        step_angle = 120.0 #default
+        #find step angle
+        if(pattern==0): step_angle = 120.0
+        elif(pattern==1): step_angle = 90.0
+        elif(pattern==2): step_angle = 72.0
+        searchwalk_points = [center_coord]
+        num_search_points = int((radius//step_jump) * (360.0//step_angle))
+        try:
+            for n in range(num_search_points):
+                if theta >= 360.0:
+                    theta = 0
+                    step += 1
+                lat = center_coord[0] + (((step * step_jump) * math.cos(math.radians(theta)))*scale) 
+                lon = center_coord[1] + (((step * step_jump) * math.sin(math.radians(theta)))*scale)
+                searchwalk_points.append((lat,lon))
+                theta += step_angle
+                """
+                Tool to plot SEARCHPOINTS: 
+                https://maps.co/gis/
+                """
+                #print(lat,",",lon)
+        except:
+            self.get_logger().error('generateSearchPattern: error creating searchwalk_points')
+        return searchwalk_points
 
 def main(args=None):
     rclpy.init(args=args)

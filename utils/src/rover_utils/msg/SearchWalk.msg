@@ -3,3 +3,4 @@ float32 search_radius
 int32 search_pattern
 bool enable_cv
 bool enable_oa
+bool loop_searchwalk
