@@ -2,12 +2,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Main Auth: Tanmay B.
 
-Code for calculating navigation vector
+Navigation Vector Calculation (N.V.C.)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 
 from math import sin, cos, atan2, radians, degrees, sqrt
-
 
 def nav_vec_calc(current_coords, target_coords):
 

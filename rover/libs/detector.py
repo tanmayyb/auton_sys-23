@@ -6,6 +6,7 @@ class aruco_detector():
         self.args = self.create_argument_parser()
         self.arucoDict, self.arucoParams = self.load_arcuo_dict(self.args);
         self.marker_params = None
+        self.aruco_detection_state = False
 
     def create_argument_parser(self):
         # construct the argument parser and parse the arguments
@@ -24,7 +25,7 @@ class aruco_detector():
         arucoParams = cv2.aruco.DetectorParameters_create()
         return arucoDict, arucoParams
 
-    def detect_aruco_marker(self, frame):
+    def do_aruco_marker_detection(self, frame):
         #detect markers in the current frame 
         (corners, ids, rejected) = cv2.aruco.detectMarkers(
             frame, 
@@ -32,7 +33,11 @@ class aruco_detector():
             parameters=self.arucoParams)
 
         self.marker_params = (corners, ids)
-        return (corners, ids, rejected)
+
+        self.aruco_detection_state = True if ids != None else False
+
+    def is_aruco_detected(self):
+        return self.aruco_detection_state
 
     def zip_markers(self, corners, ids):
         self.zipped_marker_data = zip(corners, ids)

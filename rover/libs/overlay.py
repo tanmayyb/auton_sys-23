@@ -19,7 +19,7 @@ class overlay_on():
     def load_marker_params(self):
         self.marker_params = self.detector.get_marker_params()
 
-    def put_overlay(self, frame, draw_bounding_box=True, localiser=None, use_localiser=False, controller=None, plot_center_of_mass=False):
+    def put_overlay(self, frame, draw_bounding_box=True, localiser=None, use_localiser=False, controller=None, plot_center_of_mass=False, state_text=None):
         self.frame = frame
         self.localiser = localiser
         self.controller = controller
@@ -28,7 +28,7 @@ class overlay_on():
         self.put_localiser_overlay(enable=use_localiser)
         self.draw_midline()
         self.put_center_of_mass_overlay(enable=plot_center_of_mass)
-
+        self.put_state_text(state_text)
 
         return self.frame
 
@@ -102,3 +102,6 @@ class overlay_on():
     def draw_texts(self, topLeft, markerID):
         #draw markerID on frame
         cv2.putText(self.frame, str(markerID),(topLeft[0],topLeft[1]-15),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,0),2)
+
+    def put_state_text(self, text):
+        cv2.putText(self.frame, str(text), (20,30), cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)

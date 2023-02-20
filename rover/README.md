@@ -1,4 +1,10 @@
 
+### Stream camera
+
+```
+gst-launch-1.0 -v ksvideosrc device-index=0 ! "image/jpeg,width=640, height=480,framerate=30/1" ! rtpjpegpay ! multiudpsink clients=10.0.0.52:8080
+```
+
 #### Turn cvs2 ON/OFF
 ```
 ros2 topic pub /set_cvs2_state std_msgs/Bool "data: True"
