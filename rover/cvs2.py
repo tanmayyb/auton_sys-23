@@ -66,7 +66,7 @@ class CVSubSystem(Node):
         self.detector = aruco_detector(self)
         self.localiser = aruco_localiser(self.detector, dims=self.frame_dims)
         self.pid = pid_controller(self.localiser, self.frame_dims, pid_const=PID_TUNING_CONSTS)
-        self.overlay_handler = overlay_on(detector=self.detector, localiser=self.localiser, controller=self.pid, dims=self.frame_dims)
+        self.overlay_handler = overlay_on(detector=self.detector, localiser=self.localiser, controller=self.pid, dims=self.frame_dims) #make this less messy
 
         """
         ROS2 INTERFACES
