@@ -12,7 +12,7 @@ class featureGUI():
         self.master = master
         self.node = node
 
-        self.loadWin()
+        self.param = self.loadWin()
 
         #Frame for save button
         frame_save = tk.Frame(
@@ -54,48 +54,42 @@ class featureGUI():
 
         self.button_save.pack()
         self.button_load.pack()
-
-
+    
+    #Enables all buttons on the GUI
+    def btON(self):
+        self.button_save.configure(state=tk.NORMAL)
+        self.button_load.configure(state=tk.NORMAL)
+    
+    #Disables all buttons on the GUI
+    def btOFF(self):
+        self.button_save.configure(state=tk.DISABLED)
+        self.button_load.configure(state=tk.DISABLED)
 
     #Runs when the load button is clicked --> Loads all values from JSON into the GUI
     def load(self):
-        self.button_save.configure(state=tk.DISABLED)
-        self.button_load.configure(state=tk.DISABLED)
-        
+        self.btOFF()
+      
         try:
-            param = self.node.sendRequest()
+            self.param = self.node.sendRequest()
         except:
             tk.messagebox.showerror(master = self.master, title = "Error", message = "SERVICE TIMEOUT, could not find service callback")
-            self.button_save.configure(state=tk.NORMAL)
-            self.button_load.configure(state=tk.NORMAL)
+            self.btON()
             return
 
-        param_names = list(param.keys())
+        param_names = list(self.param.keys())
 
         for i in param_names:
             value = self.master.grid_slaves(row = param_names.index(i), column = 1)[0].winfo_children()[0]
             value.delete(0, tk.END)
-            value.insert(0, param[i])
+            value.insert(0, self.param[i])
 
-        self.button_save.configure(state=tk.NORMAL)
-        self.button_load.configure(state=tk.NORMAL)
+        self.btON()
         
-
-
     #Runs when the save button is clicked (Saves all values in the GUI to JSON)
     def save(self):
-        self.button_save.configure(state=tk.DISABLED)
-        self.button_load.configure(state=tk.DISABLED)
-
-        try:
-            param = self.node.sendRequest()
-        except:
-            tk.messagebox.showerror(master = self.master, title = "Error", message = "SERVICE TIMEOUT, could not find service callback")
-            self.button_save.configure(state=tk.NORMAL)
-            self.button_load.configure(state=tk.NORMAL)
-            return
+        self.btOFF()
             
-        param_names = list(param.keys())
+        param_names = list(self.param.keys())
 
         for i in param_names:
             #Locates the desired entry widget in the grid and retrieves the value
@@ -105,13 +99,12 @@ class featureGUI():
             
             #Check to see if all inputs are integer values, if not a popup error message will show
             try:
-                param[i] = int(value)
+                self.param[i] = int(value)
             except:
                 tk.messagebox.showerror(master = self.master, title = "Error", message = "Input Error at " + f"{i}")
         
-        self.node.sendParam(param)
-        self.button_save.configure(state=tk.NORMAL)
-        self.button_load.configure(state=tk.NORMAL)
+        self.node.sendParam(self.param)
+        self.btON()
 
     #This functions deals with loading all the information(key and values) from the JSON file into the GUI
     def loadWin(self):
@@ -144,18 +137,18 @@ class featureGUI():
                     entry.pack()
                     entry.insert(0, param[param_names[i]])
         
-
-def root(master): 
+        return param
+        
+def launchFWindow(master): #Main function that launches the feature window
     try:
-        newWindow = tk.Toplevel(master)
+        newWindow = tk.Toplevel(master) #Links the new window with the original window
         newWindow.title("Parameter Controls")
         newWindow.minsize(1000,500)    
-        node = PublisherClient()
-        app = featureGUI(newWindow, node)
-
+        node = PublisherClient() #Init the publisher_client node
+        app = featureGUI(newWindow, node) #launches the window
     except:
         tk.messagebox.showerror(title = "Error", message = "SERVICE TIMEOUT, could not find service callback")
     
-    newWindow.wait_window()
-    node.destroy_node()
+    newWindow.wait_window() #this function is used to wait for the feature window to close (it halts the code from executing the rest of the code)
+    node.destroy_node() #destroys all node used in the feature window
     
