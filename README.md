@@ -17,7 +17,7 @@ Goals:
 | Name             | Email                    | Role                  |
 | ---------------- | ------------------------ | --------------------- |
 | Tanmay Bishnoi   | tbishnoi@ryerson.ca      | Lead Engineer         |
-| Ryan             | email@ryerson.ca         |      Engineer         |
+| Ryan             | r1le@ryerson.ca         |      Engineer         |
 | Eleanor          | email@ryerson.ca         |      Engineer         |
 
 ![Screenshot 2022-09-15 201720](https://user-images.githubusercontent.com/72982560/190530379-7744850b-d36d-4233-8ec5-d695e7e2a66b.png)
