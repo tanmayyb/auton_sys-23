@@ -38,10 +38,15 @@ class CVSubSystem(Node):
     def __init__(self):
         super().__init__('cv_subsystem')
 
+        self.subsystem_state = SM_DICT['idle_scan']
+        self.aruco_is_detected = False
+        self.aruco_detection_timestamp = None
+        self.aruco_confimation_wait_time = 3.0 #seconds
+
         self.stream = streamer()
         self.frame_dims = self.stream.get_frame_dims()
 
-        self.detector = aruco_detector()
+        self.detector = aruco_detector(self)
         self.localiser = aruco_localiser(self.detector, dims=self.frame_dims)
         self.overlay_handler = overlay_on(self.detector, dims=self.frame_dims)
         self.pid = pid_controller(self.localiser, self.frame_dims, pid_const=PID_TUNING_CONSTS)
@@ -59,17 +64,12 @@ class CVSubSystem(Node):
         self.thread = None
         self.event = None
 
-        self.subsystem_state = SM_DICT['idle_scan']
-        
-        self.aruco_detected = False
-        self.aruco_detection_timestamp = None
-        self.aruco_confimation_time = 4.0 #seconds
-
         self.searchwalk_interrupted = False
-
+        
+        """
+        https://stackoverflow.com/questions/61394756/how-to-use-opencv-videowriter-with-gstreamer
+        """
         self.out_streamer = cv2.VideoWriter(gst_out_command,cv2.CAP_GSTREAMER,0, 20, self.frame_dims, True)
-
-
 
     def set_cvs2_state_callback(self, msg):
         msg = msg.data
@@ -81,18 +81,13 @@ class CVSubSystem(Node):
             self.stop_subsystem_thread()
 
     def main_subsystem_thread(self):
-        """
-        https://superfastpython.com/stop-a-thread-in-python/
-        """
         self.get_logger().info("cvs2 STARTED!")
-
+        
         while not self.event.is_set():
             ret, frame = self.stream.get_frame()
 
             # detector detects 
             self.detector.do_aruco_marker_detection(frame)
-            self.aruco_detected = self.detector.is_aruco_detected()
-            
 
             """
             State Machine for CVS2
@@ -112,7 +107,8 @@ class CVSubSystem(Node):
                 controller=self.pid, 
                 plot_center_of_mass=True,
                 state_text=SM_INFO[self.subsystem_state])
-            #self.stream.display_frames(frame)
+           
+            self.stream.display_frames(frame)
             self.out_streamer.write(frame)
             self.mainloop = self.stream.check_for_exit_keypresses()
             
@@ -132,7 +128,7 @@ class CVSubSystem(Node):
                 - checks for aruco detections
                 - interrupts 'action_manager'
             """
-            if self.aruco_detected:
+            if self.aruco_is_detected:
                 self.register_aruco_detection_time()
                 #self.interrupt_searchwalk()
                 self.subsystem_state = SM_DICT['confirm_aruco']
@@ -142,7 +138,7 @@ class CVSubSystem(Node):
             CONFIRM ARUCO
                 - check for false positives
             """
-            if self.aruco_detected:
+            if self.aruco_is_detected:
                 if self.aruco_signal_confirmed():
                     self.subsystem_state = SM_DICT['approach']
             else: 
@@ -162,7 +158,7 @@ class CVSubSystem(Node):
 
         elif self.subsystem_state == SM_DICT['approach']:
             self.get_logger().warn("Triggering approach behaviour...")
-            self.subsystem_state = SM_DICT['reset']
+            #self.subsystem_state = SM_DICT['reset']
             #approach logic
 
     def start_subsystem_thread(self):    
@@ -177,6 +173,10 @@ class CVSubSystem(Node):
             print("Subsystem thread is ALREADY running...")
 
     def stop_subsystem_thread(self):
+        """
+        about self.event.is_set():
+        https://superfastpython.com/stop-a-thread-in-python/
+        """
         if self.thread is not None:
             self.get_logger().info("setting thread event to stop...") 
             self.event.set()
@@ -205,7 +205,7 @@ class CVSubSystem(Node):
     
     def aruco_signal_confirmed(self):
         detection_time = time.time() - self.aruco_detection_timestamp
-        if detection_time >= self.aruco_confimation_time:
+        if detection_time >= self.aruco_confimation_wait_time:
             return True
         return False
 
@@ -215,7 +215,6 @@ def main(args=None):
     cvs2 = CVSubSystem()
 
     executor = MultiThreadedExecutor()
-
     rclpy.spin(cvs2, executor=executor)
 
     cvs2.destroy()

@@ -2,11 +2,12 @@ from settings.aruco_dict import *
 import cv2, argparse, time, sys 
 
 class aruco_detector():
-    def __init__(self):
+    def __init__(self, parent):
         self.args = self.create_argument_parser()
         self.arucoDict, self.arucoParams = self.load_arcuo_dict(self.args);
         self.marker_params = None
         self.aruco_detection_state = False
+        self.parent = parent
 
     def create_argument_parser(self):
         # construct the argument parser and parse the arguments
@@ -34,10 +35,11 @@ class aruco_detector():
 
         self.marker_params = (corners, ids)
 
-        self.aruco_detection_state = True if ids != None else False
+        self.update_parent_aruco_detection_state_tracker(ids) 
 
-    def is_aruco_detected(self):
-        return self.aruco_detection_state
+    def update_parent_aruco_detection_state_tracker(self, ids):
+        #this function updates main program's state tracker self.aruco_detected
+        self.parent.aruco_is_detected = True if ids != None else False
 
     def zip_markers(self, corners, ids):
         self.zipped_marker_data = zip(corners, ids)

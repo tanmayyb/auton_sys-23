@@ -1,3 +1,7 @@
 utils/build
 utils/install
 utils/log
+
+rover/settings/__pycache__
+rover/libs/__pycache__
+rover/utils/__pycache__
