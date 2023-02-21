@@ -2,8 +2,7 @@ import tkinter as tk
 import tkinter.messagebox
 from tkinter.ttk import *
 import rclpy
-from JsonFile import *
-from PublisherClientNode import *
+from nodes.paramManager import *
 
 import threading
 
@@ -143,7 +142,7 @@ def launchFWindow(master): #Main function that launches the feature window
     try:
         newWindow = tk.Toplevel(master) #Links the new window with the original window
         newWindow.title("Parameter Controls")
-        newWindow.minsize(1000,500)    
+        newWindow.minsize(800,500)    
         node = PublisherClient() #Init the publisher_client node
         app = featureGUI(newWindow, node) #launches the window
     except:

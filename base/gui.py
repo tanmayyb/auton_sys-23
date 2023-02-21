@@ -7,10 +7,12 @@ import tkintermapview
 from threading import *
 import time
 
-from base.base import baseNode
+from nodes.base import baseNode
 
 from settings.window import *
 from settings.grid import *
+
+from applet.param_feature import launchFWindow
 
 import rclpy
 
@@ -55,6 +57,7 @@ class gui(Thread):
          # Window setup
         self.window.title("Auton ROS GUI")
         self.window.geometry(SETUP_STRING)
+        self.window.minsize(800,670)
         self.setup_styles()
 
     def setup_styles(self):
@@ -570,9 +573,30 @@ class gui(Thread):
     def set_status_bar_speed_info(self, msg):
         self.teleop_speed_info.configure(text=f"Speed:\t{10.0*float(msg):.1f}\t")
 
+    def show_top_bar(self):
+        self.top_frame = Frame(self.window, width=800, height = 40, borderwidth=1, relief=GROOVE)
+        self.top_frame.grid(row=0, 
+                column=0,
+                columnspan=5,
+                sticky="NW")
 
+        self.top_frame.propagate(FALSE)
+             
+        self.paramFeature_BT = Button(
+            self.top_frame, 
+            text="Feature",
+            command = lambda: Thread(target=self.feature_button_action, daemon=True).start()
+            )
+        self.paramFeature_BT.pack(side=RIGHT, padx=5, pady=5)
+    
+    def feature_button_action(self):
+        self.paramFeature_BT.configure(state=DISABLED)
+        launchFWindow(self.window)
+        self.paramFeature_BT.configure(state=NORMAL)
 
     def draw_gui(self):
+        self.show_top_bar()
+
         self.show_map()
         
         self.show_scroll()

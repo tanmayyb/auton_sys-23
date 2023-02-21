@@ -2,8 +2,6 @@ from pickle import FALSE, TRUE
 from rclpy.node import Node
 from rclpy.action import ActionClient
 
-
-
 from geometry_msgs.msg import Point
 
 from rover_utils.action import MinimalWalk

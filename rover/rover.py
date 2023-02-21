@@ -10,8 +10,13 @@ from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 from rover_utils.action import MinimalWalk
 
+from rover_utils.msg import SendingParam
+from rover_utils.srv import RequestParam
+
 from rover_utils.msg import TankDriveMsg
 from geometry_msgs.msg import Point
+
+from utils.JsonFile import *
 
 from nvc.nvc import nv_calc  
 from pid.error import heading_error
@@ -76,6 +81,17 @@ class Rover(Node):
             'VectorNavPublisherTopic',
             self.update_sensor_data,
             10)
+
+        self.param_sub = self.create_subscription(
+            SendingParam,
+            'robotJson',
+            self.getParams,
+            10)
+
+        self.param_srv = self.create_service(
+            RequestParam, 
+            'get_params', 
+            self.sendParams)
 
         #VectorNavSensorData
 
@@ -165,6 +181,40 @@ class Rover(Node):
         msg.rpwm = c2mm[1]
         self.teensy_pub.publish(msg)
         """leds have to be accounted for"""
+    
+    def getParams(self, msg):
+        params = dict() #Create an empty dictionary for settings
+        try:
+            params["BF-P"] = msg.bfp
+            params["BF-R"] = msg.bfr
+            params["D: PID"] = msg.d
+            params["Drift Speed"] = msg.driftspeed
+            params["I: PID"] = msg.i
+            params["P: PID"] = msg.p
+            params["Turn Speed"] = msg.turnspeed
+
+            editJson(params)
+        except:
+            print("Error, invalid message.")
+        self.get_logger().info('I heard: "%s"' % str(params))
+    
+    def sendParams(self, request, response):
+        jsonFile = loadJson_file()
+        
+        if (request.request == -1): #Check request id
+
+            response.bfp = jsonFile["BF-P"]
+            response.bfr = jsonFile["BF-R"]
+            response.driftspeed = jsonFile["Drift Speed"]
+            response.p = jsonFile["P: PID"]
+            response.i = jsonFile["I: PID"]
+            response.d = jsonFile["D: PID"]
+            response.turnspeed = jsonFile["Turn Speed"]
+        
+            self.get_logger().info('Incoming request\nRequest Number: %d' % (request.request))
+            return response
+        else:
+            self.get_logger().info('Error receiving request')
 
 
 

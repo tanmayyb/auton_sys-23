@@ -38,6 +38,8 @@ find_package(geometry_msgs REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "action/MinimalWalk.action"
   "msg/TankDriveMsg.msg"
+  "msg/SendingParam.msg"
+  "srv/RequestParam.srv"
    DEPENDENCIES geometry_msgs
 )
 

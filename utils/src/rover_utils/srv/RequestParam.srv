@@ -1,0 +1,11 @@
+#Creating a request and service file. I'm not sure what the request would be yet?
+int64 request
+---
+#Response 
+int64 bfp
+int64 bfr
+int64 driftspeed
+int64 p
+int64 i
+int64 d
+int64 turnspeed  

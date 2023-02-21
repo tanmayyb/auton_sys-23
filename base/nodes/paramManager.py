@@ -1,13 +1,8 @@
 import rclpy
 from rclpy.node import Node
 
-from custom_msg.msg import Robotparam
-from custom_msg.srv import Service
-
-import json
-from JsonFile import *
-
-from threading import *
+from rover_utils.msg import SendingParam
+from rover_utils.srv import RequestParam
 
 pubTopicName = "robotJson"
 cliTopicName = "get_params"
@@ -18,16 +13,16 @@ class PublisherClient(Node):
         super().__init__('publisher_client') #Calls the node class's constructor and gives it the node name 'publisher_client'
 
         #Init publisher
-        self.publisher_ = self.create_publisher(Robotparam, pubTopicName, 10) #declares the node publishes message of type string with a topic name (must be same as Subscriber)
+        self.publisher_ = self.create_publisher(SendingParam, pubTopicName, 10) #declares the node publishes message of type string with a topic name (must be same as Subscriber)
 
         #Init client
-        self.cli = self.create_client(Service, cliTopicName)                                 
+        self.cli = self.create_client(RequestParam, cliTopicName)                                 
 
 
     #Publisher sends rover parameters to the subscriber
     def sendParam(self, updatedParameters): 
 
-        msg = Robotparam()
+        msg = SendingParam()
         #Check if updatedParameters is Python dictionary, adds values to msg
         if (type(updatedParameters) is dict):
             msg.bfp = updatedParameters["BF-P"]
@@ -57,7 +52,7 @@ class PublisherClient(Node):
             if (time == 10): #If timer reaches 10 (sec) then stop trying to find service node
                 self.get_logger().info('unable to find service. SERVICE TIMEOUT')
                 raise Exception("Service Timeout") #send error
-        self.req = Service.Request()         
+        self.req = RequestParam.Request()         
         
         self.req.request = -1           
         self.future = self.cli.call_async(self.req)

@@ -4,10 +4,7 @@ import json
 #Saver (Edits and saves JSON File)
 #Loader (Sends JSON to GUI)
 
-fileName = "sample.json"
-parameters = {}
-
-
+fileName = "rover/settings/tunings.json"
 
 #Edit JSON - Updated parameters is meant to be a dictionary with the new json values
 def editJson(updatedParameters):
