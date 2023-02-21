@@ -30,6 +30,9 @@ from libs.overlay import overlay_on
 from libs.controller import pid_controller
 
 from settings.pid import *
+from settings.states import *
+from settings.pipeline import *
+
 
 class CVSubSystem(Node):
     def __init__(self):
@@ -56,20 +59,15 @@ class CVSubSystem(Node):
         self.thread = None
         self.event = None
 
-        self.sm_dict = {
-            'idle_scan':0,
-            'confirm_aruco':1,
-            'approach':2,
-            'reset':3}
-
-        self.sm_info = ['READY/SCANNING','CONFIRMING...','APPROACHING','RESETING']
-        self.subsystem_state = self.sm_dict['idle_scan']
+        self.subsystem_state = SM_DICT['idle_scan']
         
         self.aruco_detected = False
         self.aruco_detection_timestamp = None
         self.aruco_confimation_time = 4.0 #seconds
 
         self.searchwalk_interrupted = False
+
+        self.out_streamer = cv2.VideoWriter(gst_out_command,cv2.CAP_GSTREAMER,0, 20, self.frame_dims, True)
 
 
 
@@ -113,10 +111,11 @@ class CVSubSystem(Node):
                 use_localiser=True, 
                 controller=self.pid, 
                 plot_center_of_mass=True,
-                state_text=self.sm_info[self.subsystem_state])
-            self.stream.display_frames(frame)
+                state_text=SM_INFO[self.subsystem_state])
+            #self.stream.display_frames(frame)
+            self.out_streamer.write(frame)
             self.mainloop = self.stream.check_for_exit_keypresses()
-
+            
         #cleanup video pointers
         cv2.destroyAllWindows()
         # self.stream.stop() #this stops the class
@@ -127,7 +126,7 @@ class CVSubSystem(Node):
         STATE MACHINE PROGRAM
         """
         
-        if self.subsystem_state == self.sm_dict['idle_scan']:
+        if self.subsystem_state == SM_DICT['idle_scan']:
             """
             IDLE/SCANNING
                 - checks for aruco detections
@@ -136,21 +135,21 @@ class CVSubSystem(Node):
             if self.aruco_detected:
                 self.register_aruco_detection_time()
                 #self.interrupt_searchwalk()
-                self.subsystem_state = self.sm_dict['confirm_aruco']
+                self.subsystem_state = SM_DICT['confirm_aruco']
 
-        elif self.subsystem_state == self.sm_dict['confirm_aruco']:
+        elif self.subsystem_state == SM_DICT['confirm_aruco']:
             """
             CONFIRM ARUCO
                 - check for false positives
             """
             if self.aruco_detected:
                 if self.aruco_signal_confirmed():
-                    self.subsystem_state = self.sm_dict['approach']
+                    self.subsystem_state = SM_DICT['approach']
             else: 
                 #false positive
-                self.subsystem_state = self.sm_dict['reset']
+                self.subsystem_state = SM_DICT['reset']
 
-        elif self.subsystem_state == self.sm_dict['reset']:
+        elif self.subsystem_state == SM_DICT['reset']:
             """
             RESET LOGIC
                 - resets cvs2
@@ -159,11 +158,11 @@ class CVSubSystem(Node):
             #add function to resume manager's goals
             self.searchwalk_interrupted = False
             self.aruco_detection_timestamp = None
-            self.subsystem_state = self.sm_dict['idle_scan']
+            self.subsystem_state = SM_DICT['idle_scan']
 
-        elif self.subsystem_state == self.sm_dict['approach']:
+        elif self.subsystem_state == SM_DICT['approach']:
             self.get_logger().warn("Triggering approach behaviour...")
-            self.subsystem_state = self.sm_dict['reset']
+            self.subsystem_state = SM_DICT['reset']
             #approach logic
 
     def start_subsystem_thread(self):    

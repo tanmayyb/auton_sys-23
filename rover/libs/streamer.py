@@ -1,5 +1,4 @@
 import cv2
-from cv2 import CAP_GSTREAMER
 from settings.pipeline import *
 from settings.video import *
 
@@ -8,8 +7,8 @@ class streamer():
         self.cap = self.start_stream()
 
     def start_stream(self):
-        print("\n[INFO] starting gst pipeline with command:\n"+gst_command+"\n")
-        cap = cv2.VideoCapture(gst_command, cv2.CAP_GSTREAMER)
+        print("\n[INFO] starting gst pipeline with command:\n"+gst_in_command+"\n")
+        cap = cv2.VideoCapture(gst_in_command, cv2.CAP_GSTREAMER)
         return cap
 
     def get_frame(self):
