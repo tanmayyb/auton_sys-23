@@ -2,6 +2,11 @@ utils/build
 utils/install
 utils/log
 
+base/__pycache__
+base/base/__pycache__
+base/plugins/__pycache__
+base/settings/__pycache__
+
 rover/settings/__pycache__
 rover/libs/__pycache__
 rover/utils/__pycache__
