@@ -39,22 +39,30 @@ class SearchApproachActionManager(Node):
 
         self.running_search = False
 
-        self.miniwalk_action_client = ActionClient(
-            self, 
-            MinimalWalk, 
-            'miniwalk')
-
-        self.do_searchwalk = self.create_subscription(
+        """
+        ROS2 Interfaces
+        """
+        self.do_searchwalk_subscription = self.create_subscription(
             SearchWalk,
             'searchwalk',
             self.do_searchwalk_callback,
             10)
 
-        self.searchwalk_interruption_service = self.create_service(
+        self.interrupt_searchwalk_service = self.create_service(
             Trigger, 
             'halt_searchwalk', 
             self.searchwalk_interruption_callback)
 
+        self.resume_searchwalk_subscription = self.create_subscription(
+            SearchWalk,
+            'resume_searchwalk',
+            self.resume_searchwalk_callback,
+            10)
+
+        self.miniwalk_action_client = ActionClient(
+            self, 
+            MinimalWalk, 
+            'miniwalk')
 
         print("------------ACTION MANAGER CREATED------------") 
 
@@ -127,26 +135,38 @@ class SearchApproachActionManager(Node):
         result = future.result().result
         print(result)
         
-        self.gid = self.gid + 1
-        if self.running_search:
-            self.searchwalk_goal_executor() # flaw in generalization?
+        if result ==  True:
+        #only continue if last goal result was successful
+            self.gid = self.gid + 1
+            if self.running_search:
+                self.searchwalk_goal_executor()
+        #if result==False, action could have been interrupted by cvs2
 
     def miniwalk_feedback_callback(self, feedback_msg):
         feedback = feedback_msg.feedback
         #do something with the feedback like publish to gui
 
-    def cancel_goal(self):
-        self.get_logger().error('Sending goal cancel request for Current Goal...')
+    def cancel_miniwalk_goal(self):
+        self.get_logger().error('sending cancel request for current miniwalk goal...')
         cancel_future  = self.goal_handle.cancel_goal_async() #requesting cancel
-        cancel_future.add_done_callback(self.cancel_done)
+        cancel_future.add_done_callback(self.miniwalk_cancel_done)
 
-    def cancel_done(self, future):
+    def miniwalk_cancel_done(self, future):
         cancel_response = future.result()
 
-    def searchwalk_interruption_callback(self):
-        self.cancel_goal() #cancel goal
-        #make sure the goal can be resumed if false detection spotted
+    def searchwalk_interruption_callback(self, request, response):
+        if self.running_search:
+            self.get_logger().warn('interrupting searchwalk...')
+            self.cancel_miniwalk_goal()
+            response.success = True    # write condition to ensure cancellation
+        else:
+            self.get_logger().error('no searchwalk goals to interrupt...')
+            response.success = False
+        return response
 
+    def resume_searchwalk_callback(self, msg):
+        self.get_logger().warn('resuming searchwalk from last goal...')
+        self.searchwalk_goal_executor()
         
     def create_searchwalk_goals(self, searchwalk_goal):
         self.get_logger().info("searchwalk goal list CREATED:\n")
