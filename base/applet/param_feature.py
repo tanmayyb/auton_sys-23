@@ -98,7 +98,7 @@ class featureGUI():
             
             #Check to see if all inputs are integer values, if not a popup error message will show
             try:
-                self.param[i] = int(value)
+                self.param[i] = float(value)
             except:
                 tk.messagebox.showerror(master = self.master, title = "Error", message = "Input Error at " + f"{i}")
         

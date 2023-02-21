@@ -1,9 +1,9 @@
 #Creating a msg file with multiple data types
-int64 bfp
-int64 bfr
-int64 driftspeed
-int64 p
-int64 i
-int64 d
-int64 turnspeed  
+float64 bfp
+float64 bfr
+float64 driftspeed
+float64 p
+float64 i
+float64 d
+float64 turnspeed  
    

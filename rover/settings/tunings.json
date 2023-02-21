@@ -1,9 +1,9 @@
 {
-       "BF-P": 200,
-       "BF-R": 20,
-       "D: PID": 100,
-       "Drift Speed": 100,
-       "I: PID": 20,
-       "P: PID": 30,
-       "Turn Speed": 65
+       "BF-P": 20.0,
+       "BF-R": 20.0,
+       "D: PID": 100.0,
+       "Drift Speed": 100.0,
+       "I: PID": 20.0,
+       "P: PID": 30.0,
+       "Turn Speed": 65.0
 }

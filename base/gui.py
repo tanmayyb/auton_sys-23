@@ -57,7 +57,7 @@ class gui(Thread):
          # Window setup
         self.window.title("Auton ROS GUI")
         self.window.geometry(SETUP_STRING)
-        self.window.minsize(800,670)
+        self.window.minsize(WIN_WIDTH, WIN_HEIGHT)
         self.setup_styles()
 
     def setup_styles(self):
