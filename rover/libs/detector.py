@@ -1,5 +1,6 @@
 from settings.aruco_dict import *
-import cv2, argparse, time, sys 
+import cv2, argparse, time, sys
+import numpy as np
 
 class aruco_detector():
     def __init__(self, parent):
@@ -39,7 +40,7 @@ class aruco_detector():
 
     def update_parent_aruco_detection_state_tracker(self, ids):
         #this function updates main program's state tracker self.aruco_detected
-        self.parent.aruco_is_detected = True if ids != None else False
+        self.parent.aruco_is_detected = True if np.any(ids) != None else False
 
     def zip_markers(self, corners, ids):
         self.zipped_marker_data = zip(corners, ids)

@@ -1,7 +1,7 @@
 import cv2
 
 class overlay_on():
-    def __init__(self, detector, localiser=None, controller = None, dims=None):
+    def __init__(self, detector=None, localiser=None, controller = None, dims=None):
         self.frame = None
         self.width = dims[0]
         self.height = dims[1]

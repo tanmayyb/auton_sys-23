@@ -33,7 +33,6 @@ from settings.pid import *
 from settings.states import *
 from settings.pipeline import *
 
-
 class CVSubSystem(Node):
     def __init__(self):
         super().__init__('cv_subsystem')
@@ -66,8 +65,8 @@ class CVSubSystem(Node):
         self.frame_dims = self.stream.get_frame_dims()
         self.detector = aruco_detector(self)
         self.localiser = aruco_localiser(self.detector, dims=self.frame_dims)
-        self.overlay_handler = overlay_on(self.detector, dims=self.frame_dims)
         self.pid = pid_controller(self.localiser, self.frame_dims, pid_const=PID_TUNING_CONSTS)
+        self.overlay_handler = overlay_on(detector=self.detector, localiser=self.localiser, controller=self.pid, dims=self.frame_dims)
 
         """
         ROS2 INTERFACES
@@ -118,6 +117,7 @@ class CVSubSystem(Node):
         # detector detects 
         self.detector.do_aruco_marker_detection(frame)
         self.localiser.do_localisation()
+        _ = self.pid.get_pid_c2mm()
         return frame
 
     def run_state_machine(self):
@@ -185,7 +185,7 @@ class CVSubSystem(Node):
             state_text=SM_INFO[self.subsystem_state])
         
         self.stream.display_frames(frame)
-        #self.out_streamer.write(frame)
+        self.out_streamer.write(frame)
         self.mainloop = self.stream.check_for_exit_keypresses()
 
     def start_subsystem_thread(self):    

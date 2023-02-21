@@ -59,7 +59,6 @@ class aruco_localiser():
     def get_cX(self):
         return self.cX_array
 
-
     def compute_marker_center(self, topLeft, bottomRight):
         cX = int((topLeft[0] + bottomRight[0])/2.0)
         cY = int((topLeft[1] + bottomRight[1])/2.0)
