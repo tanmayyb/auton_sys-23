@@ -205,7 +205,7 @@ class SearchApproachActionManager(Node):
             coords  = Point()
             coords.x = point[0]
             coords.y = point[1]
-            coords.z = 0.0 
+            coords.z = 2.0 
             goal.coords = coords
             goal.use_guidance = False
             goal.signal_and_wait = False

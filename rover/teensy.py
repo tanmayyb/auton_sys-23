@@ -7,7 +7,7 @@ class Teensy(Node):
     def __init__(self):
         super().__init__('teensy_node')
         
-        self.UDP_IP = "192.168.1.20"  # Teensy's address
+        self.UDP_IP = "172.16.10.2"  # Teensy's address
     
         self.UDP_PORT = 8080  # port
         self.default_msg = 'D_0_128_0_128_0_0_0_0_0_0_0_0_0_0_0_0_128_128_0_0_0'
