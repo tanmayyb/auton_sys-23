@@ -2,12 +2,11 @@ from pickle import FALSE, TRUE
 from rclpy.node import Node
 from rclpy.action import ActionClient
 
-
-
+from std_msgs.msg import Bool
 from geometry_msgs.msg import Point
 
 from rover_utils.action import MinimalWalk
-from rover_utils.msg import TankDriveMsg
+from rover_utils.msg import TankDriveMsg, SearchWalk
 
 import time 
 
@@ -33,7 +32,17 @@ class baseNode(Node):
             'VectorNavPublisherTopic',
             self.gui_update_rover_lla,
             10)
-    
+
+        self.do_searchwalk_pub = self.create_publisher(
+            SearchWalk,
+            'start_searchwalk',
+            10)
+        
+        self.cancel_searchwalk_pub = self.create_publisher(
+            Bool,
+            'stop_searchwalk',
+            10)
+
     def send_goal_miniwalk(self,tlat,tlon, gf_rad):
         
         """CREATE GOAL MSG"""
@@ -104,9 +113,35 @@ class baseNode(Node):
         self.teleop_pub.publish(msg)
 
     def gui_update_rover_lla(self, msg):
-        x = msg.x
-        y = msg.y
-        z = msg.z
-        self.parent.update_rover_lla(x,y,z)
-        self.parent.update_rover_marker(x,y)
-        #print(x,y,z)
+        # x = msg.x
+        # y = msg.y
+        # z = msg.z
+        # self.parent.update_rover_lla(x,y,z)
+        # self.parent.update_rover_marker(x,y)
+        # #print(x,y,z)
+        pass
+
+    def start_searchwalk(self, msg):
+        lat, lon, srad, s_pttrn, e_cv, e_oa  = msg
+
+        searchwalk_msg = SearchWalk()
+        
+        coords = Point()
+        coords.x = lat
+        coords.y = lon
+        coords.z = 0.0
+        
+        searchwalk_msg.coords = coords
+        searchwalk_msg.search_radius = srad
+        searchwalk_msg.search_pattern = s_pttrn
+        searchwalk_msg.enable_cv = True
+        searchwalk_msg.enable_oa = False
+        searchwalk_msg.loop_searchwalk = False
+
+        print(searchwalk_msg)
+        self.do_searchwalk_pub.publish(searchwalk_msg)
+
+    def cancel_searchwalk(self):
+        msg = Bool()
+        msg.data = True
+        self.cancel_searchwalk_pub.publish(msg)

@@ -16,13 +16,13 @@ from rclpy.executors import MultiThreadedExecutor
 
 from std_srvs.srv import Trigger
 from geometry_msgs.msg import Point
+from std_msgs.msg import Bool
+
 
 from rover_utils.action import MinimalWalk
 from rover_utils.msg import SearchWalk
 
 from utils.spa import generateSearchPattern
-
-import math
 
 class SearchApproachActionManager(Node):
 
@@ -44,7 +44,7 @@ class SearchApproachActionManager(Node):
         """
         self.do_searchwalk_subscription = self.create_subscription(
             SearchWalk,
-            'searchwalk',
+            'start_searchwalk',
             self.do_searchwalk_callback,
             10)
 
@@ -57,6 +57,11 @@ class SearchApproachActionManager(Node):
             SearchWalk,
             'resume_searchwalk',
             self.resume_searchwalk_callback,
+            10)
+        self.stop_searchwalk_subscription = self.create_subscription(
+            Bool,
+            'stop_searchwalk',
+            self.stop_searchwalk_callback,
             10)
 
         self.miniwalk_action_client = ActionClient(
@@ -72,6 +77,7 @@ class SearchApproachActionManager(Node):
         self.load_goals_and_execute_searchwalk(msg)
 
     def load_goals_and_execute_searchwalk(self, msg):
+        verbose = True
         try:
             lat = msg.coords.x
             lon = msg.coords.y
@@ -85,13 +91,16 @@ class SearchApproachActionManager(Node):
         """
         try: #this can be tested using a pub to the gui to plot the pattern
             searchwalk_goal = ((lat, lon), search_radius, search_pattern)
-            self.goal_list = self.create_searchwalk_goals(searchwalk_goal)
+            self.goal_list = self.create_searchwalk_goals(searchwalk_goal, verbose=verbose)
             self.goal_list_last_index = len(self.goal_list) - 1
             self.running_search = True
+            if(verbose): print("num of goals in list: ", self.goal_list_last_index)
         except:
             self.get_logger().error('load_goals_and_execute_searchwalk: failed to create goal queue!')
+            self.running_search = False
+            self.goal_list_last_index = -1
+            self.goal_list = []
             return
-        
         try:
             self.get_logger().warn('load_goals_and_execute_searchwalk: executing searchwalk...')
             self.searchwalk_goal_executor()
@@ -125,22 +134,28 @@ class SearchApproachActionManager(Node):
             self.get_logger().info('Miniwalk Goal rejected :(')
             return
         
-        self.goal_handle = goal_handle
         self.get_logger().info('Miniwalk Goal accepted :)')
+        self.goal_handle = goal_handle
 
         get_result_future = goal_handle.get_result_async()
         get_result_future.add_done_callback(self.miniwalk_get_result_callback)
 
     def miniwalk_get_result_callback(self, future):
         result = future.result().result
-        print(result)
+        #print(result, result.result)
         
-        if result ==  True:
+        if result.result ==  True:
         #only continue if last goal result was successful
             self.gid = self.gid + 1
             if self.running_search:
                 self.searchwalk_goal_executor()
+
+        if result.result == False:
+            self.running_search = False
+            self.get_logger().warning("sw: miniwalk goal result=false")
         #if result==False, action could have been interrupted by cvs2
+        #if result==False, action could have been interrupted by user
+        #if result==False, action could have been interrupted by error
 
     def miniwalk_feedback_callback(self, feedback_msg):
         feedback = feedback_msg.feedback
@@ -148,8 +163,13 @@ class SearchApproachActionManager(Node):
 
     def cancel_miniwalk_goal(self):
         self.get_logger().error('sending cancel request for current miniwalk goal...')
-        cancel_future  = self.goal_handle.cancel_goal_async() #requesting cancel
-        cancel_future.add_done_callback(self.miniwalk_cancel_done)
+        print("goal_handle: ", self.goal_handle)
+        
+        if self.goal_handle is not None:
+            cancel_future  = self.goal_handle.cancel_goal_async() #requesting cancel
+            cancel_future.add_done_callback(self.miniwalk_cancel_done)
+            self.get_logger().info('cancel request for goal sent...')
+        #generalize for edge cases
 
     def miniwalk_cancel_done(self, future):
         cancel_response = future.result()
@@ -167,10 +187,18 @@ class SearchApproachActionManager(Node):
     def resume_searchwalk_callback(self, msg):
         self.get_logger().warn('resuming searchwalk from last goal...')
         self.searchwalk_goal_executor()
-        
-    def create_searchwalk_goals(self, searchwalk_goal):
-        self.get_logger().info("searchwalk goal list CREATED:\n")
-        searchwalk_points = generateSearchPattern(searchwalk_goal)
+
+    def stop_searchwalk_callback(self, msg):
+        self.cancel_miniwalk_goal()
+        self.running_search = False
+
+    def create_searchwalk_goals(self, searchwalk_goal, verbose=False):
+        self.get_logger().info("creating sw goal list...")
+        try:
+            searchwalk_points = generateSearchPattern(searchwalk_goal)
+        except:
+            self.get_logger().error("create_searchwalk_goals: error generating search_pttrn")
+        goal_list = []
         for point in searchwalk_points:
             """create miniwalk goal and add to goals list"""
             goal = MinimalWalk.Goal()
@@ -181,8 +209,11 @@ class SearchApproachActionManager(Node):
             goal.coords = coords
             goal.use_guidance = False
             goal.signal_and_wait = False
-            self.goal_list.append(goal)
-            #print("lat: ", point[0], "\tlon: ", point[1])
+            goal_list.append(goal)
+            if(verbose): print("lat: ", point[0], "\t\tlon: ", point[1])
+        
+        return goal_list
+         
 
 
 def main(args=None):

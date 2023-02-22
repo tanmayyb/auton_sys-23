@@ -15,7 +15,7 @@ from rclpy.action import ActionServer, CancelResponse, GoalResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 
-from rover_utils.action import MinimalWalk, Approach
+from rover_utils.action import MinimalWalk
 from rover_utils.msg import TankDriveMsg
 from geometry_msgs.msg import Point
 
@@ -43,8 +43,8 @@ class Rover(Node):
         """
         self.ab2t = None
         self.d2t = None
-        self.arb = None
-        self.rcrds = None
+        self.arb = 0.0
+        self.rcrds = (0.0,0.0)
         
         self.verbose = False
         
@@ -65,7 +65,7 @@ class Rover(Node):
         self.min_walk_act_server = ActionServer(
             self,
             MinimalWalk,
-            'MiniWalkTopic',
+            'miniwalk',
             execute_callback=self.miniwalk_exec_callback,
             callback_group=ReentrantCallbackGroup(),
             goal_callback=self.miniwalk_goal_callback,
@@ -98,11 +98,11 @@ class Rover(Node):
     def miniwalk_goal_callback(self, goal_request):
         """Accept or reject a client request to begin an action."""
         # This server allows multiple goals in parallel
-        self.get_logger().info('Received new goal request')
+        self.get_logger().info('received new goal request')
         return GoalResponse.ACCEPT
 
     def miniwalk_cancel_callback(self, goal_handle):
-        self.get_logger().warn('Received cancel request for current goal!')
+        self.get_logger().warn('received current goal cancel request!')
         self.set_rover_to_neutral()
         return CancelResponse.ACCEPT
 

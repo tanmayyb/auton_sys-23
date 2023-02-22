@@ -185,7 +185,7 @@ class CVSubSystem(Node):
             state_text=SM_INFO[self.subsystem_state])
         
         self.stream.display_frames(frame)
-        self.out_streamer.write(frame)
+        #self.out_streamer.write(frame)
         self.mainloop = self.stream.check_for_exit_keypresses()
 
     def start_subsystem_thread(self):    

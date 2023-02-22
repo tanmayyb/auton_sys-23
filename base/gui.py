@@ -309,16 +309,18 @@ class gui(Thread):
         self.input_srad_label2.grid(row=2,column=0)
 
         #text fields
-        self.input_tlat2 = Entry(self.frame1_srch_act_frame, textvariable=self.input_tlat)
-        self.input_tlon2 = Entry(self.frame1_srch_act_frame, textvariable=self.input_tlon)
+        self.input_sw_tlat = StringVar()
+        self.input_sw_tlon = StringVar()
+        self.input_tlat2 = Entry(self.frame1_srch_act_frame, textvariable=self.input_sw_tlat)
+        self.input_tlon2 = Entry(self.frame1_srch_act_frame, textvariable=self.input_sw_tlon)
         self.input_tlat2.grid(row=0,column=1,columnspan=4)
         self.input_tlon2.grid(row=1,column=1,columnspan=4)
 
         #radio buttons
-        self.srad = IntVar()
-        self.srad_radiobttn1 = Radiobutton(self.frame1_srch_act_frame, text="5m", variable=self.srad, value=5)
-        self.srad_radiobttn2 = Radiobutton(self.frame1_srch_act_frame, text="10m", variable=self.srad, value=10)
-        self.srad_radiobttn3 = Radiobutton(self.frame1_srch_act_frame, text="20m", variable=self.srad, value=20)
+        self.input_srad = DoubleVar()
+        self.srad_radiobttn1 = Radiobutton(self.frame1_srch_act_frame, text="5m", variable=self.input_srad, value=5.0)
+        self.srad_radiobttn2 = Radiobutton(self.frame1_srch_act_frame, text="10m", variable=self.input_srad, value=10.0)
+        self.srad_radiobttn3 = Radiobutton(self.frame1_srch_act_frame, text="20m", variable=self.input_srad, value=20.0)
         self.srad_radiobttn1.grid(row=2,column=1)
         self.srad_radiobttn2.grid(row=2,column=2)
         self.srad_radiobttn3.grid(row=2,column=3)
@@ -343,13 +345,36 @@ class gui(Thread):
         self.spattern_radiobttn2.grid(row=2,column=1)
         self.spattern_radiobttn3.grid(row=2,column=2)
 
-        self.do_search_bttn = Button(self.frame2_srch_act_frame, text ="Do Search")
-        self.cancel_search_bttn = Button(self.frame2_srch_act_frame, text ="Cancel Search")
+        self.do_search_bttn = Button(self.frame2_srch_act_frame, text ="Do Search", command=self.do_searchwalk)
+        self.cancel_search_bttn = Button(self.frame2_srch_act_frame, text ="Cancel Search", command=self.cancel_searchwalk)
         # adjust elements in grid
         self.do_search_bttn.grid(row=3,column=0)
         self.cancel_search_bttn.grid(row=3,column=1)
 
- 
+        self.input_sw_tlat.set(43.6588224)
+        self.input_sw_tlon.set(-79.3792462)
+        self.input_srad.set(5.0)
+        self.input_srad.set(0)
+        #def_coords: (43.6588224, -79.3792462), srad: 5.0, spttrn: 0 
+
+    def do_searchwalk(self):
+        """
+        get all vals from searchwalk inputfields
+        """
+        lat = float(self.input_sw_tlat.get())
+        lon = float(self.input_sw_tlon.get())
+        srad = float(self.input_srad.get())
+        spattrn = self.spattern.get()
+        e_cv  = self.enable_artag.get()
+        e_oa = self.enable_obstacle_avoidance.get()
+
+        msg = (lat, lon, srad, spattrn, e_cv, e_oa)
+        #print(lat, lon, srad, spattrn, e_cv, e_oa)
+        self.base_node.start_searchwalk(msg)
+
+    def cancel_searchwalk(self):
+        self.base_node.cancel_searchwalk()
+
     def do_teleop_button_4(self):
         #stop/standby everything
         self.teleop.do_teleop_func(True)    #fix message type
@@ -376,8 +401,6 @@ class gui(Thread):
 
     def send_pwm_msg(self, lpwm, rpwm):
         self.base_node.do_teleop(lpwm, rpwm)
-
-    
 
         
     def show_buttons(self, frame):
