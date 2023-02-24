@@ -2,9 +2,11 @@ int64 request
 ---
 #Response 
 float64 bfp
-float64 bfr
-float64 driftspeed
+float64 bfer
 float64 p
 float64 i
 float64 d
-float64 turnspeed  
+float64 lpwm
+float64 rpwm
+float64 driftspeed
+float64 controloutput  
