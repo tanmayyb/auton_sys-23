@@ -1,9 +1,11 @@
 {
-       "BF-P": 20.0,
-       "BF-R": 20.0,
-       "D: PID": 100.0,
-       "Drift Speed": 100.0,
-       "I: PID": 20.0,
-       "P: PID": 30.0,
-       "Turn Speed": 65.0
+         "BF-ER": 20.0,
+         "BF-P": 30.0,
+         "Control Output": 40.0,
+         "D: PID": 0.1,
+         "Drift Speed": 20.0,
+         "I: PID": 0.0,
+         "Left PWM": 127.0,
+         "P: PID": 0.6,
+         "Right PWM": 127.0
 }
