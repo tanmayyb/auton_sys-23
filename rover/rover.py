@@ -33,6 +33,7 @@ class Rover(Node):
 
         print("rover_node initialised")
 
+        self.parameters = loadJson_file()
 
         self.pid_controller = None
 
@@ -51,9 +52,9 @@ class Rover(Node):
         self.verbose = False
         
         #tunining variable initialisations
-        self.neutral_pwms = (127,127)
-        self.pid_const  = (0.6,  0.0, 0.1) # good for kerr 
-        self.drift_and_control_output_pwms = (20, 40) # quad grass 
+        self.neutral_pwms = (self.parameters["Left PWM"],self.parameters["Right PWM"])
+        self.pid_const  = (self.parameters["P: PID"],  self.parameters["I: PID"], self.parameters["D: PID"]) # good for kerr 
+        self.drift_and_control_output_pwms = (self.parameters["Drift Speed"], self.parameters["Control Output"]) # quad grass 
 
         self.pid_controller = pid_controller(
             self.pid_const, 
@@ -186,13 +187,14 @@ class Rover(Node):
         params = dict() #Create an empty dictionary for settings
         try:
             params["BF-P"] = msg.bfp
-            params["BF-R"] = msg.bfr
-            params["D: PID"] = msg.d
-            params["Drift Speed"] = msg.driftspeed
-            params["I: PID"] = msg.i
+            params["BF-ER"] = msg.bfer
             params["P: PID"] = msg.p
-            params["Turn Speed"] = msg.turnspeed
-
+            params["I: PID"] = msg.i
+            params["D: PID"] = msg.d
+            params["Left PWM"] = msg.lpwm
+            params["Right PWM"] = msg.rpwm
+            params["Drift Speed"] = msg.driftspeed
+            params["Control Output"] = msg.controloutput
             editJson(params)
         except:
             print("Error, invalid message.")
@@ -204,18 +206,26 @@ class Rover(Node):
         if (request.request == -1): #Check request id
 
             response.bfp = jsonFile["BF-P"]
-            response.bfr = jsonFile["BF-R"]
-            response.driftspeed = jsonFile["Drift Speed"]
+            response.bfer = jsonFile["BF-ER"]
             response.p = jsonFile["P: PID"]
             response.i = jsonFile["I: PID"]
             response.d = jsonFile["D: PID"]
-            response.turnspeed = jsonFile["Turn Speed"]
+            response.lpwm = jsonFile["Left PWM"]
+            response.rpwm = jsonFile["Right PWM"]
+            response.driftspeed = jsonFile["Drift Speed"]
+            response.controloutput = jsonFile["Control Output"]
+
+            self.set_params()
         
             self.get_logger().info('Incoming request\nRequest Number: %d' % (request.request))
             return response
         else:
             self.get_logger().info('Error receiving request')
-
+    
+    def set_params(self):
+        self.neutral_pwms = (self.parameters["Left PWM"],self.parameters["Right PWM"])
+        self.pid_const  = (self.parameters["P: PID"],  self.parameters["I: PID"], self.parameters["D: PID"])
+        self.drift_and_control_output_pwms = (self.parameters["Drift Speed"], self.parameters["Control Output"])
 
 
 def main(args=None):
@@ -234,6 +244,10 @@ if __name__ == '__main__':
     
     main()
 
+"""Original Parameter values"""
+#self.neutral_pwms = (127,127)
+#self.pid_const  = (0.6,  0.0, 0.1) # good for kerr 
+#self.drift_and_control_output_pwms = (20, 40) # quad grass 
 
 
 

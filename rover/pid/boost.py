@@ -1,17 +1,20 @@
 """
 Developed by Kevin T.
-Modified by Tanmay B.
-15 Sep 2022
+Modified by Tanmay B. and Ryan L.
+23 Feb 2023
 """
+
+from utils.JsonFile import *
 
 def boost_function(error_in_degs):
 
+        params = loadJson_file()
 
         """
         MUST BE FLOAT
         """
-        er = 20.0       #error range in degrees
-        peak = 30.0     #peak value of boost function 
+        er = params["BF-ER"]       #error range in degrees
+        peak = params["BF-P"]     #peak value of boost function 
         
         #Slope calculation for deadzone, basically calculates what slope should
         #the linear equation have such that at f(0) = peak value

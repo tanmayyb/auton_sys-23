@@ -26,12 +26,14 @@ class PublisherClient(Node):
         #Check if updatedParameters is Python dictionary, adds values to msg
         if (type(updatedParameters) is dict):
             msg.bfp = updatedParameters["BF-P"]
-            msg.bfr = updatedParameters["BF-R"]
-            msg.d = updatedParameters["D: PID"]
-            msg.driftspeed = updatedParameters["Drift Speed"]
-            msg.i = updatedParameters["I: PID"]
+            msg.bfer = updatedParameters["BF-ER"]
             msg.p = updatedParameters["P: PID"]
-            msg.turnspeed = updatedParameters["Turn Speed"]
+            msg.i = updatedParameters["I: PID"]
+            msg.d = updatedParameters["D: PID"]
+            msg.lpwm = updatedParameters["Left PWM"]
+            msg.rpwm = updatedParameters["Right PWM"]
+            msg.driftspeed = updatedParameters["Drift Speed"]
+            msg.controloutput = updatedParameters["Control Output"]
 
             try:
                 self.publisher_.publish(msg) #sends the JSON String to the robot
@@ -65,12 +67,14 @@ class PublisherClient(Node):
         #Update rover settings to match with service response
         try:
             params["BF-P"] = response.bfp
-            params["BF-R"] = response.bfr
-            params["D: PID"] = response.d
-            params["Drift Speed"] = response.driftspeed
-            params["I: PID"] = response.i
+            params["BF-ER"] = response.bfer
             params["P: PID"] = response.p
-            params["Turn Speed"] = response.turnspeed
+            params["I: PID"] = response.i
+            params["D: PID"] = response.d
+            params["Left PWM"] = response.lpwm
+            params["Right PWM"] = response.rpwm
+            params["Drift Speed"] = response.driftspeed
+            params["Control Output"] = response.controloutput
 
             return params
         
