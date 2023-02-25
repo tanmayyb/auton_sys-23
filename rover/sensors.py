@@ -14,7 +14,7 @@ class SensorPub(Node):
     def __init__(self):
         super().__init__('nav_sensors_node')
         
-        sudoPassword = 'jetson'
+        sudoPassword = 'xav'
         command = 'chmod 666 /dev/ttyUSB0'
         devpath = '/dev/ttyUSB0'
         self.vn = None

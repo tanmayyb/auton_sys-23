@@ -20,6 +20,8 @@ import rclpy
 from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
 
+from rover_utils.msg import TankDriveMsg
+
 from std_msgs.msg import Bool
 from std_srvs.srv import Trigger
 
@@ -47,7 +49,7 @@ class CVSubSystem(Node):
         self.subsystem_state = SM_DICT['idle_scan']
         self.aruco_is_detected = False
         self.aruco_detection_timestamp = None
-        self.aruco_confimation_wait_time = 3.0 #seconds
+        self.aruco_confimation_wait_time = 0.7 #seconds
         self.searchwalk_interrupted = False
         self.searchwalk_interruption_thread = None
         self.main_thread = None
@@ -80,6 +82,11 @@ class CVSubSystem(Node):
         self.interrupt_searchwalk_service_client = self.create_client(
             Trigger, 
             'halt_searchwalk')
+
+        self.send_cv_pid_vals_pub = self.create_publisher(
+            TankDriveMsg, 
+            'TeensySubscriberTopic',
+            10)
         
         """
         https://stackoverflow.com/questions/61394756/how-to-use-opencv-videowriter-with-gstreamer
@@ -114,10 +121,10 @@ class CVSubSystem(Node):
     def process_data(self):
         """detect and localise ARUCO markers"""
         ret, frame = self.stream.get_frame()
-        # detector detects 
+        # These functions have to occur in this sequence
         self.detector.do_aruco_marker_detection(frame)
         self.localiser.do_localisation()
-        _ = self.pid.get_pid_c2mm()
+        self.pid_vals = self.pid.get_pid_c2mm()
         return frame
 
     def run_state_machine(self):
@@ -132,8 +139,9 @@ class CVSubSystem(Node):
             """
             if self.aruco_is_detected:
                 self.register_aruco_detection_time()
-                self.interrupt_searchwalk() 
-                self.subsystem_state = SM_DICT['interrupt_searchwalk']
+                #self.interrupt_searchwalk() 
+                #self.subsystem_state = SM_DICT['interrupt_searchwalk']
+                self.subsystem_state = SM_DICT['confirm_aruco']
 
         elif self.subsystem_state == SM_DICT['interrupt_searchwalk']:
             if self.searchwalk_interrupted: #if successfully interrupted
@@ -151,6 +159,7 @@ class CVSubSystem(Node):
             """
             if self.aruco_is_detected:
                 if self.aruco_signal_confirmed():
+                    self.get_logger().warn("Triggering approach behaviour...")
                     self.subsystem_state = SM_DICT['approach']
             else: 
                 #false positive
@@ -168,9 +177,19 @@ class CVSubSystem(Node):
             self.subsystem_state = SM_DICT['idle_scan']
 
         elif self.subsystem_state == SM_DICT['approach']:
-            self.get_logger().warn("Triggering approach behaviour...")
-            #self.subsystem_state = SM_DICT['reset']
             #approach logic
+            if self.aruco_is_detected:
+                val = self.pid.get_pid_c2mm()
+                if val is not None:
+                    leftval, rightval = val
+                    msg = TankDriveMsg()
+                    msg.lpwm = leftval
+                    msg.rpwm = rightval
+                    self.send_cv_pid_vals_pub.publish(msg)
+                    print(msg)
+            else:
+                self.get_logger().warn("aruco not detected, resetting to idle scan...")
+                self.subsystem_state = SM_DICT['reset']
 
     def finalize_iteration(self, frame):
         """
@@ -184,7 +203,7 @@ class CVSubSystem(Node):
             plot_center_of_mass=True,
             state_text=SM_INFO[self.subsystem_state])
         
-        self.stream.display_frames(frame)
+        #self.stream.display_frames(frame)
         self.out_streamer.write(frame)
         self.mainloop = self.stream.check_for_exit_keypresses()
 
