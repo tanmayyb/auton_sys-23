@@ -27,12 +27,12 @@ class baseNode(Node):
 
         self.teleop_pub = self.create_publisher(
             TankDriveMsg,
-            'TeensySubscriberTopic',
+            'drive_msg',
             10)
 
         self.sensor_sub = self.create_subscription(
             Point,
-            'VectorNavPublisherTopic',
+            'rover_pose_msg',
             self.gui_update_rover_lla,
             10)
 
