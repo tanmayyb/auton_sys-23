@@ -20,7 +20,7 @@ class baseNode(Node):
         self.minimal_walk_action_client = ActionClient(
             self, 
             MinimalWalk, 
-            'MiniWalkTopic')
+            'miniwalk')
 
         self.teleop_pub = self.create_publisher(
             TankDriveMsg,
@@ -113,11 +113,11 @@ class baseNode(Node):
         self.teleop_pub.publish(msg)
 
     def gui_update_rover_lla(self, msg):
-        # x = msg.x
-        # y = msg.y
-        # z = msg.z
+        x = msg.x
+        y = msg.y
+        z = msg.z
         # self.parent.update_rover_lla(x,y,z)
-        # self.parent.update_rover_marker(x,y)
+        self.parent.update_rover_marker(x,y)
         # #print(x,y,z)
         pass
 
