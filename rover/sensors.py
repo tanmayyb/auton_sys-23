@@ -42,7 +42,7 @@ class SensorPub(Node):
 
         self.publisher = self.create_publisher(
             Point,
-            'VectorNavPublisherTopic',
+            'rover_pose_msg',
             10)
 
         timer_period  = 0.010
