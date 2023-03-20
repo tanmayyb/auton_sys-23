@@ -2,20 +2,19 @@ import rclpy, socket
 from rclpy.node import Node
 
 from rover_utils.msg import TankDriveMsg
+from std_msgs.msg import Empty
 
 class Teensy(Node):
     def __init__(self):
         super().__init__('teensy_node')
-        
+
+        """
+        Networking
+        """
         self.UDP_IP = "172.16.10.2"  # Teensy's address
-    
         self.UDP_PORT = 8080  # port
         self.default_msg = 'D_0_128_0_128_0_0_0_0_0_0_0_0_0_0_0_0_128_128_0_0_0'
         self.teensy = 0
-
-        self.teleop_id = 1
-        self.auton_id = 2
-        #self.msg_select = True
 
         try:
             self.teensy = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -24,21 +23,50 @@ class Teensy(Node):
             #print("teensy success")
         except:
             print("error booting teensy server")
+            #exit file if not booting
+
+        """
+        State Variables and Trackers
+        """
+        self.current_message = self.default_msg     #for display of current message
+        self.drive_enabled = True                    #for estop
         
-        self.subscriber = self.create_subscription(
+        """
+        ROS 2 Interfaces
+        """
+        self.drive_msg_sub = self.create_subscription(
             TankDriveMsg,
             'TeensySubscriberTopic',
-            self.subscription_callback,
+            self.drive_msg_sub_callback,
+            10)
+
+        self.e_stop_sub = self.create_subscription(
+            Empty,
+            'e_stop',
+            self.e_stop_callback,
+            10)
+
+        self.enable_drive_sub = self.create_subscription(
+            Empty,
+            'enable_drive',
+            self.enable_drive_callback,
             10)
         
-        print("teensy server operational")
+        print("teensy node online!")
 
-    def subscription_callback(self, msg):
-        #if self.msg_select:
-        print(msg)
-        self.send_to_teensy(msg.lpwm, msg.rpwm)
-        
-        
+    def drive_msg_sub_callback(self, msg):
+        if self.drive_enabled:
+            self.send_to_teensy(msg.lpwm, msg.rpwm)
+            print(msg)
+
+    def e_stop_callback(self, msg):
+        self.drive_enabled = False
+        print("drive disabled")
+
+    def enable_drive_callback(self, msg):
+        self.drive_enabled = True
+        print("drive enabled")
+
     def send_to_teensy(self, lpwm, rpwm):
         # convert c2mm to string
         try:
@@ -50,7 +78,6 @@ class Teensy(Node):
         #compile string and send
         msg = 'D_0_'+left_pwm+'_0_'+right_pwm+'_0_0_0_0_0_0_0_0_0_0_0_0_128_128_0_0_0'
         self.teensy.sendto(msg.encode(), (self.UDP_IP, self.UDP_PORT))
-        #print(msg)
 
 def main(args=None):
     rclpy.init(args=args)
