@@ -542,6 +542,37 @@ class gui(Thread):
             padx=ROVER_ARB_DATA_PADDING_X,
             pady=ROVER_ARB_DATA_PADDING_Y)
 
+    def show_drive_switch_frame(self):
+        self.drive_switch_frame = LabelFrame(
+            self.window, 
+            text="drive switch")
+
+        self.drive_switch_frame.grid(
+                row=DRIVE_SWITCH_FRAME_ROW, 
+                column=DRIVE_SWITCH_FRAME_COLUMN,
+                rowspan=DRIVE_SWITCH_FRAME_ROWSPAN,
+                columnspan=DRIVE_SWITCH_FRAME_COLUMNSPAN)
+
+        self.show_drive_switch_buttons()
+
+    
+    def show_drive_switch_buttons(self):
+
+        self.e_stop_button = Button(
+            self.drive_switch_frame, 
+            text="  ENABLE  ",  
+            command=self.drive_enable).pack()
+
+        self.e_stop_button = Button(
+            self.drive_switch_frame, 
+            text="  E-STOP  ",  
+            command=self.drive_e_stop).pack()
+
+    def drive_e_stop(self):
+        self.base_node.trigger_e_stop()
+
+    def drive_enable(self):
+        self.base_node.enable_drive()
 
     def update_rover_lla(self, x,y,z):
         self.rover_lat_data.configure(text=f" {x:.5f} ")
@@ -667,6 +698,8 @@ class gui(Thread):
         self.show_scroll()
 
         self.show_action_console()
+
+        self.show_drive_switch_frame()
 
         self.show_status_bar()
 

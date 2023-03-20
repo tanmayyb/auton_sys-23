@@ -6,6 +6,7 @@ base/__pycache__
 base/base/__pycache__
 base/plugins/__pycache__
 base/settings/__pycache__
+base/nodes/__pycache__
 
 rover/settings/__pycache__
 rover/libs/__pycache__
