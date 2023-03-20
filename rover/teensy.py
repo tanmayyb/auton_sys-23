@@ -7,7 +7,7 @@ class Teensy(Node):
     def __init__(self):
         super().__init__('teensy_node')
         
-        self.UDP_IP = "192.168.1.20"  # Teensy's address
+        self.UDP_IP = "172.16.10.2"  # Teensy's address
     
         self.UDP_PORT = 8080  # port
         self.default_msg = 'D_0_128_0_128_0_0_0_0_0_0_0_0_0_0_0_0_128_128_0_0_0'
@@ -35,7 +35,9 @@ class Teensy(Node):
 
     def subscription_callback(self, msg):
         #if self.msg_select:
+        print(msg)
         self.send_to_teensy(msg.lpwm, msg.rpwm)
+        
         
     def send_to_teensy(self, lpwm, rpwm):
         # convert c2mm to string
@@ -48,7 +50,7 @@ class Teensy(Node):
         #compile string and send
         msg = 'D_0_'+left_pwm+'_0_'+right_pwm+'_0_0_0_0_0_0_0_0_0_0_0_0_128_128_0_0_0'
         self.teensy.sendto(msg.encode(), (self.UDP_IP, self.UDP_PORT))
-        print(msg)
+        #print(msg)
 
 def main(args=None):
     rclpy.init(args=args)
