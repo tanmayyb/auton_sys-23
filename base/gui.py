@@ -399,10 +399,8 @@ class gui(Thread):
         #self.base_node.send_goal(10)
         self.teleop.do_teleop_func(False)    #fix message type
         self.base_node.do_teleop(127,127)
-        try:
-            self.base_node.cancel_miniwalk_goal()
-        except:
-            print("no goal set")
+        self.base_node.cancel_miniwalk_goal()
+
 
 
     def miniwalk_action_button_1(self):
@@ -472,8 +470,8 @@ class gui(Thread):
                 padx=BUTTON_FRAME_INNER_PADDING_X,
                 pady=BUTTON_FRAME_INNER_PADDING_Y,)
 
-    def show_rover_info_labels(self, frame):
-        self.rover_info_label_frame = LabelFrame(frame)
+    def show_rover_info_labels(self):
+        self.rover_info_label_frame = LabelFrame(self.window)
 
         self.rover_info_label_frame.grid(
                 row=ROVER_INFO_LABEL_FRAME_ROW, 
@@ -545,13 +543,14 @@ class gui(Thread):
     def show_drive_switch_frame(self):
         self.drive_switch_frame = LabelFrame(
             self.window, 
-            text="drive switch")
+            text="drive safety")
 
         self.drive_switch_frame.grid(
                 row=DRIVE_SWITCH_FRAME_ROW, 
                 column=DRIVE_SWITCH_FRAME_COLUMN,
                 rowspan=DRIVE_SWITCH_FRAME_ROWSPAN,
-                columnspan=DRIVE_SWITCH_FRAME_COLUMNSPAN)
+                columnspan=DRIVE_SWITCH_FRAME_COLUMNSPAN,
+                sticky=DRIVE_SWITCH_FRAME_STICKY )
 
         self.show_drive_switch_buttons()
 
@@ -581,8 +580,8 @@ class gui(Thread):
     
     
     def update_rover_marker(self, x,y):
+        #called by nodes/base.py/gui_update_rover_lla()
         self.rover_marker.set_position(x,y)
-        
     
     def show_scroll(self):
         
@@ -622,15 +621,15 @@ class gui(Thread):
         id = None
         
         if caller == "miniwalk_feedback":
-            if show_type == b'I01\n':
-                id = "[miniwalking]"
+            if show_type == 1:
+                id = "[mW_feedback]"
             
             d2t = str(msg.d2t)[:6]
             he = str(msg.he)[:6]
             
             self.feedback_scroll.insert(
                 END,
-                f"{id}:    {d2t}     {he}"+'\n')
+                f"{id}:     d2t: {d2t}     he: {he}"+'\n')
             self.feedback_scroll.see('end')
 
     def print_result(self, caller, result):
@@ -693,13 +692,17 @@ class gui(Thread):
 
 
     def draw_gui(self):
+
+        self.show_drive_switch_frame()
+
         self.show_map()
         
         self.show_scroll()
 
+        self.show_rover_info_labels()
+
         self.show_action_console()
 
-        self.show_drive_switch_frame()
 
         self.show_status_bar()
 
