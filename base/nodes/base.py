@@ -2,7 +2,7 @@ from pickle import FALSE, TRUE
 from rclpy.node import Node
 from rclpy.action import ActionClient
 
-from std_msgs.msg import Bool
+from std_msgs.msg import Bool, Empty
 from geometry_msgs.msg import Point
 
 from rover_utils.action import MinimalWalk
@@ -17,10 +17,13 @@ class baseNode(Node):
         
         self.parent = parent
 
+        """
+        ROS 2 Interfaces
+        """
         self.minimal_walk_action_client = ActionClient(
             self, 
             MinimalWalk, 
-            'MiniWalkTopic')
+            'miniwalk')
 
         self.teleop_pub = self.create_publisher(
             TankDriveMsg,
@@ -41,6 +44,16 @@ class baseNode(Node):
         self.cancel_searchwalk_pub = self.create_publisher(
             Bool,
             'stop_searchwalk',
+            10)
+        
+        self.e_stop_pub = self.create_publisher(
+            Empty,
+            'e_stop',
+            10)
+
+        self.enable_drive_pub = self.create_publisher(
+            Empty,
+            'enable_drive',
             10)
 
     def send_goal_miniwalk(self,tlat,tlon, gf_rad):
@@ -113,11 +126,11 @@ class baseNode(Node):
         self.teleop_pub.publish(msg)
 
     def gui_update_rover_lla(self, msg):
-        # x = msg.x
-        # y = msg.y
-        # z = msg.z
+        x = msg.x
+        y = msg.y
+        z = msg.z
         # self.parent.update_rover_lla(x,y,z)
-        # self.parent.update_rover_marker(x,y)
+        self.parent.update_rover_marker(x,y)
         # #print(x,y,z)
         pass
 
@@ -145,3 +158,13 @@ class baseNode(Node):
         msg = Bool()
         msg.data = True
         self.cancel_searchwalk_pub.publish(msg)
+
+    def trigger_e_stop(self):
+        msg = Empty()
+        self.e_stop_pub.publish(msg)
+        self.get_logger().error("drive E_STOP triggered!")
+
+    def enable_drive(self):
+        msg = Empty()
+        self.enable_drive_pub.publish(msg)
+        self.get_logger().warn("drive ENABLE triggered!")
