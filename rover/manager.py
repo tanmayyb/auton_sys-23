@@ -27,7 +27,7 @@ from utils.spa import generateSearchPattern
 class SearchApproachActionManager(Node):
 
     def __init__(self):
-        super().__init__('action_manager')
+        super().__init__('action_manager_node')
 
         """
         Searchwalk Variables

@@ -27,7 +27,7 @@ import time
 
 class Rover(Node):
     def __init__(self):
-        super().__init__('rover')
+        super().__init__('rover_node')
 
         print("rover_node initialised")
 
