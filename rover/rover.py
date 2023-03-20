@@ -27,7 +27,7 @@ import time
 
 class Rover(Node):
     def __init__(self):
-        super().__init__('rover')
+        super().__init__('rover_node')
 
         print("rover_node initialised")
 
@@ -73,12 +73,12 @@ class Rover(Node):
 
         self.teensy_pub = self.create_publisher(
             TankDriveMsg,
-            'TeensySubscriberTopic',
+            'drive_msg',
             10)
 
         self.vectornav_sub = self.create_subscription(
             Point,
-            'VectorNavPublisherTopic',
+            'rover_pose_msg',
             self.update_sensor_data_callback,
             10)
         #VectorNavSensorData

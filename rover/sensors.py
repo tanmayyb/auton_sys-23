@@ -12,7 +12,7 @@ import time, os
 
 class SensorPub(Node):
     def __init__(self):
-        super().__init__('nav_sensors_node')
+        super().__init__('sensors_node')
         
         sudoPassword = 'xav'
         command = 'chmod 666 /dev/ttyUSB0'
@@ -42,7 +42,7 @@ class SensorPub(Node):
 
         self.publisher = self.create_publisher(
             Point,
-            'VectorNavPublisherTopic',
+            'rover_pose_msg',
             10)
 
         timer_period  = 0.010

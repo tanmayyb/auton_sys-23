@@ -37,7 +37,7 @@ from settings.pipeline import *
 
 class CVSubSystem(Node):
     def __init__(self):
-        super().__init__('cv_subsystem')
+        super().__init__('cv_subsystem_node')
 
         """
         TRACKERS

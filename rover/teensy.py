@@ -28,15 +28,15 @@ class Teensy(Node):
         """
         State Variables and Trackers
         """
-        self.current_message = self.default_msg     #for display of current message
-        self.drive_enabled = True                    #for estop
+        self.current_message = self.def_ros2_tank_drive_msg()   #for display of current message
+        self.drive_enabled = False                               #for estop
         
         """
         ROS 2 Interfaces
         """
         self.drive_msg_sub = self.create_subscription(
             TankDriveMsg,
-            'TeensySubscriberTopic',
+            'drive_msg',
             self.drive_msg_sub_callback,
             10)
 
@@ -53,11 +53,18 @@ class Teensy(Node):
             10)
         
         print("teensy node online!")
+        print("drive_enabled state: ", self.drive_enabled)
+
+        """
+        Timer for Process Monitoring Purposes
+        """
+        timer_period  = 0.2
+        self.create_timer(timer_period, self.timer_callback)
 
     def drive_msg_sub_callback(self, msg):
         if self.drive_enabled:
             self.send_to_teensy(msg.lpwm, msg.rpwm)
-            print(msg)
+            self.current_message = msg
 
     def e_stop_callback(self, msg):
         self.drive_enabled = False
@@ -66,6 +73,10 @@ class Teensy(Node):
     def enable_drive_callback(self, msg):
         self.drive_enabled = True
         print("drive enabled")
+
+    def timer_callback(self):
+        if self.drive_enabled:
+            print("LPWM: ", self.current_message.lpwm, "\tRPWM: ", self.current_message.rpwm,  )
 
     def send_to_teensy(self, lpwm, rpwm):
         # convert c2mm to string
@@ -78,6 +89,12 @@ class Teensy(Node):
         #compile string and send
         msg = 'D_0_'+left_pwm+'_0_'+right_pwm+'_0_0_0_0_0_0_0_0_0_0_0_0_128_128_0_0_0'
         self.teensy.sendto(msg.encode(), (self.UDP_IP, self.UDP_PORT))
+
+    def def_ros2_tank_drive_msg(self):
+        msg = TankDriveMsg()
+        msg.lpwm = 127
+        msg.rpwm = 127
+        return msg
 
 def main(args=None):
     rclpy.init(args=args)
