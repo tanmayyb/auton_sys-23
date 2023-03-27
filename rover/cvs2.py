@@ -35,6 +35,8 @@ from settings.pid import *
 from settings.states import *
 from settings.pipeline import *
 
+from std_msgs.msg import Bool
+
 class CVSubSystem(Node):
     def __init__(self):
         super().__init__('cv_subsystem_node')
@@ -87,11 +89,19 @@ class CVSubSystem(Node):
             TankDriveMsg, 
             'drive_msg',
             10)
+
+        self.aruco_detection_state_pub = self.create_publisher(
+            Bool, 
+            'aruco_detection_state',
+            10)
         
         """
         https://stackoverflow.com/questions/61394756/how-to-use-opencv-videowriter-with-gstreamer
         """
         self.out_streamer = cv2.VideoWriter(gst_out_command,cv2.CAP_GSTREAMER,0, 20, self.frame_dims, True)
+
+        #remove
+        self.start_subsystem_thread()
 
     def set_cvs2_state_callback(self, msg):
         msg = msg.data
@@ -186,7 +196,7 @@ class CVSubSystem(Node):
                     msg.lpwm = leftval
                     msg.rpwm = rightval
                     self.send_cv_pid_vals_pub.publish(msg)
-                    print(msg)
+                    self.get_logger().info("approaching target...")
             else:
                 self.get_logger().warn("aruco not detected, resetting to idle scan...")
                 self.subsystem_state = SM_DICT['reset']
@@ -206,6 +216,7 @@ class CVSubSystem(Node):
         #self.stream.display_frames(frame)
         self.out_streamer.write(frame)
         self.mainloop = self.stream.check_for_exit_keypresses()
+        self.pub_aruco_detection_state_msg()
 
     def start_subsystem_thread(self):    
         if self.main_thread is None:
@@ -258,6 +269,11 @@ class CVSubSystem(Node):
         if detection_time >= self.aruco_confimation_wait_time:
             return True
         return False
+
+    def pub_aruco_detection_state_msg(self):
+        msg =  Bool()
+        msg.data = self.aruco_is_detected
+        self.aruco_detection_state_pub.publish(msg)
 
 def main(args=None):
     rclpy.init(args=args)
