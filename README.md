@@ -4,13 +4,13 @@
 
 # auton_sys-23
 
-Auton redesign repo for URC 2022.
+Auton redesign GUI for URC 2023.
 
 UI Figma Link:
 https://www.figma.com/file/ip6mJr0MV8HCT5906CQ1Ye/Auton-ROS-GUI?node-id=0%3A1
 
 Goals:
-
+The goal of this branch is to over-haul the code of the GUI to make it more readable, modular and reduce redundancy.
 
 ### Main Contributors:
 
