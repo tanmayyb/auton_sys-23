@@ -85,7 +85,7 @@ class CVSubSystem(Node):
 
         self.send_cv_pid_vals_pub = self.create_publisher(
             TankDriveMsg, 
-            'TeensySubscriberTopic',
+            'drive_msg',
             10)
         
         """

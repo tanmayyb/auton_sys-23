@@ -110,8 +110,8 @@ class Rover(Node):
         print("received goal request", goal_handle.request)
         
         coords = goal_handle.request.coords
-        tcrds = (coords.x, coords.y)   #get coordinates from msg
-        geofence = coords.z  #get geofence from msg
+        tcrds = (coords.x, coords.y)        #get coordinates from msg
+        geofence = coords.z                 #get geofence from msg
 
         #signal_and_wait = goal_handle.request.signal_and_wait
 
@@ -128,6 +128,7 @@ class Rover(Node):
             if goal_handle.is_cancel_requested:
                 goal_handle.canceled()
                 self.get_logger().info('Goal canceled')
+                self.send_to_teensy(self.neutral_pwms)               #set to neutral
                 return MinimalWalk.Result()
 
             """logic of mini walk"""
