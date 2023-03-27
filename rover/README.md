@@ -24,7 +24,7 @@ The current camera in use for Auton ARUCO is called `"GUCC"`.
 
 ### Stream camera to CVS2
 
-<b> "Gucc" </br>
+<b> "Gucc" </b>
 ```
 TX: 
 SYSTEM LOOPBACK(for CVS2) + BASESTATION(debugging):
