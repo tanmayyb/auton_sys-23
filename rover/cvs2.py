@@ -35,6 +35,8 @@ from settings.pid import *
 from settings.states import *
 from settings.pipeline import *
 
+from utils.boost import boost_function
+
 from std_msgs.msg import Bool
 
 class CVSubSystem(Node):
@@ -69,7 +71,7 @@ class CVSubSystem(Node):
         self.frame_dims = self.stream.get_frame_dims()
         self.detector = aruco_detector(self)
         self.localiser = aruco_localiser(self.detector, dims=self.frame_dims)
-        self.pid = pid_controller(self.localiser, self.frame_dims, pid_const=PID_TUNING_CONSTS)
+        self.pid = pid_controller(self.localiser, self.frame_dims, pid_const=PID_TUNING_CONSTS, control_const=PID_OUTPUT_LIM_CONSTS)
         self.overlay_handler = overlay_on(detector=self.detector, localiser=self.localiser, controller=self.pid, dims=self.frame_dims) #make this less messy
 
         """
@@ -192,6 +194,11 @@ class CVSubSystem(Node):
                 val = self.pid.get_pid_c2mm()
                 if val is not None:
                     leftval, rightval = val
+                    #refine
+                    boost_val = boost_function(self.pid.get_pid_error())
+                    leftval, rightval = self.pid.add_boost_to_c2mm((leftval,rightval), boost_val)
+                    print(self.pid.get_pid_error(), boost_val, (leftval, rightval))
+                   
                     msg = TankDriveMsg()
                     msg.lpwm = leftval
                     msg.rpwm = rightval

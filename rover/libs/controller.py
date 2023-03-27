@@ -1,7 +1,7 @@
 from simple_pid import PID
 
 class pid_controller():
-    def __init__(self, localiser, dims, pid_const=(0.07,  0.01, 0.01), control_const=(0, 20)):
+    def __init__(self, localiser, dims, pid_const=(0.7, 0.0, 0.4), control_const=(0, 15)):
         
         self.neutral_pwm = 127 
         self.drift_pwm = control_const[0]
@@ -11,7 +11,7 @@ class pid_controller():
         self.localiser = localiser
         
         self.setpoint = 0 
-        self.sample_time = 0.5
+        self.sample_time = 0.1
         
         self.pid_error = None
         self.control = None
@@ -49,7 +49,9 @@ class pid_controller():
         control = self.pid(self.pid_error)
         #update trackers
         self.control  = control
-        #return self.control
+
+        if(abs(self.pid_error) < 30.0):
+            self.control = 0.0
 
     def get_pid_c2mm(self):
         if(self.calc_error() != None):
@@ -58,7 +60,9 @@ class pid_controller():
         else:
             return None
         return c2mm_vals
-        
+    
+    def get_pid_error(self):
+        return self.pid_error
     
     def do_c2mm(self,  control):
         left_pwm = self.neutral_pwm - int(control) + self.drift_pwm
@@ -66,6 +70,11 @@ class pid_controller():
 
         return (left_pwm, right_pwm)
 
+    def add_boost_to_c2mm(self, c2mm_pwm, boost_pwm):
+        left_pwm = int(c2mm_pwm[0]) + int(boost_pwm)
+        right_pwm = int(c2mm_pwm[1])+ int(boost_pwm)
+
+        return (left_pwm, right_pwm)
 
     def get_pid_error(self):
         return self.pid_error

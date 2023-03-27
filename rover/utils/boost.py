@@ -14,8 +14,8 @@ def boost_function(error_in_degs):
         """
         MUST BE FLOAT
         """
-        er = 20.0       #error range in degrees
-        peak = 30.0     #peak value of boost function 
+        er = 60.0       #error range in degrees
+        peak = 11.0     #peak value of boost function 
         
         #Slope calculation for deadzone, basically calculates what slope should
         #the linear equation have such that at f(0) = peak value
