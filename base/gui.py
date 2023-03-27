@@ -98,7 +98,8 @@ class gui(Thread):
                 row=MAP_FRAME_ROW, 
                 column=MAP_FRAME_COLUMN,
                 rowspan=MAP_FRAME_ROWSPAN,
-                columnspan=MAP_FRAME_COLUMNSPAN)
+                columnspan=MAP_FRAME_COLUMNSPAN,
+                sticky=MAP_STICKY)
 
         self.map_widget = tkintermapview.TkinterMapView(
             self.map_frame, 
