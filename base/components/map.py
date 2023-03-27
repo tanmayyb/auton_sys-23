@@ -1,39 +1,24 @@
 from cgitb import text
 from tkinter import *
 from tkinter.ttk import *
+from tkinter import Label, scrolledtext
 
 import tkintermapview
+import time
+
+
+from settings.window import *
+from settings.grid import *
 
 import os
 
-"""MAP"""
-MAP_FRAME_ROW = 1
-MAP_FRAME_COLUMN = 0
-MAP_FRAME_ROWSPAN = 1
-MAP_FRAME_COLUMNSPAN = 1
-
-
-MAP_WIDTH = 400
-MAP_HEIGHT = 400
-MAP_CORNER_RADIUS = 0
-
-MAP_WIDGET_ROW = 0
-MAP_WIDGET_COLUMN = 0
-MAP_STICKY = "W"
-
-""" MAP LOCATION"""
-
-TMU_LAT = 43.65897373429778
-TMU_LON = -79.37932931217927
-
-LAT_FOR_MAP = TMU_LAT
-LON_FOR_MAP = TMU_LON
-
-""" MAP WAYPOINT """
 
 class map():
-    def __init__(self, window):
+    def __init__(self, parent, window):
         self.window = window
+        self.parent = parent
+
+        self.home = (TMU_LAT, TMU_LON)
 
         self.waypoints = 0
         self.markers = []
@@ -42,7 +27,7 @@ class map():
         self.show_map()
     
     def show_map(self):
-        script_directory = os.path.dirname(os.path.abspath(__file__))
+        script_directory = os.path.dirname(os.path.abspath("base/components"))
         database_path = os.path.join(
             script_directory,
             "database", 
@@ -104,8 +89,8 @@ class map():
         #                         pass_coords=True)
 
     def load_coords(self, coords):
-        self.input_tlat.set(str(coords[0]))
-        self.input_tlon.set(str(coords[1]))
+        self.parent.actionConsole.input_tlat.set(str(coords[0]))
+        self.parent.actionConsole.input_tlon.set(str(coords[1]))
 
     def send_rover_to_point(self, coords):
 
@@ -127,10 +112,10 @@ class map():
             text="wp:"+str(self.waypoints))
         self.markers.append(new_marker)
 
-        self.base_node.send_goal_miniwalk(
+        self.parent.base_node.send_goal_miniwalk(
             float(coords[0]),
             float(coords[1]),
-            float(self.input_geofence.get()))
+            float(self.parent.actionConsole.input_geofence.get()))
 
     def add_waypoint_on_map(self, coords):
         self.waypoints = self.waypoints + 1

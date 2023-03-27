@@ -86,10 +86,11 @@ class gui(Thread):
         self.teleop.daemon = True
         self.teleop.start()
 
-
+################## MAP ##################
 
     def show_map(self):
         script_directory = os.path.dirname(os.path.abspath(__file__))
+        print(script_directory)
         database_path = os.path.join(
             script_directory,
             "database", 
@@ -156,7 +157,6 @@ class gui(Thread):
 
     def send_rover_to_point(self, coords):
 
-
         if self.waypoints == 0:
             self.path = self.map_widget.set_path(
                 [self.home,
@@ -211,6 +211,7 @@ class gui(Thread):
         self.markers.pop()
         self.waypoints= self.waypoints-1
         
+################## ACTION CONSOLE ##################
 
     def show_action_console(self):
         self.action_console_frame = LabelFrame(
@@ -466,7 +467,8 @@ class gui(Thread):
     def update_rover_marker(self, x,y):
         self.rover_marker.set_position(x,y)
         
-    
+################## SCROLL ##################
+
     def show_scroll(self):
         
         self.scroll_frame = LabelFrame(
@@ -524,6 +526,7 @@ class gui(Thread):
         self.event_scroll.insert(END,"rec:   "+data+'\n')
         self.event_scroll.see('end')
 
+################## STATUS BAR ##################
 
     def show_status_bar(self):
         self.status_bar_frame = LabelFrame(
@@ -572,6 +575,8 @@ class gui(Thread):
 
     def set_status_bar_speed_info(self, msg):
         self.teleop_speed_info.configure(text=f"Speed:\t{10.0*float(msg):.1f}\t")
+
+################## TOP BAR ##################
 
     def show_top_bar(self):
         self.top_frame = Frame(self.window, width=800, height = 40, borderwidth=1, relief=GROOVE)

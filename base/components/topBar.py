@@ -1,13 +1,19 @@
+from cgitb import text
 from tkinter import *
 from tkinter.ttk import *
+from tkinter import Label, scrolledtext
 
 from threading import *
 
-from test2 import *
+from settings.window import *
+from settings.grid import *
+
+from applet.param_feature import launchFWindow
 
 class topBar():
-    def __init__(self, window):
+    def __init__(self, parent, window):
         self.window = window
+        self.parent = parent
 
         self.show_top_bar()
 

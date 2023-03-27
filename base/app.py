@@ -1,13 +1,15 @@
 from threading import *
 from root import *
 from gui import gui
+from test import test
 
 
 
 def main(args= None):
     
     root = root_()
-    app = gui(root)
+    app = test(root)
+    #app = gui(root)
     #app.daemon = True
 
     print("gui launched")
