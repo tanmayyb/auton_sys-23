@@ -18,6 +18,7 @@ from rclpy.executors import MultiThreadedExecutor
 from rover_utils.action import MinimalWalk
 from rover_utils.msg import TankDriveMsg
 from geometry_msgs.msg import Point
+from std_msgs.msg import Float64
 
 from utils.nvc import nav_vec_calc  
 from utils.error import heading_error
@@ -35,7 +36,7 @@ class Rover(Node):
         self.pid_controller = None
 
         """
-        Navigational Variables
+        miniWalk Navigation Variables
         ab2t:       Absolute Bearing to Target
         d2t:        Distance to Target
         arb:        Absolute Rover Bearing
@@ -62,6 +63,10 @@ class Rover(Node):
             self.pid_const, 
             self.drift_and_control_output_pwms)
 
+        
+        """
+        ROS 2 Interfaces
+        """
         self.min_walk_act_server = ActionServer(
             self,
             MinimalWalk,
@@ -81,7 +86,12 @@ class Rover(Node):
             'rover_pose_msg',
             self.update_sensor_data_callback,
             10)
-        #VectorNavSensorData
+        
+        self.cvs2_error_sub = self.create_subscription(
+            Float64,
+            'cvs2_error_msg',
+            self.cvs2_error_sub_callback,
+            10)
 
 
     def update_sensor_data_callback(self, msg):
@@ -172,6 +182,10 @@ class Rover(Node):
         msg.rpwm = c2mm[1]
         self.teensy_pub.publish(msg)
         """leds have to be programmed"""
+
+    def cvs2_error_sub_callback(self, msg):
+        cvs2_error = msg.data
+        print(cvs2_error)
 
 def main(args=None):
     rclpy.init(args=args)

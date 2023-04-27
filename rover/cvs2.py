@@ -12,7 +12,7 @@ Code for Computer Vision Sub-System (CVS2) for AR Tag detection, localisation an
 """
 
 import cv2, sys, time
-sys.path.append("..") 
+sys.path.append("..")
 
 from threading import Thread, Event
 
@@ -31,9 +31,9 @@ from libs.localiser import aruco_localiser
 from libs.overlay import overlay_on
 from libs.controller import pid_controller
 
-from settings.pid import *
-from settings.states import *
+from settings.pid import PID_TUNING_CONSTS, PID_OUTPUT_LIM_CONSTS
 from settings.pipeline import *
+from settings.states import SM_DICT, SM_INFO
 
 from utils.boost import boost_function
 
@@ -50,14 +50,40 @@ class CVSubSystem(Node):
             - node events
             - threading
         """
+
+
+        """
+        Cvs2 System Variables
+        """
         self.subsystem_state = SM_DICT['idle_scan']
         self.aruco_is_detected = False
         self.aruco_detection_timestamp = None
-        self.aruco_confimation_wait_time = 0.7 #seconds
+        
         self.searchwalk_interrupted = False
         self.searchwalk_interruption_thread = None
+        self.searchwalk_resume_thread = None
+
         self.main_thread = None
         self.main_thread_event = None
+
+
+        """
+        Cvs2 Gst Settings
+        """
+
+
+        """
+        Cvs2 PID Settings
+        """
+
+        """
+        Cvs2 Settings
+        """
+        self.aruco_confimation_wait_time = 0.7 #seconds
+        """Cvs2 Stream Settings"""
+        self.process_cvs2_overlay_frame = True
+        self.show_cvs2_output_locally = True
+        self.show_cvs2_output_on_network = False
 
         """
         LIBS
@@ -85,7 +111,11 @@ class CVSubSystem(Node):
 
         self.interrupt_searchwalk_service_client = self.create_client(
             Trigger, 
-            'halt_searchwalk')
+            'pause_searchwalk')
+
+        self.resume_searchwalk_service_client = self.create_client(
+            Trigger, 
+            'resume_searchwalk')
 
         self.send_cv_pid_vals_pub = self.create_publisher(
             TankDriveMsg, 
@@ -102,8 +132,6 @@ class CVSubSystem(Node):
         """
         self.out_streamer = cv2.VideoWriter(gst_out_command,cv2.CAP_GSTREAMER,0, 20, self.frame_dims, True)
 
-        #remove
-        self.start_subsystem_thread()
 
     def set_cvs2_state_callback(self, msg):
         msg = msg.data
@@ -151,45 +179,58 @@ class CVSubSystem(Node):
             """
             if self.aruco_is_detected:
                 self.register_aruco_detection_time()
-                #self.interrupt_searchwalk() 
-                #self.subsystem_state = SM_DICT['interrupt_searchwalk']
-                self.subsystem_state = SM_DICT['confirm_aruco']
+                self.interrupt_searchwalk() 
+                self.subsystem_state = SM_DICT['interrupt_searchwalk']
 
         elif self.subsystem_state == SM_DICT['interrupt_searchwalk']:
             if self.searchwalk_interrupted: #if successfully interrupted
-                self.subsystem_state = SM_DICT['confirm_aruco']
-                #reset searchwalk
-                self.searchwalk_interruption_thread.join()
+                
+                # OPTIMIZATION, PERFOMANCE ANALYSIS:
+                #   how to handle fast false positives at this stage if they exist? 
+                #   what if we interrupted but because it was a false positive 
+                #   our rover has stopped for nothing.
+                #   will it affect the performance of our rover in the competition as a whole?
+                self.searchwalk_interruption_thread.join()  #reset searchwalk interruption thread
                 self.searchwalk_interruption_thread = None
-                self.searchwalk_interrupted = False
-            # how to handle fast false positives at this stage if they exist? 
+                self.subsystem_state = SM_DICT['confirm_aruco']
 
         elif self.subsystem_state == SM_DICT['confirm_aruco']:
             """
             CONFIRM ARUCO
                 - check for false positives
             """
+
+            #TODO:  envision more robust false positive detection system
+            #       maybe add a threshold/buildup function with timeouts to confirm false positives
+
             if self.aruco_is_detected:
                 if self.aruco_signal_confirmed():
                     self.get_logger().warn("Triggering approach behaviour...")
                     self.subsystem_state = SM_DICT['approach']
             else: 
                 #false positive
+                #maybe add a timeout/model for robust false positive
+                self.get_logger().warn("false positive detected, resetting CVS2-SM and sW...")
                 self.subsystem_state = SM_DICT['reset']
 
         elif self.subsystem_state == SM_DICT['reset']:
             """
-            RESET LOGIC
-                - resets cvs2
-                - resumes 'action_manager' 
+            RESET CVS2
+                - resets cvs2 variables
+                - resumes searchwalk 
             """
-            #add function to resume manager's goals
-            self.searchwalk_interrupted = False
-            self.aruco_detection_timestamp = None
-            self.subsystem_state = SM_DICT['idle_scan']
+            if self.searchwalk_interrupted:
+                if self.searchwalk_resume_thread is None:
+                    self.resume_searchwalk()
+            else:
+                if self.searchwalk_resume_thread is not None:
+                    self.searchwalk_resume_thread.join()
+                    self.searchwalk_resume_thread = None
+                self.subsystem_state = SM_DICT['idle_scan']
 
-        elif self.subsystem_state == SM_DICT['approach']:
-            #approach logic
+            self.reset_cvs2()   #vague function
+
+        elif self.subsystem_state == SM_DICT['approach']: #approach logic
             if self.aruco_is_detected:
                 val = self.pid.get_pid_c2mm()
                 if val is not None:
@@ -212,19 +253,30 @@ class CVSubSystem(Node):
         """
         Overlay functions for debugging and viz purposes
         """
-        frame = self.overlay_handler.put_overlay( # overlay handler zips and overlays data 
-            frame,
-            localiser=self.localiser, 
-            use_localiser=True, 
-            controller=self.pid, 
-            plot_center_of_mass=True,
-            state_text=SM_INFO[self.subsystem_state])
         
-        #self.stream.display_frames(frame)
-        self.out_streamer.write(frame)
-        self.mainloop = self.stream.check_for_exit_keypresses()
-        self.pub_aruco_detection_state_msg()
+        if self.process_cvs2_overlay_frame:
+            frame = self.overlay_handler.put_overlay( # overlay handler zips and overlays data 
+                frame,
+                localiser=self.localiser, 
+                use_localiser=True, 
+                controller=self.pid, 
+                plot_center_of_mass=True,
+                state_text=SM_INFO[self.subsystem_state])        
+            """
+            Stream Settings
+            """
+            if self.show_cvs2_output_locally:       self.stream.display_frames(frame)
+            if self.show_cvs2_output_on_network:    self.out_streamer.write(frame)
 
+        self.pub_aruco_detection_state_msg()
+        self.mainloop = self.stream.check_for_exit_keypresses()
+
+    def reset_cvs2(self):
+        self.aruco_detection_timestamp = None
+    
+    """
+    SubSytem Threading
+    """
     def start_subsystem_thread(self):    
         if self.main_thread is None:
             self.main_thread_event = Event()
@@ -249,18 +301,19 @@ class CVSubSystem(Node):
         else:
             print("Subsystem thread is NOT running...")
 
-    def register_aruco_detection_time(self):
-        self.aruco_detection_timestamp = time.time() #register time
 
+    """
+    Interrupt Searchwalk
+    """
     def interrupt_searchwalk(self):
         if self.searchwalk_interruption_thread == None:
             self.searchwalk_interruption_thread = Thread(target=self.interrupt_searchwalk_service_thread)
             self.searchwalk_interruption_thread.start()
 
     def interrupt_searchwalk_service_thread(self):
-        self.get_logger().info("signal detected, attempting to interrupt searchwalk")
+        self.get_logger().info("signal detected, attempting to interrupt searchwalk...")
 
-        while not self.interrupt_searchwalk_service_client.wait_for_service(timeout_sec=1.0):
+        while not self.interrupt_searchwalk_service_client.wait_for_service(timeout_sec=0.5):
             self.get_logger().info('searchwalk interrupt service not available, trying again...')
                 
         self.req = Trigger.Request()
@@ -268,14 +321,45 @@ class CVSubSystem(Node):
         future.add_done_callback(self.interrupt_searchwalk_service_callback)
 
     def interrupt_searchwalk_service_callback(self, future):
-        self.get_logger().warn('interrupt signal success!')
         self.searchwalk_interrupted = True
+        self.get_logger().warn('interrupt sw signal success!')
+    
 
+    """
+    Resume Searchwalk
+    """
+    def resume_searchwalk(self):
+        if self.searchwalk_resume_thread == None:
+            self.searchwalk_resume_thread = Thread(target=self.resume_searchwalk_service_thread)
+            self.searchwalk_resume_thread.start()
+
+    def resume_searchwalk_service_thread(self):
+        self.get_logger().info("attempting to resume searchwalk again...")
+
+        while not self.resume_searchwalk_service_client.wait_for_service(timeout_sec=0.5):
+            self.get_logger().info('searchwalk resume service not available, trying again...')
+                
+        self.req = Trigger.Request()
+        future = self.resume_searchwalk_service_client.call_async(self.req)
+        future.add_done_callback(self.resume_searchwalk_service_callback)
+
+    def resume_searchwalk_service_callback(self, future):
+        self.searchwalk_interrupted = False
+        self.get_logger().warn('resume sw signal success!')
+
+
+    """
+    Dectection Confirmation
+    """
     def aruco_signal_confirmed(self):
         detection_time = time.time() - self.aruco_detection_timestamp
         if detection_time >= self.aruco_confimation_wait_time:
             return True
         return False
+
+    def register_aruco_detection_time(self):
+        self.aruco_detection_timestamp = time.time() #register time
+
 
     def pub_aruco_detection_state_msg(self):
         msg =  Bool()
