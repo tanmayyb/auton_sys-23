@@ -209,7 +209,7 @@ class CVSubSystem(Node):
                     self.subsystem_state = SM_DICT['approach']
             else: 
                 #false positive
-                #maybe add a timeout/model for robust false positive
+                #TODO:  maybe add a timeout/model for robust false positive
                 self.get_logger().warn("false positive detected, resetting CVS2-SM and sW...")
                 self.subsystem_state = SM_DICT['reset']
 
