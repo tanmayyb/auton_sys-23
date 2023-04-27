@@ -8,6 +8,11 @@ base/plugins/__pycache__
 base/settings/__pycache__
 base/nodes/__pycache__
 
+base/plugins/teleop/Utils/__pycache__
+base/plugins/teleop/__pycache__
+
 rover/settings/__pycache__
 rover/libs/__pycache__
 rover/utils/__pycache__
+
+**/__pycache__/

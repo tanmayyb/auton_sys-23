@@ -346,6 +346,7 @@ class gui(Thread):
         elements of frame2 of searchwalk
         """
         self.enable_artag = IntVar()
+        self.enable_artag.set(1)
         self.enable_obstacle_avoidance = IntVar()
         self.spattern = IntVar()
 
@@ -382,7 +383,7 @@ class gui(Thread):
         lon = float(self.input_sw_tlon.get())
         srad = float(self.input_srad.get())
         spattrn = self.spattern.get()
-        e_cv  = self.enable_artag.get()
+        e_cv  = True if self.enable_artag.get()==1 else False
         e_oa = self.enable_obstacle_avoidance.get()
 
         msg = (lat, lon, srad, spattrn, e_cv, e_oa)

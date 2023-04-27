@@ -147,7 +147,7 @@ class baseNode(Node):
         searchwalk_msg.coords = coords
         searchwalk_msg.search_radius = srad
         searchwalk_msg.search_pattern = s_pttrn
-        searchwalk_msg.enable_cv = True
+        searchwalk_msg.enable_cv = e_cv
         searchwalk_msg.enable_oa = False
         searchwalk_msg.loop_searchwalk = False
 
