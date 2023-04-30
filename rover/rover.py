@@ -22,8 +22,8 @@ from std_msgs.msg import Float64
 
 from settings.pid import *
 
-from utils.nvc import nav_vec_calc  
-from utils.error import heading_error
+from utils.navigation_vector import calculate_navigation_vector  
+from utils.navigation_error import calculate_heading_error
 from utils.controller import controller
 
 import time
@@ -146,8 +146,8 @@ class Rover(Node):
                 return MinimalWalk.Result()
 
             """logic of mini walk"""
-            ab2t, d2t = nav_vec_calc(self.rcrds, tcrds)
-            error = heading_error(self.arb, ab2t)
+            ab2t, d2t = calculate_navigation_vector(self.rcrds, tcrds)
+            error = calculate_heading_error(self.arb, ab2t)
             c2mm = self.miniwalk_pid.control(error)
         
             """send signal to teensy"""

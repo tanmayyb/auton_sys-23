@@ -9,7 +9,7 @@ Main Auth: Tanmay B.
 from math import sin
 
 
-def heading_error(current_bearing, target_bearing):
+def calculate_heading_error(current_bearing, target_bearing):
     
     """
     determine shortest angle and direction to turn

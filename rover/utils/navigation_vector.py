@@ -8,7 +8,7 @@ Navigation Vector Calculation (N.V.C.)
 
 from math import sin, cos, atan2, radians, degrees, sqrt
 
-def nav_vec_calc(current_coords, target_coords):
+def calculate_navigation_vector(current_coords, target_coords):
 
 
     R = 6371000.0  # radius of Earth in meters
