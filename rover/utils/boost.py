@@ -8,15 +8,16 @@ Code for 'boost' function of the rover
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 
-def boost_function(error_in_degs):
+def boost_function(error_in_degs, consts=[60.0, 11.0, 0.0]):
 
 
         """
         MUST BE FLOAT
         """
-        er = 60.0       #error range in degrees
-        peak = 11.0     #peak value of boost function 
-        
+        er = consts[0]       #error range [degr]
+        peak = consts[1]     #peak value of boost function [pwm]
+        deadzone = consts[2]
+
         #Slope calculation for deadzone, basically calculates what slope should
         #the linear equation have such that at f(0) = peak value
         #Note: they are redundant when not in deadzone

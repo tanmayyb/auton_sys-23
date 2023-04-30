@@ -37,7 +37,7 @@ from settings.states import SM_DICT, SM_INFO
 
 from utils.boost import boost_function
 
-from std_msgs.msg import Bool
+from std_msgs.msg import Bool, Float64
 
 class CVSubSystem(Node):
     def __init__(self):
@@ -125,6 +125,11 @@ class CVSubSystem(Node):
         self.aruco_detection_state_pub = self.create_publisher(
             Bool, 
             'aruco_detection_state',
+            10)
+        
+        self.send_cv_error_pub = self.create_publisher(
+            Float64, 
+            'cvs2_error_msg',
             10)
         
         """

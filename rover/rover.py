@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Main Auth: Tanmay B.
 
-Main 'rover' node with action logics
+Main 'rover' node with low level action logics
 
     - Miniwalk action
     - Approach action
@@ -20,9 +20,11 @@ from rover_utils.msg import TankDriveMsg
 from geometry_msgs.msg import Point
 from std_msgs.msg import Float64
 
+from settings.pid import *
+
 from utils.nvc import nav_vec_calc  
 from utils.error import heading_error
-from utils.pid import pid_controller
+from utils.controller import controller
 
 import time
 
@@ -32,8 +34,6 @@ class Rover(Node):
 
         print("rover_node initialised")
 
-
-        self.pid_controller = None
 
         """
         miniWalk Navigation Variables
@@ -52,18 +52,22 @@ class Rover(Node):
         #tunning variable initialisations
         # <<<<< add load functionality here 
 
-        # miniwalk tunings
+        """
+        PID for Miniwalk and Approach
+        """
         self.neutral_pwms = (127,127)
-        self.pid_const  = (0.6,  0.0, 0.1) # good for kerr 
-        self.drift_and_control_output_pwms = (20, 40) # quad grass 
-        # approach tunings
-        
 
-        self.pid_controller = pid_controller(
-            self.pid_const, 
-            self.drift_and_control_output_pwms)
-
+        self.miniwalk_pid = controller(
+            MINIWALK_PID_CONTROL_CONSTS ,
+            MINIWALK_AUX_CONTROL_CONSTS,
+            sample_time=0.5)
         
+        self.approach_pid = controller(
+            APPROACH_PID_CONTROL_CONSTS,
+            APPROACH_AUX_CONTROL_CONSTS,
+            sample_time=0.1)
+        
+    
         """
         ROS 2 Interfaces
         """
@@ -90,7 +94,7 @@ class Rover(Node):
         self.cvs2_error_sub = self.create_subscription(
             Float64,
             'cvs2_error_msg',
-            self.cvs2_error_sub_callback,
+            self.approach_drive_callback,
             10)
 
 
@@ -144,20 +148,16 @@ class Rover(Node):
             """logic of mini walk"""
             ab2t, d2t = nav_vec_calc(self.rcrds, tcrds)
             error = heading_error(self.arb, ab2t)
-            control = self.pid_controller.do_pid(error)
-            boost = self.pid_controller.do_boost(error)
+            c2mm = self.miniwalk_pid.control(error)
+        
             """send signal to teensy"""
-            c2mm = self.pid_controller.do_c2mm(control, boost)
             self.send_to_teensy(c2mm)
             
-
+            """create feedback"""
             feedback_msg.d2t = d2t
             feedback_msg.he = error
-
             goal_handle.publish_feedback(feedback_msg)
             
-            #time.sleep(.05)
-
             if d2t<geofence:
                 self.miniwalk_loop = False
 
@@ -183,9 +183,9 @@ class Rover(Node):
         self.teensy_pub.publish(msg)
         """leds have to be programmed"""
 
-    def cvs2_error_sub_callback(self, msg):
+    def approach_drive_callback(self, msg):
         cvs2_error = msg.data
-        print(cvs2_error)
+        #DO pid with cvs2 error and send to teensy
 
 def main(args=None):
     rclpy.init(args=args)
