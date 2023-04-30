@@ -97,7 +97,11 @@ class Rover(Node):
             self.approach_drive_callback,
             10)
 
-
+    """
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    vectorNav subscriber
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    """
     def update_sensor_data_callback(self, msg):
         lat = msg.x
         lon = msg.y
@@ -109,6 +113,11 @@ class Rover(Node):
         if self.verbose == True:
             print(msg)
 
+    """
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    miniWalk action
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    """
     def miniwalk_goal_callback(self, goal_request):
         """Accept or reject a client request to begin an action."""
         # This server allows multiple goals in parallel
@@ -173,6 +182,21 @@ class Rover(Node):
 
         return result
     
+    """
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    approach action
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    """
+    def approach_drive_callback(self, msg):
+        cvs2_error = msg.data
+        c2mm = self.approach_pid.control(cvs2_error)
+        self.send_to_teensy(c2mm)
+    
+    """
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    teensy
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    """
     def set_rover_to_neutral(self):
         self.send_to_teensy(self.neutral_pwms)
 
@@ -183,9 +207,7 @@ class Rover(Node):
         self.teensy_pub.publish(msg)
         """leds have to be programmed"""
 
-    def approach_drive_callback(self, msg):
-        cvs2_error = msg.data
-        #DO pid with cvs2 error and send to teensy
+
 
 def main(args=None):
     rclpy.init(args=args)

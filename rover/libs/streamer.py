@@ -17,8 +17,8 @@ class streamer():
 
         return ret, frame
 
-    def get_frame_dims(self):
-        return VIDEO_RESIZE_DIMS
+    def get_info(self):
+        return VIDEO_RESIZE_DIMS, FOV
 
     def display_frames(self, frame):
         cv2.imshow("GST_Stream_for_Aruco",frame)

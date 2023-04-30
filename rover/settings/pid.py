@@ -16,19 +16,22 @@ APPROACH_AUX_CONTROL_CONSTS = [0,
 PID_TUNING_CONSTS = (0.3, 0.0, 0.1)
 PID_OUTPUT_LIM_CONSTS = (0, 15)
 
-
-
 """
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Const Format
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+PID_CONTROL_CONSTS = [  P                          [const, <float>],
+                        I                          [const, <float>],
+                        D                          [const, <float>],
+                        PID CONTROLLER OUT LIM     [PWM, <float>]]
 
-_AUX_CONTROL_CONSTS = [
-                        DRIFT [pwm, <int>]
-                        BOOST (  range[deg, <float>], 
-                                peak[pwm, <float>], 
-                                deadzone[deg, <float>])
-                                ] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                                
+AUX_CONTROL_CONSTS = [  DRIFT                      [pwm, <int>],
+                        BOOST [     RANGE          [deg, <float>], 
+                                    PEAK           [pwm, <float>], 
+                                    DEADZONE       [deg, <float>]]] 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """

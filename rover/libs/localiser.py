@@ -2,9 +2,10 @@ import cv2
 
 
 class aruco_localiser():
-    def __init__(self, detector, dims=None):
+    def __init__(self, detector, dims=None, fov=None):
         self.width = dims[0]
         self.height = dims[1]
+        self.fov = fov
         self.detector = detector
 
         self.cX = []
@@ -12,6 +13,8 @@ class aruco_localiser():
 
         self.corners = None 
         self.ids = None
+
+        self.center_of_mass = None
 
     def do_localisation(self):
         self.get_and_compute_center_params()
@@ -35,6 +38,23 @@ class aruco_localiser():
         [[4] [1]]
 
         '''
+    
+    def calculate_approach_error(self):
+        cX = self.cX_array
+        if(len(cX) != 0):
+            self.center_of_mass = sum(cX)/len(cX)
+            unmapped_error = self.center_of_mass - self.map_dim_x/2
+            mapped_error = self.map_error(unmapped_error)
+            self.pid_error = mapped_error
+            return mapped_error
+        else:
+            self.center_of_mass = None
+            return None
+
+    def map_error(self, unmapped_error):
+        mapped_error = (self.fov/self.width)*unmapped_error
+        return mapped_error
+
     def computer_centers(self, corners,  ids):
         
         self.cX_array  = []
@@ -50,8 +70,8 @@ class aruco_localiser():
             #print(corners, ids)
             #print(self.cX_array)
     
-    def find_xpos_relative_to_midline(self):
-        pass
+    def get_center_of_mass(self):
+        return self.center_of_mass
     
     def fetch_center_arrays(self):
         return self.cX_array, self.cY_array

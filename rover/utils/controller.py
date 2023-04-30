@@ -1,3 +1,11 @@
+"""
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Main Auth: Tanmay B.
+
+    - Controller...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+"""
+
 from simple_pid import PID
 
 class controller():
@@ -72,12 +80,12 @@ class controller():
             """right side slope with '-ve' value =  -p/er*error + p"""
             boost_pwm = +(self.boost_peak/self.boost_rng)*error_in_degs + self.boost_peak
 
-        elif (error_in_degs > 0.0 and error_in_degs > + self.boost_rng or error_in_degs < 0.0 and error_in_degs < -self.boost_rng):
+        elif abs(error_in_degs) > +self.boost_rng:
             """default deadzone"""
             boost_pwm = 0.0     #deadzone the boost
         
-        """dampen boost function induced overshoot"""
-        if(error_in_degs > 0.0 and error_in_degs < +self.boost_usr_dz or error_in_degs < 0.0 and error_in_degs > -self.boost_usr_dz):
+        if abs(error_in_degs) < +self.boost_usr_dz:
+            """dampen boost function induced overshoot"""
             boost_pwm = 0.0     #if the error is in 'center' deadzone area
 
         return int(boost_pwm)

@@ -1,14 +1,13 @@
 import cv2
 
 class overlay_on():
-    def __init__(self, detector=None, localiser=None, controller = None, dims=None):
+    def __init__(self, detector=None, localiser=None, dims=None):
         self.frame = None
         self.width = dims[0]
         self.height = dims[1]
         self.detector = detector
         self.localiser = localiser
-        self.controller = controller
-    
+
     def convert_corners_to_ints(self, topLeft, topRight, bottomRight, bottomLeft):
         topLeft = (int(topLeft[0]), int(topLeft[1]))
         topRight = (int(topRight[0]), int(topRight[1]))
@@ -19,10 +18,16 @@ class overlay_on():
     def load_marker_params(self):
         self.marker_params = self.detector.get_marker_params()
 
-    def put_overlay(self, frame, draw_bounding_box=True, localiser=None, use_localiser=False, controller=None, plot_center_of_mass=False, state_text=None):
+    def put_overlay(self, 
+                    frame, 
+                    draw_bounding_box=True, 
+                    localiser=None, 
+                    use_localiser=False, 
+                    plot_center_of_mass=False, 
+                    state_text=None):
+        
         self.frame = frame
         self.localiser = localiser
-        self.controller = controller
         self.load_marker_params() #fetch corners from marker
         self.put_overlay_for_each_marker(enable=draw_bounding_box)
         self.put_localiser_overlay(enable=use_localiser)
@@ -34,7 +39,7 @@ class overlay_on():
 
     def put_center_of_mass_overlay(self, enable):
         if enable:
-            center_of_mass = self.controller.get_center_of_mass()
+            center_of_mass = self.localiser.get_center_of_mass()
             if(center_of_mass != None):
                 cv2.circle(self.frame, (int(center_of_mass), int(self.height/2)),10,(0,255,255),-1)
 

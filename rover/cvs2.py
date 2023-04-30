@@ -29,13 +29,9 @@ from libs.streamer import streamer
 from libs.detector import aruco_detector
 from libs.localiser import aruco_localiser
 from libs.overlay import overlay_on
-from libs.controller import pid_controller
 
-from settings.pid import PID_TUNING_CONSTS, PID_OUTPUT_LIM_CONSTS
 from settings.pipeline import *
 from settings.states import SM_DICT, SM_INFO
-
-from utils.boost import boost_function
 
 from std_msgs.msg import Bool, Float64
 
@@ -73,10 +69,6 @@ class CVSubSystem(Node):
 
 
         """
-        Cvs2 PID Settings
-        """
-
-        """
         Cvs2 Settings
         """
         self.aruco_confimation_wait_time = 0.7 #seconds
@@ -91,14 +83,13 @@ class CVSubSystem(Node):
             - detection
             - localization
             - overlay
-            - pid
         """
+
         self.stream = streamer()
-        self.frame_dims = self.stream.get_frame_dims()
+        self.frame_dims, self.fov = self.stream.get_info()
         self.detector = aruco_detector(self)
-        self.localiser = aruco_localiser(self.detector, dims=self.frame_dims)
-        self.pid = pid_controller(self.localiser, self.frame_dims, pid_const=PID_TUNING_CONSTS, control_const=PID_OUTPUT_LIM_CONSTS)
-        self.overlay_handler = overlay_on(detector=self.detector, localiser=self.localiser, controller=self.pid, dims=self.frame_dims) #make this less messy
+        self.localiser = aruco_localiser(self.detector, dims=self.frame_dims, fov=self.fov)
+        self.overlay_handler = overlay_on(detector=self.detector, localiser=self.localiser, dims=self.frame_dims) #make this less messy
 
         """
         ROS2 INTERFACES
@@ -116,11 +107,6 @@ class CVSubSystem(Node):
         self.resume_searchwalk_service_client = self.create_client(
             Trigger, 
             'resume_searchwalk')
-
-        self.send_cv_pid_vals_pub = self.create_publisher(
-            TankDriveMsg, 
-            'drive_msg',
-            10)
 
         self.aruco_detection_state_pub = self.create_publisher(
             Bool, 
@@ -169,7 +155,6 @@ class CVSubSystem(Node):
         # These functions have to occur in this sequence
         self.detector.do_aruco_marker_detection(frame)
         self.localiser.do_localisation()
-        self.pid_vals = self.pid.get_pid_c2mm()
         return frame
 
     def run_state_machine(self):
@@ -204,7 +189,6 @@ class CVSubSystem(Node):
             CONFIRM ARUCO
                 - check for false positives
             """
-
             #TODO:  envision more robust false positive detection system
             #       maybe add a threshold/buildup function with timeouts to confirm false positives
 
@@ -237,19 +221,7 @@ class CVSubSystem(Node):
 
         elif self.subsystem_state == SM_DICT['approach']: #approach logic
             if self.aruco_is_detected:
-                val = self.pid.get_pid_c2mm()
-                if val is not None:
-                    leftval, rightval = val
-                    #refine
-                    boost_val = boost_function(self.pid.get_pid_error())
-                    leftval, rightval = self.pid.add_boost_to_c2mm((leftval,rightval), boost_val)
-                    print(self.pid.get_pid_error(), boost_val, (leftval, rightval))
-                   
-                    msg = TankDriveMsg()
-                    msg.lpwm = leftval
-                    msg.rpwm = rightval
-                    self.send_cv_pid_vals_pub.publish(msg)
-                    self.get_logger().info("approaching target...")
+                self.publish_approach_error()
             else:
                 self.get_logger().warn("aruco not detected, resetting to idle scan...")
                 self.subsystem_state = SM_DICT['reset']
@@ -264,7 +236,6 @@ class CVSubSystem(Node):
                 frame,
                 localiser=self.localiser, 
                 use_localiser=True, 
-                controller=self.pid, 
                 plot_center_of_mass=True,
                 state_text=SM_INFO[self.subsystem_state])        
             """
@@ -370,6 +341,15 @@ class CVSubSystem(Node):
         msg =  Bool()
         msg.data = self.aruco_is_detected
         self.aruco_detection_state_pub.publish(msg)
+
+    def publish_approach_error(self):
+        error = self.localiser.calculate_approach_error()
+        msg = Float64()
+        msg.data = error
+        self.send_cv_error_pub.publish(msg)
+        print("[approach_subroutine]: approach_error:\t", error, "[deg]")
+
+
 
 def main(args=None):
     rclpy.init(args=args)
