@@ -14,4 +14,4 @@ Link: [Download Page](https://developer.nvidia.com/sdk-manager)
 > - Connect ground and reset pins on J50 before powering board on
 > - Check status with lsusb in terminal: should end in 7f21
 
-Link: [Instructions] (https://wiki.seeedstudio.com/reComputer_J1020_A206_Flash_JetPack/#hardware-preparation-force-recovery-mode) -> but with pins listed above
+Link: [Instructions](https://wiki.seeedstudio.com/reComputer_J1020_A206_Flash_JetPack/#hardware-preparation-force-recovery-mode) -> but with pins listed above
