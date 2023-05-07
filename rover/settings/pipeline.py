@@ -9,7 +9,6 @@ User Settings
 """
 CAM = CamName.Gucc
 STREAM_CVS2_OUT_TO_USER = True
-CVS2_RX_USES_LINUX = False
 
 """
 %%%%%%%%%%%%%%%%%%%%%
@@ -22,15 +21,14 @@ gst_out_command = None
 if CAM == CamName.Gucc:
     #pipeline for Gucc Cam: lin_vrx_1.0
     gst_in_command = "udpsrc port=8080 ! application/x-rtp, media=video, payload=26, encoding-name=JPEG, framerate=30/1 ! rtpjpegdepay ! jpegdec ! videoconvert ! appsink"
-    
+    print("Calibration check gstreamer command:\n", )
     if STREAM_CVS2_OUT_TO_USER == False:
         gst_out_command = "appsrc ! videoconvert ! x264enc tune=zerolatency bitrate=500 speed-preset=superfast ! rtph264pay ! multiudpsink clients=127.0.0.1:8081"
     else:
-        gst_out_command = "appsrc ! videoconvert ! x264enc tune=zerolatency bitrate=500 speed-preset=superfast ! rtph264pay ! multiudpsink clients=127.0.0.1:8081,172.17.255.9:8081"
+        gst_out_command = "appsrc ! videoconvert ! x264enc tune=zerolatency bitrate=500 speed-preset=superfast ! rtph264pay ! multiudpsink clients=127.0.0.1:8081,172.17.255.10:8081,172.17.255.9:8081"
         usr_rx_pipeline = None
-        if CVS2_RX_USES_LINUX == True:
-            usr_rx_pipeline = "gst-launch-1.0 udpsrc port=8081 ! application/x-rtp, encoding-name=H264, payload=96 ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! autovideosink"
-        print("Enter this pipeline on <172.17.255.9:8081> to see the cvs2 output:\n", usr_rx_pipeline)
+        usr_rx_pipeline = "gst-launch-1.0 udpsrc port=8081 ! application/x-rtp, encoding-name=H264, payload=96 ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! autovideosink"
+        print("Enter this pipeline on <172.17.255.9/10:8081> to see the cvs2 output:\n", usr_rx_pipeline)
 
 
 """

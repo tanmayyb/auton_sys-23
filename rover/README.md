@@ -42,7 +42,7 @@ CVS2:APPIN:
 ### Watch output stream (tbd)
 ```
 gst-launch-1.0 udpsrc port=8080 ! application/x-rtp, media=video, payload=26, encoding-name=JPEG, framerate=30/1 ! rtpjpegdepay ! jpegdec ! videoconvert ! autovideosink
-gst-launch-1.0 udpsrc port=8080 ! application/x-rtp, encoding-name=H264, payload=96 ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! autovideosink
+gst-launch-1.0 udpsrc port=8081 ! application/x-rtp, encoding-name=H264, payload=96 ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! autovideosink
 ```
 
 Windows Cam Streaming (tbd)
@@ -70,6 +70,7 @@ ros2 topic pub /searchwalk rover_utils/msg/SearchWalk "{coords:{ x: 43.6587021, 
 
 Cameras:
 ```
+v4l2-ctl --list-devices
 v4l2-ctl -d /dev/video0 --list-formats-ext      -to know format of a cam's stream
 
 ```

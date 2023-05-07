@@ -141,7 +141,7 @@ class SearchApproachActionManager(Node):
 
                 """
                 Send New Goals from goal queue
-                """"
+                """
                 goal = self.goal_list[self.gid]
                 print("sw: sending mW goal.... \nsw_gid: ", self.gid, "\nsw_goal: ", goal)
                 #self.get_logger().warning('sw: sending miniwalk goal...') #define goal here
@@ -184,7 +184,7 @@ class SearchApproachActionManager(Node):
                 self.searchwalk_goal_executor()
 
         if result.result == False:
-            self.running_search = False
+            self.running_search = True
             self.get_logger().warning("sw: miniwalk goal result=false")
         #if result==False, action could have been interrupted by cvs2
         #if result==False, action could have been interrupted by user

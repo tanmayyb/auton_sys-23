@@ -74,8 +74,8 @@ class CVSubSystem(Node):
         self.aruco_confimation_wait_time = 0.7 #seconds
         """Cvs2 Stream Settings"""
         self.process_cvs2_overlay_frame = True
-        self.show_cvs2_output_locally = True
-        self.show_cvs2_output_on_network = False
+        self.show_cvs2_output_locally = False
+        self.show_cvs2_output_on_network = True
 
         """
         LIBS
@@ -175,7 +175,7 @@ class CVSubSystem(Node):
         elif self.subsystem_state == SM_DICT['interrupt_searchwalk']:
             if self.searchwalk_interrupted: #if successfully interrupted
                 
-                # OPTIMIZATION, PERFOMANCE ANALYSIS:
+                # OPTIMIZATION, PERFOMANCE ANALYSIS: (Persistance of vision)
                 #   how to handle fast false positives at this stage if they exist? 
                 #   what if we interrupted but because it was a false positive 
                 #   our rover has stopped for nothing.

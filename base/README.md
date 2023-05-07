@@ -12,3 +12,11 @@ Run:
 ```
 python3 base/app.py
 ```
+
+```
+pip install pygame
+pip install tkintermapview
+```
+```
+sudo apt-get install python3-pil python3-pil.imagetk
+```
