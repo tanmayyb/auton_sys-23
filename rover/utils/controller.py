@@ -56,12 +56,14 @@ class controller():
         return int(control)
 
     def control(self, error):
-        control = self.do_pid(error)
+        pid = self.do_pid(error)
         boost = self.do_boost(error)
+
+        print("pid: ", pid,"\tboost: ", boost, "\tdrift: ", self.drift_pwm)
         
         """c2mm (controller to motor mapping) control_val->pwms"""
-        left_pwm = self.neutral_pwm - control + self.drift_pwm + boost
-        right_pwm = self.neutral_pwm + control + self.drift_pwm + boost
+        left_pwm = self.neutral_pwm - pid + self.drift_pwm + boost
+        right_pwm = self.neutral_pwm + pid + self.drift_pwm + boost
 
         return (left_pwm, right_pwm)
 
