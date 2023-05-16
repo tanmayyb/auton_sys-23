@@ -43,7 +43,7 @@ class aruco_localiser():
         cX = self.cX_array
         if(len(cX) != 0):
             self.center_of_mass = sum(cX)/len(cX)
-            unmapped_error = self.center_of_mass - self.map_dim_x/2
+            unmapped_error = self.center_of_mass - self.width/2
             mapped_error = self.map_error(unmapped_error)
             self.pid_error = mapped_error
             return mapped_error

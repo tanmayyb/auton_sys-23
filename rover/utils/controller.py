@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Main Auth: Tanmay B.
 
-    - Controller...
+    - Controller
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 
@@ -24,11 +24,11 @@ class controller():
         
 
     def init_pid_controller(self, PID_CONTROL_CONSTS, sample_time):
-        self.Kp = PID_CONTROL_CONSTS[0]
-        self.Ki = PID_CONTROL_CONSTS[1]
-        self.Kd = PID_CONTROL_CONSTS[2]
-        self.pid_out_lim = (-PID_CONTROL_CONSTS[3], 
-                             PID_CONTROL_CONSTS[3])
+        self.Kp = PID_CONTROL_CONSTS[0][0]
+        self.Ki = PID_CONTROL_CONSTS[0][1]
+        self.Kd = PID_CONTROL_CONSTS[0][2]
+        self.pid_out_lim = (-PID_CONTROL_CONSTS[1], 
+                             PID_CONTROL_CONSTS[1])
         self.sample_time = sample_time
         self.setpoint = 0.0 
         self.pid = PID(self.Kp, 
@@ -37,23 +37,38 @@ class controller():
                        self.setpoint, 
                        self.sample_time, 
                        self.pid_out_lim)
-        
+
+        self.pid_usr_dz = PID_CONTROL_CONSTS[2]
+
     def init_boost_controller(self, BOOST_CONTROL_CONST):        
         self.boost_rng = BOOST_CONTROL_CONST[0]      
         self.boost_peak = BOOST_CONTROL_CONST[1]   
         self.boost_usr_dz = BOOST_CONTROL_CONST[2]   
 
+    def do_pid(self, error):
+        control = self.pid(error)
+        
+        """deadzone"""
+        if self.pid_usr_dz !=0.0:
+            if (abs(error) < self.pid_usr_dz):
+                control = 0.0
+
+        return int(control)
+
     def control(self, error):
-        control = int(self.pid(error))
-        boost = self.boost_function(error)
+        pid = self.do_pid(error)
+        boost = self.do_boost(error)
+
+        print("pid: ", pid,"\tboost: ", boost, "\tdrift: ", self.drift_pwm)
+        
         """c2mm (controller to motor mapping) control_val->pwms"""
-        left_pwm = self.neutral_pwm - control + self.drift_pwm + boost
-        right_pwm = self.neutral_pwm + control + self.drift_pwm + boost
+        left_pwm = self.neutral_pwm - pid + self.drift_pwm + boost
+        right_pwm = self.neutral_pwm + pid + self.drift_pwm + boost
 
         return (left_pwm, right_pwm)
 
 
-    def boost_function(self, error_in_degs):
+    def do_boost(self, error_in_degs):
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         Developed by:   Kevin Tran
@@ -69,7 +84,7 @@ class controller():
         
         boost_pwm = 0.0
 
-        #Deadzone area
+        """deadzone"""
         if (error_in_degs == 0.0):
             boost_pwm = self.boost_peak
         elif (error_in_degs > 0.0 and error_in_degs < +self.boost_rng):
