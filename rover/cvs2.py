@@ -64,11 +64,6 @@ class CVSubSystem(Node):
 
 
         """
-        Cvs2 Gst Settings
-        """
-
-
-        """
         Cvs2 Settings
         """
         self.aruco_confimation_wait_time = 0.7 #seconds
@@ -168,6 +163,13 @@ class CVSubSystem(Node):
                 - interrupts 'action_manager'
             """
             if self.aruco_is_detected:
+                
+                # OPTIMIZATION, PERFOMANCE ANALYSIS:
+                #   how to handle fast false positives at this stage if they exist? 
+                #   what if we interrupted but because it was a false positive 
+                #   our rover has stopped for nothing.
+                #   will it affect the performance of our rover in the competition as a whole?
+                
                 self.register_aruco_detection_time()
                 self.interrupt_searchwalk() 
                 self.subsystem_state = SM_DICT['interrupt_searchwalk']
@@ -175,11 +177,6 @@ class CVSubSystem(Node):
         elif self.subsystem_state == SM_DICT['interrupt_searchwalk']:
             if self.searchwalk_interrupted: #if successfully interrupted
                 
-                # OPTIMIZATION, PERFOMANCE ANALYSIS:
-                #   how to handle fast false positives at this stage if they exist? 
-                #   what if we interrupted but because it was a false positive 
-                #   our rover has stopped for nothing.
-                #   will it affect the performance of our rover in the competition as a whole?
                 self.searchwalk_interruption_thread.join()  #reset searchwalk interruption thread
                 self.searchwalk_interruption_thread = None
                 self.subsystem_state = SM_DICT['confirm_aruco']
