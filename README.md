@@ -1,3 +1,9 @@
+
+```
+This branch does not have a stable CVS2. The CVS2 has trouble Approaching targets, filtering false positives, and getting cancelled by the client.
+The miniWalk and MultiWalk work fine.
+```
+
 <p align="center"> 
   <img src="https://github-readme-quotes.herokuapp.com/quote?quotesUrl=https://github.com/teamr3/public-quotes/blob/master/auton_sys-23/99threads.json">
 </p>
