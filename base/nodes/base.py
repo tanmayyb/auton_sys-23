@@ -93,8 +93,8 @@ class baseNode(Node):
 
     def minimal_walk_goal_result_callback(self, future):
         result = future.result().result
-        self.parent.print_result("minimal client", result)
-        self.parent.insert_in_scroll(result)
+        self.parent.scroll.print_result("minimal client", result)
+        self.parent.scroll.insert_in_scroll(result)
 
     def cancel_miniwalk_goal(self):
         """
@@ -117,7 +117,7 @@ class baseNode(Node):
         feedback = feedback_msg.feedback
         #self.get_logger().info('Received feedback: {0}'.format(feedback.partial_sequence))
         
-        self.parent.display_action_feedback("miniwalk_feedback", feedback, show_type = 1)
+        self.parent.scroll.display_action_feedback("miniwalk_feedback", feedback, show_type = 1)
 
     def do_teleop(self, lpwm, rpwm):
         msg = TankDriveMsg()
@@ -129,8 +129,8 @@ class baseNode(Node):
         x = msg.x
         y = msg.y
         z = msg.z
-        self.parent.update_rover_lla(x,y,z)
-        self.parent.update_rover_marker(x,y)
+        self.parent.actionConsole.update_rover_lla(x,y,z)
+        self.parent.map.update_rover_marker(x,y)
         # #print(x,y,z)
         pass
 

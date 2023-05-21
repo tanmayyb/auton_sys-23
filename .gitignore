@@ -7,6 +7,7 @@ base/base/__pycache__
 base/plugins/__pycache__
 base/settings/__pycache__
 base/nodes/__pycache__
+base/components/__pycache__
 
 base/plugins/teleop/Utils/__pycache__
 base/plugins/teleop/__pycache__

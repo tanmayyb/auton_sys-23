@@ -55,10 +55,10 @@ class teleop_processor(Thread):
         self.parent = parent
 
     def set_status_bar_controller_state(self, msg):
-        self.parent.set_status_bar_controller_state(msg)
+        self.parent.statusBar.set_status_bar_controller_state(msg)
     
     def status_bar_info_text(self, msg):
-        self.parent.set_status_bar_controller_info(msg)
+        self.parent.statusBar.set_status_bar_controller_info(msg)
     
     def run(self):
         """
@@ -88,7 +88,7 @@ class teleop_processor(Thread):
 
             else:
                 
-                self.parent.set_status_bar_controller_state("\tConnected")
+                self.parent.statusBar.set_status_bar_controller_state("\tConnected")
                 
                 # The strings to be sent
                 self.leftY: str = "0"
@@ -207,16 +207,16 @@ class teleop_processor(Thread):
                 }
                 self.leftY_, self.rightY_ = self.leftY, self.rightY
                 
-                self.parent.set_status_bar_speed_info(str(self.controllerTool.SPEED.speed()))
+                self.parent.statusBar.set_status_bar_speed_info(str(self.controllerTool.SPEED.speed()))
                 
                 if lastMsg != msg:
                     paren_controller_info_msg = f"  lpwm:{str(self.leftY_)}  rpwm: {str(self.rightY_)}"
-                    self.parent.set_status_bar_controller_info("\t"+paren_controller_info_msg)
+                    self.parent.statusBar.set_status_bar_controller_info("\t"+paren_controller_info_msg)
                     
                     msg = json.dumps(msg)
 
                     if self.do_teleop == True:
-                        self.parent.send_pwm_msg(int(self.leftY_), int(self.rightY_))
+                        self.parent.actionConsole.send_pwm_msg(int(self.leftY_), int(self.rightY_))
                     # only needs to print/send the message if there is a change
                     # sender.sendto(msg.encode(), (UDP_IP, UDP_PORT))
                     #print("\tData: " + msg)
