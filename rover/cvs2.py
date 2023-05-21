@@ -156,11 +156,20 @@ class CVSubSystem(Node):
         self.get_logger().info("cvs2 STOPPED!") 
 
     def process_data(self):
+        """
+        PROCESS DATA
+        This function does:
+            - processing of frame to detect and localise ARUCO markers
+            - calculates area of markers faces
+
+            - updates and calculates mean sum of signal windows/FP (False-Positive) Filters
+        """
         """detect and localise ARUCO markers"""
         ret, frame = self.stream.get_frame()
         # These functions have to occur in this sequence
         self.detector.do_aruco_marker_detection(frame)
         self.localiser.do_localisation()
+        #self.localiser.calculate_aruco_face_area()
 
         """update filter windows"""
         self.idle_aruco_confirm = self.idle_confirm_filter.update_and_get_activation(self.aruco_is_detected)
