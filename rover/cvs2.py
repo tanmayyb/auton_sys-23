@@ -22,7 +22,7 @@ from rclpy.executors import MultiThreadedExecutor
 
 from rover_utils.msg import TankDriveMsg
 
-from std_msgs.msg import Bool
+from std_msgs.msg import Empty, Bool
 from std_srvs.srv import Trigger
 
 from libs.streamer import streamer
@@ -100,12 +100,23 @@ class CVSubSystem(Node):
         """
         ROS2 INTERFACES
         """
+
+        """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        CVS2 INTERFACES
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        """
         self.set_cvs2_state_subscription = self.create_subscription(
             Bool,
             'set_cvs2_state',
             self.set_cvs2_state_callback,
             10)
 
+        """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        SEARCHWALK INTERFACES
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        """
         self.interrupt_searchwalk_service_client = self.create_client(
             Trigger, 
             'pause_searchwalk')
@@ -125,9 +136,28 @@ class CVSubSystem(Node):
             10)
         
         """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        USER INTERFACES
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        """
+        self.toggle_cvs2_state_subscription = self.create_subscription(
+            Empty,
+            'toggle_cvs2_state',
+            self.toggle_cvs2_state_callback,
+            10)
+        self.reset_sW_interruptor_subscription = self.create_subscription(
+            Empty,
+            'reset_cvs2_sW_interrupt',
+            self.reset_sW_interrupt,
+            10)
+
+
+        """
         https://stackoverflow.com/questions/61394756/how-to-use-opencv-videowriter-with-gstreamer
         """
         self.out_streamer = cv2.VideoWriter(gst_out_command,cv2.CAP_GSTREAMER,0, 20, self.frame_dims, True)
+        self.get_logger().warn("------------CVS2 CREATED------------") 
+
 
 
     def set_cvs2_state_callback(self, msg):
@@ -293,14 +323,18 @@ class CVSubSystem(Node):
             self.searchwalk_interruption_thread.start()
 
     def interrupt_searchwalk_service_thread(self):
+        """
+        https://stackoverflow.com/questions/18018033/how-to-stop-a-looping-thread-in-python
+        """
         self.get_logger().info("signal detected, attempting to interrupt searchwalk...")
 
-        while not self.interrupt_searchwalk_service_client.wait_for_service(timeout_sec=0.5):
+        while getattr(self.searchwalk_interruption_thread, "do_run", True) and (not self.interrupt_searchwalk_service_client.wait_for_service(timeout_sec=0.5)):
             self.get_logger().info('searchwalk interrupt service not available, trying again...')
-                
-        self.req = Trigger.Request()
-        future = self.interrupt_searchwalk_service_client.call_async(self.req)
-        future.add_done_callback(self.interrupt_searchwalk_service_callback)
+
+        if getattr(self.searchwalk_interruption_thread, "do_run", True):
+            self.req = Trigger.Request()
+            future = self.interrupt_searchwalk_service_client.call_async(self.req)
+            future.add_done_callback(self.interrupt_searchwalk_service_callback)
 
     def interrupt_searchwalk_service_callback(self, future):
         self.searchwalk_interrupted = True
@@ -345,6 +379,23 @@ class CVSubSystem(Node):
         self.send_cv_error_pub.publish(msg)
         print("[approach_subroutine]: approach_error:\t", error, "[deg]")
 
+
+    """
+    USEFUL USER INTERFACES
+    """
+    def toggle_cvs2_state_callback(self, msg):
+        self.get_logger().warn("cvs2 state toggle received") 
+        if self.main_thread is None:
+            self.get_logger().warn("starting cvs2... ") 
+            self.start_subsystem_thread()
+        else:
+            self.get_logger().warn("stopping cvs2... ") 
+            self.stop_subsystem_thread()
+
+    def reset_sW_interrupt(self, msg):
+        self.get_logger().warn("request to stop cvs2 sW interrupt received, setting to idle... ") 
+        self.searchwalk_interruption_thread.do_run = False
+        self.subsystem_state == SM_DICT['idle_scan']
 
 
 def main(args=None):

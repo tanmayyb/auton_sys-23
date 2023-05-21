@@ -7,7 +7,6 @@ class streamer():
         self.cap = self.start_stream()
 
     def start_stream(self):
-        print("\n[INFO] starting gst pipeline with command:\n"+gst_in_command+"\n")
         cap = cv2.VideoCapture(gst_in_command, cv2.CAP_GSTREAMER)
         return cap
 

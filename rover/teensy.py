@@ -2,7 +2,7 @@ import rclpy, socket
 from rclpy.node import Node
 
 from rover_utils.msg import TankDriveMsg
-from std_msgs.msg import Empty
+from std_msgs.msg import Empty, Int64
 
 class Teensy(Node):
     def __init__(self):
@@ -13,12 +13,16 @@ class Teensy(Node):
         """
         self.UDP_IP = "172.16.10.2"  # Teensy's address
         self.UDP_PORT = 8080  # port
-        self.default_msg = 'D_0_128_0_128_0_0_0_0_0_0_0_0_0_0_0_0_128_128_0_0_0'
         self.teensy = 0
+        """
+        Default Teensy Commands
+        """
+        self.default_drive_msg = 'D_0_128_0_128_0_0_0_0_0_0_0_0_0_0_0_0_128_128_0_0_0'
+        self.default_led_msg = 'S_0'
 
         try:
             self.teensy = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            self.teensy.sendto(self.default_msg.encode(), (  self.UDP_IP, 
+            self.teensy.sendto(self.default_drive_msg.encode(), (  self.UDP_IP, 
                                                         self.UDP_PORT))
             #print("teensy success")
         except:
@@ -38,6 +42,12 @@ class Teensy(Node):
             TankDriveMsg,
             'drive_msg',
             self.drive_msg_sub_callback,
+            10)
+
+        self.led_msg_sub = self.create_subscription(
+            Int64,
+            'led_msg',
+            self.led_msg_sub_callback,
             10)
 
         self.e_stop_sub = self.create_subscription(
@@ -60,11 +70,16 @@ class Teensy(Node):
         """
         timer_period  = 0.2
         self.create_timer(timer_period, self.timer_callback)
+    
 
+    """Msg Interface Callbacks"""
     def drive_msg_sub_callback(self, msg):
         if self.drive_enabled:
-            self.send_to_teensy(msg.lpwm, msg.rpwm)
+            self.send_to_drive(msg.lpwm, msg.rpwm)
             self.current_message = msg
+
+    def led_msg_sub_callback(self, msg):
+        self.send_to_led(msg.data)
 
     def e_stop_callback(self, msg):
         self.drive_enabled = False
@@ -78,7 +93,7 @@ class Teensy(Node):
         if self.drive_enabled:
             print("LPWM: ", self.current_message.lpwm, "\tRPWM: ", self.current_message.rpwm,  )
 
-    def send_to_teensy(self, lpwm, rpwm):
+    def send_to_drive(self, lpwm, rpwm):
         # convert c2mm to string
         try:
             left_pwm = str(int(lpwm)) 
@@ -88,6 +103,10 @@ class Teensy(Node):
             right_pwm = str(127)
         #compile string and send
         msg = 'D_0_'+left_pwm+'_0_'+right_pwm+'_0_0_0_0_0_0_0_0_0_0_0_0_128_128_0_0_0'
+        self.teensy.sendto(msg.encode(), (self.UDP_IP, self.UDP_PORT))
+
+    def send_to_led(self,msg):
+        msg = 'S_'+str(msg)
         self.teensy.sendto(msg.encode(), (self.UDP_IP, self.UDP_PORT))
 
     def def_ros2_tank_drive_msg(self):
