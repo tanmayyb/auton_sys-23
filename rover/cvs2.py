@@ -30,8 +30,12 @@ from libs.detector import aruco_detector
 from libs.localiser import aruco_localiser
 from libs.overlay import overlay_on
 
+from utils.fp_filter import mean_window
+
 from settings.pipeline import *
 from settings.states import SM_DICT, SM_INFO
+from settings.fp_filter import *
+
 
 from std_msgs.msg import Bool, Float64
 
@@ -64,14 +68,16 @@ class CVSubSystem(Node):
 
 
         """
-        Cvs2 Gst Settings
-        """
-
-
-        """
         Cvs2 Settings
         """
         self.aruco_confimation_wait_time = 0.7 #seconds
+        """Cvs2 FP Filters"""
+        self.idle_confirm_filter = mean_window(IDLE_WINDOW_SIZE)
+        self.active_confirm_filter = mean_window(ARUCO_COFIRM_WINDOW_SIZE)
+        self.reset_confirm_filter = mean_window(RESET_WINDOW_SIZE)
+        self.idle_aruco_confirm = 0.0 
+        self.active_confirm = 0.0
+        self.reset_confirm = 0.0
         """Cvs2 Stream Settings"""
         self.process_cvs2_overlay_frame = True
         self.show_cvs2_output_locally = False
@@ -155,6 +161,12 @@ class CVSubSystem(Node):
         # These functions have to occur in this sequence
         self.detector.do_aruco_marker_detection(frame)
         self.localiser.do_localisation()
+
+        """update filter windows"""
+        self.idle_aruco_confirm = self.idle_confirm_filter.update_and_get_activation(self.aruco_is_detected)
+        self.active_confirm = self.active_confirm_filter.update_and_get_activation(self.aruco_is_detected)
+        self.reset_confirm = self.reset_confirm_filter.update_and_get_activation(self.aruco_is_detected)
+
         return frame
 
     def run_state_machine(self):
@@ -167,19 +179,15 @@ class CVSubSystem(Node):
                 - checks for aruco detections
                 - interrupts 'action_manager'
             """
-            if self.aruco_is_detected:
-                self.register_aruco_detection_time()
+            if self.idle_aruco_confirm > IDLE_CONFIRM_THRESHOLD:
+                #Rover saw the Tag for a brief second
+                               
+                self.active_confirm_filter.reg_time(time.time())
                 self.interrupt_searchwalk() 
                 self.subsystem_state = SM_DICT['interrupt_searchwalk']
 
         elif self.subsystem_state == SM_DICT['interrupt_searchwalk']:
             if self.searchwalk_interrupted: #if successfully interrupted
-                
-                # OPTIMIZATION, PERFOMANCE ANALYSIS: (Persistance of vision)
-                #   how to handle fast false positives at this stage if they exist? 
-                #   what if we interrupted but because it was a false positive 
-                #   our rover has stopped for nothing.
-                #   will it affect the performance of our rover in the competition as a whole?
                 self.searchwalk_interruption_thread.join()  #reset searchwalk interruption thread
                 self.searchwalk_interruption_thread = None
                 self.subsystem_state = SM_DICT['confirm_aruco']
@@ -189,18 +197,21 @@ class CVSubSystem(Node):
             CONFIRM ARUCO
                 - check for false positives
             """
-            #TODO:  envision more robust false positive detection system
-            #       maybe add a threshold/buildup function with timeouts to confirm false positives
-
-            if self.aruco_is_detected:
-                if self.aruco_signal_confirmed():
+            if self.active_confirm > ARUCO_COFIRM_CONFIRM_THRESHOLD:
+                if self.active_confirm_filter.is_timeout(time.time(), ARUCO_COFIRM_TIMEOUT):
                     self.get_logger().warn("Triggering approach behaviour...")
                     self.subsystem_state = SM_DICT['approach']
             else: 
-                #false positive
-                #TODO:  maybe add a timeout/model for robust false positive
                 self.get_logger().warn("false positive detected, resetting CVS2-SM and sW...")
                 self.subsystem_state = SM_DICT['reset']
+
+        elif self.subsystem_state == SM_DICT['approach']: #approach logic
+            if self.active_confirm >= ARUCO_COFIRM_CONFIRM_THRESHOLD:
+                self.publish_approach_error()
+            else:
+                self.get_logger().warn("aruco not detected, resetting to idle scan...")
+                self.subsystem_state = SM_DICT['reset']
+                self.reset_confirm_filter.reg_time(time.time())
 
         elif self.subsystem_state == SM_DICT['reset']:
             """
@@ -208,23 +219,18 @@ class CVSubSystem(Node):
                 - resets cvs2 variables
                 - resumes searchwalk 
             """
-            if self.searchwalk_interrupted:
-                if self.searchwalk_resume_thread is None:
-                    self.resume_searchwalk()
-            else:
-                if self.searchwalk_resume_thread is not None:
-                    self.searchwalk_resume_thread.join()
-                    self.searchwalk_resume_thread = None
-                self.subsystem_state = SM_DICT['idle_scan']
-
-            self.reset_cvs2()   #vague function
-
-        elif self.subsystem_state == SM_DICT['approach']: #approach logic
-            if self.aruco_is_detected:
-                self.publish_approach_error()
-            else:
-                self.get_logger().warn("aruco not detected, resetting to idle scan...")
-                self.subsystem_state = SM_DICT['reset']
+            if self.reset_confirm < RESET_CONFIRM_THRESHOLD:
+                if self.searchwalk_interrupted:
+                    if self.searchwalk_resume_thread is None:
+                        self.resume_searchwalk()
+                else:
+                    if self.searchwalk_resume_thread is not None:
+                        self.searchwalk_resume_thread.join()
+                        self.searchwalk_resume_thread = None
+                    self.subsystem_state = SM_DICT['idle_scan']
+                self.reset_cvs2()   #vague function
+            elif self.reset_confirm_filter.is_timeout(time.time(), RESET_CONFIRM_TIMEOUT):
+                self.subsystem_state = SM_DICT['confirm_aruco']
 
     def finalize_iteration(self, frame):
         """
@@ -325,18 +331,8 @@ class CVSubSystem(Node):
 
 
     """
-    Dectection Confirmation
+    PUBLISHING MESSAGES
     """
-    def aruco_signal_confirmed(self):
-        detection_time = time.time() - self.aruco_detection_timestamp
-        if detection_time >= self.aruco_confimation_wait_time:
-            return True
-        return False
-
-    def register_aruco_detection_time(self):
-        self.aruco_detection_timestamp = time.time() #register time
-
-
     def pub_aruco_detection_state_msg(self):
         msg =  Bool()
         msg.data = self.aruco_is_detected
