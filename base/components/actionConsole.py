@@ -197,17 +197,19 @@ class actionConsole():
 
     def cancel_searchwalk(self):
         self.parent.base_node.cancel_searchwalk()
+        self.parent.base.set_rover_state(0)
 
     def do_teleop_button_4(self):
         #stop/standby everything
-        self.parent.teleop.do_teleop_func(True)    #fix message type
+        self.parent.teleop.do_teleop_func(True)
+        self.parent.base_node.set_rover_state(int(3))
 
     def stop_standby_button_3(self):
-        #self.base_node.send_goal(10)
-        self.parent.teleop.do_teleop_func(False)    #fix message type
+        self.parent.base_node.set_rover_state(0)
+        self.parent.teleop.do_teleop_func(False)
         self.parent.base_node.do_teleop(127,127)
+        #add cancel conditions here [important]
         self.parent.base_node.cancel_miniwalk_goal()
-
 
 
     def miniwalk_action_button_1(self):

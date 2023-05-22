@@ -2,7 +2,7 @@ from pickle import FALSE, TRUE
 from rclpy.node import Node
 from rclpy.action import ActionClient
 
-from std_msgs.msg import Bool, Empty
+from std_msgs.msg import Bool, Empty, Int64
 from geometry_msgs.msg import Point
 
 from rover_utils.action import MinimalWalk
@@ -59,6 +59,11 @@ class baseNode(Node):
         self.enable_drive_pub = self.create_publisher(
             Empty,
             'enable_drive',
+            10)
+        
+        self.set_rover_state_pub = self.create_publisher(
+            Int64,
+            'set_rover_state',
             10)
 
     def send_goal_miniwalk(self,tlat,tlon, gf_rad):
@@ -180,3 +185,9 @@ class baseNode(Node):
         msg = Empty()
         self.enable_drive_pub.publish(msg)
         self.get_logger().warn("drive ENABLE triggered!")
+
+    def set_rover_state(self, state):
+        msg = Int64()
+        msg.data = state
+        self.set_rover_state_pub.publish(msg)
+
