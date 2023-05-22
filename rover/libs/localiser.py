@@ -1,5 +1,5 @@
 import cv2
-
+import utils.max_segment 
 
 class aruco_localiser():
     def __init__(self, detector, dims=None, fov=None):
@@ -83,3 +83,11 @@ class aruco_localiser():
         cX = int((topLeft[0] + bottomRight[0])/2.0)
         cY = int((topLeft[1] + bottomRight[1])/2.0)
         return cX, cY
+    
+    def compute_aruco_dist_measure(self):
+        """
+        find the magnitude of the largest segment (edge/diagonal)
+        """ 
+        #find max seg given list of points
+        #scale max seg acc. to some ratio
+        #if greater than required ratio flag in cvs2 (ask to stop if in single approach mode)
