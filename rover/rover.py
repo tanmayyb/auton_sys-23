@@ -18,10 +18,11 @@ from rclpy.executors import MultiThreadedExecutor
 from rover_utils.action import MinimalWalk
 from rover_utils.msg import TankDriveMsg
 from geometry_msgs.msg import Point
-from std_msgs.msg import Float64
+from std_msgs.msg import Empty, Float64, Int64
 
 from libs.controller import controller
 from settings.pid import *
+from settings.rover import *
 
 from utils.navigation_vector import calculate_navigation_vector  
 from utils.navigation_error import calculate_heading_error
@@ -80,22 +81,50 @@ class Rover(Node):
             goal_callback=self.miniwalk_goal_callback,
             cancel_callback=self.miniwalk_cancel_callback,)
 
-        self.teensy_pub = self.create_publisher(
+        """Teensy Node Interfaces"""
+        self.teensy_drive_pub = self.create_publisher(
             TankDriveMsg,
             'drive_msg',
             10)
 
+        self.teensy_led_pub = self.create_publisher(
+            Int64,
+            'led_msg',
+            10)
+        """Sensor Module Interface"""
         self.vectornav_sub = self.create_subscription(
             Point,
             'rover_pose_msg',
             self.update_sensor_data_callback,
             10)
-        
+        """CVS2 Interface"""
         self.cvs2_error_sub = self.create_subscription(
             Float64,
             'cvs2_error_msg',
             self.approach_drive_callback,
             10)
+
+        """
+        State Variable
+        """
+        self.state = int(0)
+        self.state_publisher = self.create_publisher(
+            Int64, 
+            'rover_state', 
+            10)
+        self.state_pub_timer = self.create_timer(
+            STATE_PUB_TIMER_PERIOD, 
+            self.state_pub_timer_callback)
+        
+        """
+        DEBUGGING/DEVELOPMENT INTERFACES
+        """
+        # self.launch_subroutine_sub = self.create_subscription(
+        #     Empty,
+        #     'launch_green_flash',
+        #     self.green_flash_callback,
+        #     10)
+
 
     """
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -151,7 +180,7 @@ class Rover(Node):
             if goal_handle.is_cancel_requested:
                 goal_handle.canceled()
                 self.get_logger().info('Goal canceled')
-                self.send_to_teensy(self.neutral_pwms)               #set to neutral
+                self.send_to_teensy_drive(self.neutral_pwms)               #set to neutral
                 return MinimalWalk.Result()
 
             """logic of mini walk"""
@@ -160,7 +189,7 @@ class Rover(Node):
             c2mm = self.miniwalk_pid.control(error)
         
             """send signal to teensy"""
-            self.send_to_teensy(c2mm)
+            self.send_to_teensy_drive(c2mm)
             
             """create feedback"""
             feedback_msg.d2t = d2t
@@ -190,7 +219,7 @@ class Rover(Node):
     def approach_drive_callback(self, msg):
         cvs2_error = msg.data
         c2mm = self.approach_pid.control(cvs2_error)
-        self.send_to_teensy(c2mm)
+        self.send_to_teensy_drive(c2mm)
     
     """
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -198,15 +227,52 @@ class Rover(Node):
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     """
     def set_rover_to_neutral(self):
-        self.send_to_teensy(self.neutral_pwms)
+        self.send_to_teensy_drive(self.neutral_pwms)
 
-    def send_to_teensy(self, c2mm):
+    def send_to_teensy_drive(self, c2mm):
         msg = TankDriveMsg()
         msg.lpwm = c2mm[0]
         msg.rpwm = c2mm[1]
-        self.teensy_pub.publish(msg)
-        """leds have to be programmed"""
+        self.teensy_drive_pub.publish(msg)
 
+    def send_to_teensy_led(self, state):
+        msg = Int64()
+        msg.data = int(state)
+        self.teensy_led_pub.publish(msg)
+
+    """
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    state callback
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    """
+
+    def state_pub_timer_callback(self):
+        msg = Int64()
+        msg.data = self.state
+        self.state_publisher.publish(msg)
+
+    """
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    subroutines
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    """
+
+    # def green_flash_callback(self, msg):
+    #     start_time = time.time()
+    #     self.green_flash_subroutine(start_time)
+        
+    def green_flash_subroutine(self, start_time):
+        print("Green Flash Subroutine Triggered, looping..", time.time())
+        msg = Int64()
+        while(time.time()-start_time<FLASH_LED_GREEN_TIMEOUT):
+            msg.data = GREEN_LED_CODE
+            self.teensy_led_pub.publish(msg)
+            time.sleep(FLASH_LED_GREEN_ON_DURATION)
+            
+            msg.data = OFF_LED_CODE
+            self.teensy_led_pub.publish(msg)
+            time.sleep(FLASH_LED_GREEN_OFF_DURATION)
+        if self.verbose: print("Green Flash Subroutine completed")        
 
 
 def main(args=None):
