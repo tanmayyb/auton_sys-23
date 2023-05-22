@@ -46,6 +46,11 @@ class baseNode(Node):
             'stop_searchwalk',
             10)
         
+        self.set_cvs2_state_pub = self.create_publisher(
+            Bool,
+            'set_cvs2_state',
+            10)
+        
         self.e_stop_pub = self.create_publisher(
             Empty,
             'e_stop',
@@ -155,9 +160,16 @@ class baseNode(Node):
         self.do_searchwalk_pub.publish(searchwalk_msg)
 
     def cancel_searchwalk(self):
+        #cancel Searchwalk on Action Manager
         msg = Bool()
         msg.data = True
         self.cancel_searchwalk_pub.publish(msg)
+
+        #shut down CVS2
+        msg = Bool()
+        msg.data = False
+        self.set_cvs2_state_pub.publish(msg)
+        
 
     def trigger_e_stop(self):
         msg = Empty()
