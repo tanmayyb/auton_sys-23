@@ -2,7 +2,7 @@ from pickle import FALSE, TRUE
 from rclpy.node import Node
 from rclpy.action import ActionClient
 
-from std_msgs.msg import Bool, Empty
+from std_msgs.msg import Bool, Empty, Int64
 from geometry_msgs.msg import Point
 
 from rover_utils.action import MinimalWalk
@@ -46,6 +46,11 @@ class baseNode(Node):
             'stop_searchwalk',
             10)
         
+        self.set_cvs2_state_pub = self.create_publisher(
+            Bool,
+            'set_cvs2_state',
+            10)
+        
         self.e_stop_pub = self.create_publisher(
             Empty,
             'e_stop',
@@ -54,6 +59,11 @@ class baseNode(Node):
         self.enable_drive_pub = self.create_publisher(
             Empty,
             'enable_drive',
+            10)
+        
+        self.set_rover_state_pub = self.create_publisher(
+            Int64,
+            'set_rover_state',
             10)
 
     def send_goal_miniwalk(self,tlat,tlon, gf_rad):
@@ -155,9 +165,16 @@ class baseNode(Node):
         self.do_searchwalk_pub.publish(searchwalk_msg)
 
     def cancel_searchwalk(self):
+        #cancel Searchwalk on Action Manager
         msg = Bool()
         msg.data = True
         self.cancel_searchwalk_pub.publish(msg)
+
+        #shut down CVS2
+        msg = Bool()
+        msg.data = False
+        self.set_cvs2_state_pub.publish(msg)
+        
 
     def trigger_e_stop(self):
         msg = Empty()
@@ -168,3 +185,9 @@ class baseNode(Node):
         msg = Empty()
         self.enable_drive_pub.publish(msg)
         self.get_logger().warn("drive ENABLE triggered!")
+
+    def set_rover_state(self, state):
+        msg = Int64()
+        msg.data = state
+        self.set_rover_state_pub.publish(msg)
+
