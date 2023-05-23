@@ -197,7 +197,7 @@ class actionConsole():
 
     def cancel_searchwalk(self):
         self.parent.base_node.cancel_searchwalk()
-        self.parent.base.set_rover_state(0)
+        self.parent.base_node.set_rover_state(0)
 
     def do_teleop_button_4(self):
         #stop/standby everything

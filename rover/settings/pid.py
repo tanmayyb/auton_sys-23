@@ -7,7 +7,7 @@ Turnings for Miniwalk and Approach Controllers
 APPROACH_PID_CONTROL_CONSTS = [[0.3, 0.0, 0.1], 
                                 15, 5.0]
 APPROACH_AUX_CONTROL_CONSTS = [0, 
-                               [40.0, 35.0, 0.0]] 
+                               [40.0, 20.0, 0.0]] 
 
 
 MINIWALK_PID_CONTROL_CONSTS = [[0.6,  0.0, 0.1], 

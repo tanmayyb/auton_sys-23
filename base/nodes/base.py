@@ -65,6 +65,21 @@ class baseNode(Node):
             Int64,
             'set_rover_state',
             10)
+        
+        self.set_rover_state_sub = self.create_subscription(
+            Int64,
+            'rover_state',
+            self.set_rover_state_callback,
+            10)
+
+        self.node_test_timer = self.create_timer(
+            3.0,
+            self.node_test_callback)
+
+        self.node_test_publisher = self.create_publisher(
+            Int64,
+            'node_test',
+            10)
 
     def send_goal_miniwalk(self,tlat,tlon, gf_rad):
         
@@ -190,4 +205,15 @@ class baseNode(Node):
         msg = Int64()
         msg.data = state
         self.set_rover_state_pub.publish(msg)
+    
+    def set_rover_state_callback(self, msg):
+       self.state = msg.data
+       self.parent.topBar.set_state(self.parent.state_array[self.state])
+    
+    def node_test_callback(self):
+       rover_node_list = []
+       self.rover_node_alive = self.get_subscriptions_info_by_topic('node_test')
+       for nodes in self.rover_node_alive:
+           rover_node_list.append(str(nodes.node_name))
+       self.parent.topBar.set_led_status(rover_node_list)
 

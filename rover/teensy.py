@@ -62,6 +62,12 @@ class Teensy(Node):
             self.enable_drive_callback,
             10)
         
+        self.node_sub = self.create_subscription(
+            Int64,
+            'node_test',
+            self.node_callback,
+            10)
+        
         print("teensy node online!")
         print("drive_enabled state: ", self.drive_enabled)
 
@@ -116,6 +122,9 @@ class Teensy(Node):
         msg.lpwm = 127
         msg.rpwm = 127
         return msg
+    
+    def node_callback(self, msg):
+        None
 
 def main(args=None):
     rclpy.init(args=args)

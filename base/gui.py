@@ -28,7 +28,7 @@ class gui(Thread):
 
         self.window = window
 
-        self.state_array = ["Initializing","Standby/Idle","Moving","Manual"]
+        self.state_array = ['IDLE/STANDBY', 'MINIWALKING','', 'TELEOP']
 
         self.setup_window()
         self.draw_gui()

@@ -5,6 +5,7 @@ from rclpy.timer import Timer
 
 from rclpy.executors import MultiThreadedExecutor
 from geometry_msgs.msg import Point
+from std_msgs.msg import Int64
 
 from vnpy import *
 import time, os
@@ -47,6 +48,12 @@ class SensorPub(Node):
 
         timer_period  = 0.010
         self.create_timer(timer_period, self.timer_callback)
+        
+        self.node_sub = self.create_subscription(
+            Int64,
+            'node_test',
+            self.node_callback,
+            10)
 
         
     def timer_callback(self):
@@ -82,6 +89,9 @@ class SensorPub(Node):
     
     def gps_compass(self):
         return self.vn.read_gps_compass_estimated_baseline()
+    
+    def node_callback(self, msg):
+        None
 
 
 def main(args=None):
