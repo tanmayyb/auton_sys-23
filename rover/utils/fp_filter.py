@@ -39,7 +39,10 @@ class mean_window():
         self.registered_time = time
 
     def is_timeout(self, time, threshold):
-        detection_time = time - self.registered_time
-        if detection_time >= threshold:
-            return True
-        return False
+        if self.registered_time is not None:
+            detection_time = time - self.registered_time
+            if detection_time >= threshold:
+                return True
+            return False
+        else:
+            return False

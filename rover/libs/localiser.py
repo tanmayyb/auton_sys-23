@@ -42,8 +42,8 @@ class aruco_localiser():
     def calculate_approach_error(self):
         cX = self.cX_array
         if(len(cX) != 0):
-            self.center_of_mass = sum(cX)/len(cX)
-            unmapped_error = self.center_of_mass - self.width/2
+            self.center_of_mass = float(sum(cX))/float(len(cX))
+            unmapped_error = self.center_of_mass - self.width/2.0
             mapped_error = self.map_error(unmapped_error)
             self.pid_error = mapped_error
             return mapped_error

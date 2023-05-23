@@ -79,6 +79,10 @@ class CVSubSystem(Node):
         self.idle_aruco_confirm = 0.0 
         self.active_confirm = 0.0
         self.reset_confirm = 0.0
+        self.idle_confirm_filter.reg_time(None)
+        self.active_confirm_filter.reg_time(None)
+        self.reset_confirm_filter.reg_time(None)
+        
         """Cvs2 Stream Settings"""
         self.process_cvs2_overlay_frame = True
         self.show_cvs2_output_locally = False
@@ -261,8 +265,8 @@ class CVSubSystem(Node):
                 self.publish_approach_error()
             else:
                 self.get_logger().warn("aruco not detected, resetting to idle scan...")
-                self.subsystem_state = SM_DICT['reset']
                 self.reset_confirm_filter.reg_time(time.time())
+                self.subsystem_state = SM_DICT['reset']
 
         elif self.subsystem_state == SM_DICT['reset']:
             """
@@ -270,17 +274,17 @@ class CVSubSystem(Node):
                 - resets cvs2 variables
                 - resumes searchwalk 
             """
-            if self.reset_confirm < RESET_CONFIRM_THRESHOLD:
-                if self.searchwalk_interrupted:
-                    if self.searchwalk_resume_thread is None:
-                        self.resume_searchwalk()
-                else:
-                    if self.searchwalk_resume_thread is not None:
-                        self.searchwalk_resume_thread.join()
-                        self.searchwalk_resume_thread = None
-                    self.subsystem_state = SM_DICT['idle_scan']
-                self.reset_cvs2()   #vague function
-            elif self.reset_confirm_filter.is_timeout(time.time(), RESET_CONFIRM_TIMEOUT):
+            #if self.reset_confirm < RESET_CONFIRM_THRESHOLD:
+            if self.searchwalk_interrupted:
+                if self.searchwalk_resume_thread is None:
+                    self.resume_searchwalk()
+            else:
+                if self.searchwalk_resume_thread is not None:
+                    self.searchwalk_resume_thread.join()
+                    self.searchwalk_resume_thread = None
+                self.subsystem_state = SM_DICT['idle_scan']
+            self.reset_cvs2()   
+            if self.reset_confirm_filter.is_timeout(time.time(), RESET_CONFIRM_TIMEOUT):
                 self.subsystem_state = SM_DICT['confirm_aruco']
 
     def finalize_iteration(self, frame):
@@ -397,10 +401,11 @@ class CVSubSystem(Node):
 
     def publish_approach_error(self):
         error = self.localiser.calculate_approach_error()
-        msg = Float64()
-        msg.data = error
-        self.send_cv_error_pub.publish(msg)
-        print("[approach_subroutine]: approach_error:\t", error, "[deg]")
+        if error is not  None:
+            msg = Float64()
+            msg.data = float(error)
+            self.send_cv_error_pub.publish(msg)
+            print("[approach_subroutine]: approach_error:\t", error, "[deg]")
 
 
     """

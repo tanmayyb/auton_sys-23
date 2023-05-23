@@ -77,6 +77,8 @@ class Teensy(Node):
         if self.drive_enabled:
             self.send_to_drive(msg.lpwm, msg.rpwm)
             self.current_message = msg
+        else:
+            self.send_to_drive(127, 127)
 
     def led_msg_sub_callback(self, msg):
         self.send_to_led(msg.data)

@@ -9,7 +9,7 @@ User Settings
 """
 CAM = CamName.Gucc
 STREAM_CVS2_OUT_TO_USER = True
-SHOW_CALIBRATION_PIPELINE = False
+SHOW_CALIBRATION_PIPELINE = True
 """
 %%%%%%%%%%%%%%%%%%%%%
 Pipeline TX/RX Logics 
@@ -23,9 +23,11 @@ print("\nCam Chosen:", CAM)
 
 if CAM == CamName.Gucc:
     #pipeline for Gucc Cam: lin_vrx_1.0    
-        
-    usr_tx_pipeline = "gst-launch-1.0 -vvv v4l2src device=/dev/video0 ! 'image/jpeg, width=1280, height=720, framerate=60/1' ! jpegparse ! rtpjpegpay ! multiudpsink clients=127.0.0.1:8080"
-    cvs2_calibration_pipeline = "gst-launch-1.0 udpsrc port=8080 ! application/x-rtp, media=video, payload=26, encoding-name=JPEG, framerate=30/1 ! rtpjpegdepay ! jpegdec ! videoconvert ! autovideosink"
+    if SHOW_CALIBRATION_PIPELINE: 
+        usr_tx_pipeline = "gst-launch-1.0 -vvv v4l2src device=/dev/video0 ! 'image/jpeg, width=1280, height=720, framerate=60/1' ! jpegparse ! rtpjpegpay ! multiudpsink clients=127.0.0.1:8080,172.17.255.9:8080"
+        cvs2_calibration_pipeline = "gst-launch-1.0 udpsrc port=8080 ! application/x-rtp, media=video, payload=26, encoding-name=JPEG, framerate=30/1 ! rtpjpegdepay ! jpegdec ! videoconvert ! autovideosink"
+    else: 
+        usr_tx_pipeline = "gst-launch-1.0 -vvv v4l2src device=/dev/video0 ! 'image/jpeg, width=1280, height=720, framerate=60/1' ! jpegparse ! rtpjpegpay ! multiudpsink clients=127.0.0.1:8080"        
 
     print("\nUSR TRIGGERED I/O PIPELINES:")
     print("INPUT CVS2 PIPELINE [USER INITIATED]:\n", usr_tx_pipeline )
