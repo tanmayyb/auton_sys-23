@@ -23,6 +23,7 @@ from std_msgs.msg import Empty, Float64, Int64
 from libs.controller import controller
 from settings.pid import *
 from settings.rover import *
+from settings.states import RVR_DICT, RVR_INFO
 
 from utils.navigation_vector import calculate_navigation_vector  
 from utils.navigation_error import calculate_heading_error
@@ -37,11 +38,13 @@ class Rover(Node):
 
 
         """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         miniWalk Navigation Variables
         ab2t:       Absolute Bearing to Target
         d2t:        Distance to Target
         arb:        Absolute Rover Bearing
         rcrds:      Rover Coordinates
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
         self.ab2t = None
         self.d2t = None
@@ -70,7 +73,9 @@ class Rover(Node):
         
     
         """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         ROS 2 Interfaces
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
         self.min_walk_act_server = ActionServer(
             self,
@@ -86,7 +91,6 @@ class Rover(Node):
             TankDriveMsg,
             'drive_msg',
             10)
-
         self.teensy_led_pub = self.create_publisher(
             Int64,
             'led_msg',
@@ -105,9 +109,11 @@ class Rover(Node):
             10)
 
         """
-        State Variable
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        State Variables
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
-        self.state = int(0)
+        self.state = RVR_DICT['idle/standby']
         self.state_publisher = self.create_publisher(
             Int64, 
             'rover_state', 
@@ -115,16 +121,22 @@ class Rover(Node):
         self.state_pub_timer = self.create_timer(
             STATE_PUB_TIMER_PERIOD, 
             self.state_pub_timer_callback)
+        self.set_rover_state_sub = self.create_subscription(
+            Int64,
+            'set_rover_state',
+            self.set_rover_state_callback,
+            10)
         
         """
         DEBUGGING/DEVELOPMENT INTERFACES
         """
-        # self.launch_subroutine_sub = self.create_subscription(
-        #     Empty,
-        #     'launch_green_flash',
-        #     self.green_flash_callback,
-        #     10)
-
+        """
+        self.launch_subroutine_sub = self.create_subscription(
+            Empty,
+            'launch_green_flash',
+            self.green_flash_callback,
+            10)
+        """
 
     """
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -160,6 +172,8 @@ class Rover(Node):
 
     async def miniwalk_exec_callback(self, goal_handle):
         print("received goal request", goal_handle.request)
+
+        self.set_rover_state(RVR_DICT['miniwalk'])
         
         coords = goal_handle.request.coords
         tcrds = (coords.x, coords.y)        #get coordinates from msg
@@ -199,16 +213,13 @@ class Rover(Node):
             if d2t<geofence:
                 self.miniwalk_loop = False
 
-        #if cvs2 interrupts and no false alarm detected stop miniwalk and execute approach behaviour
-        #if cvs2 false alarm, then continue on as you were
-
         goal_handle.succeed()
         self.set_rover_to_neutral()
         result = MinimalWalk.Result()
         result.result = True
 
         self.get_logger().info('Goal Finished Executing!...')
-
+        #dont flash green at every waypoint
         return result
     
     """
@@ -263,17 +274,34 @@ class Rover(Node):
         
     def green_flash_subroutine(self, start_time):
         print("Green Flash Subroutine Triggered, looping..", time.time())
-        msg = Int64()
+        
         while(time.time()-start_time<FLASH_LED_GREEN_TIMEOUT):
-            msg.data = GREEN_LED_CODE
-            self.teensy_led_pub.publish(msg)
+            self.set_led_state(GREEN_LED_CODE)
             time.sleep(FLASH_LED_GREEN_ON_DURATION)
-            
-            msg.data = OFF_LED_CODE
-            self.teensy_led_pub.publish(msg)
+            self.set_led_state(OFF_LED_CODE)
             time.sleep(FLASH_LED_GREEN_OFF_DURATION)
-        if self.verbose: print("Green Flash Subroutine completed")        
+        if self.verbose: print("Green Flash Subroutine completed") 
 
+    """
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    states and LEDs
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    """
+    def set_rover_state_callback(self, msg):
+        state = msg.data
+        self.state = state
+        print("setting rover state as:", RVR_INFO[state])
+        self.set_led_state(state)
+
+    def set_rover_state(self, state):
+        self.state = state
+        print("setting rover state as:", RVR_INFO[state])
+        self.set_led_state(state)
+
+    def set_led_state(self, led_code):
+        msg = Int64()
+        msg.data = led_code
+        self.teensy_led_pub.publish(msg)
 
 def main(args=None):
     rclpy.init(args=args)

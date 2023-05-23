@@ -37,7 +37,7 @@ from settings.states import SM_DICT, SM_INFO
 from settings.fp_filter import *
 
 
-from std_msgs.msg import Bool, Float64
+from std_msgs.msg import Bool, Float64, Int64
 
 class CVSubSystem(Node):
     def __init__(self):
@@ -60,6 +60,7 @@ class CVSubSystem(Node):
         self.aruco_detection_timestamp = None
         
         self.searchwalk_interrupted = False
+        self.searchwalk_interruption_thread_event = None
         self.searchwalk_interruption_thread = None
         self.searchwalk_resume_thread = None
 
@@ -151,12 +152,23 @@ class CVSubSystem(Node):
             self.reset_sW_interrupt,
             10)
 
+        self.state_publisher = self.create_publisher(
+            Int64, 
+            'cvs2_state',
+            10)
+
+        timer_period  = 0.2
+        self.create_timer(timer_period, self.state_timer_callback)
+
+
 
         """
         https://stackoverflow.com/questions/61394756/how-to-use-opencv-videowriter-with-gstreamer
         """
+        print("\nwaiting for cvs2 input frames...")
         self.out_streamer = cv2.VideoWriter(gst_out_command,cv2.CAP_GSTREAMER,0, 20, self.frame_dims, True)
-        self.get_logger().warn("------------CVS2 CREATED------------") 
+        print("received frames...")
+        print("------------CVS2 CREATED------------") 
 
 
 
@@ -328,6 +340,7 @@ class CVSubSystem(Node):
     """
     def interrupt_searchwalk(self):
         if self.searchwalk_interruption_thread == None:
+            self.searchwalk_interruption_thread_event = Event()
             self.searchwalk_interruption_thread = Thread(target=self.interrupt_searchwalk_service_thread)
             self.searchwalk_interruption_thread.start()
 
@@ -337,10 +350,11 @@ class CVSubSystem(Node):
         """
         self.get_logger().info("signal detected, attempting to interrupt searchwalk...")
 
-        while getattr(self.searchwalk_interruption_thread, "do_run", True) and (not self.interrupt_searchwalk_service_client.wait_for_service(timeout_sec=0.5)):
+        
+        while (not self.searchwalk_interruption_thread_event.is_set()) and (not self.interrupt_searchwalk_service_client.wait_for_service(timeout_sec=0.5)):
             self.get_logger().info('searchwalk interrupt service not available, trying again...')
 
-        if getattr(self.searchwalk_interruption_thread, "do_run", True):
+        if not self.searchwalk_interruption_thread_event.is_set():
             self.req = Trigger.Request()
             future = self.interrupt_searchwalk_service_client.call_async(self.req)
             future.add_done_callback(self.interrupt_searchwalk_service_callback)
@@ -402,9 +416,23 @@ class CVSubSystem(Node):
             self.stop_subsystem_thread()
 
     def reset_sW_interrupt(self, msg):
-        self.get_logger().warn("request to stop cvs2 sW interrupt received, setting to idle... ") 
-        self.searchwalk_interruption_thread.do_run = False
-        self.subsystem_state == SM_DICT['idle_scan']
+
+        self.get_logger().warn("request to stop cvs2 sW interrupt received... ") 
+        if self.searchwalk_interruption_thread == None:
+            print("Subsystem thread is NOT running...")            
+        else:
+            print("stopping searchwalk_interruption_thread... ") 
+            self.searchwalk_interruption_thread_event.set()
+            self.searchwalk_interruption_thread.join()
+            self.searchwalk_interruption_thread = None
+            print("resetting cvs2... ") 
+            self.subsystem_state = SM_DICT['reset']
+
+    def state_timer_callback(self):
+        msg = Int64()
+        msg.data = self.subsystem_state
+        self.state_publisher.publish(msg)
+
 
 
 def main(args=None):
