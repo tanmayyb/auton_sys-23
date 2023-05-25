@@ -56,14 +56,23 @@ class CVSubSystem(Node):
 
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Print Verbose for User Settings 
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        """
+        self.approach_verbose = False
+        self.state_machine_logger_verbose = False
+        self.see_filter_activations_verbose = False
+
+
+        """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         Cvs2 System Variables
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
         self.subsystem_state = SM_DICT['idle_scan']
         self.aruco_is_detected = False
-        self.aruco_detection_timestamp = None
         
-        self.searchwalk_interrupted = False
+        self.searchwalk_halted = False
         self.searchwalk_interruption_thread_event = None
         self.searchwalk_interruption_thread = None
         self.searchwalk_resume_thread = None
@@ -80,14 +89,14 @@ class CVSubSystem(Node):
         """Cvs2 FP Filters"""
         self.idle_confirm_filter = mean_window(IDLE_WINDOW_SIZE)
         self.active_confirm_filter = mean_window(ARUCO_COFIRM_WINDOW_SIZE)
-        self.reset_confirm_filter = mean_window(RESET_WINDOW_SIZE)
+        self.reset_to_idle_confirm_filter = mean_window(RESET_WINDOW_SIZE)
         """Cvs2 FP Filter Activations"""
         self.idle_aruco_confirm_activation = 0.0 
         self.active_confirm_activation = 0.0
-        self.reset_confirm_activation = 0.0
+        self.reset_to_idle_activation = 0.0
         self.idle_confirm_filter.reg_time(None)
         self.active_confirm_filter.reg_time(None)
-        self.reset_confirm_filter.reg_time(None)
+        self.reset_to_idle_confirm_filter.reg_time(None)
         """Cvs2 Stream Settings"""
         self.process_cvs2_overlay_frame = True
         self.show_cvs2_output_locally = False
@@ -228,7 +237,7 @@ class CVSubSystem(Node):
         """update filter windows"""
         self.idle_aruco_confirm_activation = self.idle_confirm_filter.update_and_get_activation(self.aruco_is_detected)
         self.active_confirm_activation = self.active_confirm_filter.update_and_get_activation(self.aruco_is_detected)
-        self.reset_confirm_activation = self.reset_confirm_filter.update_and_get_activation(self.aruco_is_detected)
+        self.reset_to_idle_activation = self.reset_to_idle_confirm_filter.update_and_get_activation(self.aruco_is_detected)
 
         return frame
 
@@ -242,16 +251,17 @@ class CVSubSystem(Node):
                 - checks for aruco detections
                 - interrupts 'action_manager'
             """
-            if self.idle_aruco_confirm_activation > IDLE_CONFIRM_THRESHOLD:
-                #Rover saw the Tag for a brief second
-                               
+            if self.idle_aruco_confirm_activation >= IDLE_ARUCO_CONFIRM_THRESHOLD:                 #Rover saw the Tag for a brief second/IDLE_ARUCO_CONFIRM_THRESHOLD                               
                 self.active_confirm_filter.reg_time(time.time())
-                self.interrupt_searchwalk() 
-                self.subsystem_state = SM_DICT['interrupt_searchwalk']
+                if not self.searchwalk_halted:
+                    self.interrupt_searchwalk() 
+                    self.subsystem_state = SM_DICT['interrupt_searchwalk']
+                else:
+                    self.subsystem_state = SM_DICT['confirm_aruco']
 
         elif self.subsystem_state == SM_DICT['interrupt_searchwalk']:
-            if self.searchwalk_interrupted: #if successfully interrupted
-                self.searchwalk_interruption_thread.join()  #reset searchwalk interruption thread
+            if self.searchwalk_halted:
+                self.searchwalk_interruption_thread.join()  
                 self.searchwalk_interruption_thread = None
                 self.subsystem_state = SM_DICT['confirm_aruco']
 
@@ -260,40 +270,40 @@ class CVSubSystem(Node):
             CONFIRM ARUCO
                 - check for false positives
             """
-            if self.idle_aruco_confirm_activation > ARUCO_COFIRM_CONFIRM_THRESHOLD:             #wtf does this mean
+            if self.active_confirm_activation >= IDLE_ARUCO_CONFIRM_THRESHOLD: 
                 if self.active_confirm_filter.is_timeout(time.time(), ARUCO_COFIRM_TIMEOUT):
-                    self.get_logger().warn("Triggering approach behaviour...")
+                    self.get_logger().warn("approaching...")
                     self.subsystem_state = SM_DICT['approach']
             else: 
-                self.get_logger().warn("false positive detected, resetting CVS2-SM and sW...")
-                self.subsystem_state = SM_DICT['reset']
+                self.state_machine_logger_verbose: self.get_logger().info("FP detection spotted...")  
+                self.put_sm_into_reset()
 
         elif self.subsystem_state == SM_DICT['approach']: #approach logic
-            if self.active_confirm_activation >= ARUCO_COFIRM_CONFIRM_THRESHOLD:
-                self.publish_approach_error()
+            if self.active_confirm_activation >= ACTIVE_ARUCO_CONFIRM_ACTIVATION:
+                self.approach_aruco_markers()
             else:
-                self.get_logger().warn("aruco not detected, resetting to idle scan...")
-                self.reset_confirm_filter.reg_time(time.time())
-                self.subsystem_state = SM_DICT['reset']
+                self.state_machine_logger_verbose: self.get_logger().warn("lost active aruco confirm...")
+                self.put_sm_into_reset()
 
         elif self.subsystem_state == SM_DICT['reset']:
             """
             RESET CVS2
                 - resets cvs2 variables
-                - resumes searchwalk 
+                - resumes searchwalk/handles poor aruco detection states
             """
-            #if self.reset_confirm < RESET_CONFIRM_THRESHOLD:
-            if self.searchwalk_interrupted:
-                if self.searchwalk_resume_thread is None:
+            if self.reset_to_idle_confirm_filter.is_timeout(time.time(), RESET_TO_IDLE_CONFIRM_TIMEOUT):
+                if self.searchwalk_halted:
                     self.resume_searchwalk()
-            else:
-                if self.searchwalk_resume_thread is not None:
-                    self.searchwalk_resume_thread.join()
-                    self.searchwalk_resume_thread = None
-                self.subsystem_state = SM_DICT['idle_scan']
-            self.reset_cvs2()   
-            if self.reset_confirm_filter.is_timeout(time.time(), RESET_CONFIRM_TIMEOUT):
-                self.subsystem_state = SM_DICT['confirm_aruco']
+                else:                              
+                    if self.searchwalk_resume_thread is not None:
+                        self.searchwalk_resume_thread.join()
+                        self.searchwalk_resume_thread = None
+                    self.subsystem_state = SM_DICT['idle_scan']
+            else: 
+                if self.idle_aruco_confirm_activation < IDLE_ARUCO_CONFIRM_THRESHOLD:
+                    self.do_something_to_get_higher_activation()
+                else:
+                    self.subsystem_state = SM_DICT['confirm_aruco']
 
     def finalize_iteration(self, frame):
         """
@@ -313,11 +323,10 @@ class CVSubSystem(Node):
             if self.show_cvs2_output_locally:       self.stream.display_frames(frame)
             if self.show_cvs2_output_on_network:    self.out_streamer.write(frame)
 
+        if self.see_filter_activations_verbose: print(self.idle_aruco_confirm_activation, self.active_confirm_activation, self.reset_to_idle_activation)
+        
         self.pub_aruco_detection_state_msg()
         self.mainloop = self.stream.check_for_exit_keypresses()
-
-    def reset_cvs2(self):
-        self.aruco_detection_timestamp = None
     
     """
     SubSytem Threading
@@ -361,11 +370,11 @@ class CVSubSystem(Node):
         """
         https://stackoverflow.com/questions/18018033/how-to-stop-a-looping-thread-in-python
         """
-        self.get_logger().info("signal detected, attempting to interrupt searchwalk...")
+        if self.state_machine_logger_verbose: self.get_logger().info("signal detected, interrupting searchwalk...")
 
         
         while (not self.searchwalk_interruption_thread_event.is_set()) and (not self.interrupt_searchwalk_service_client.wait_for_service(timeout_sec=0.5)):
-            self.get_logger().info('searchwalk interrupt service not available, trying again...')
+            if self.state_machine_logger_verbose: self.get_logger().info('searchwalk interrupt service not available, trying again...')
 
         if not self.searchwalk_interruption_thread_event.is_set():
             self.req = Trigger.Request()
@@ -373,8 +382,8 @@ class CVSubSystem(Node):
             future.add_done_callback(self.interrupt_searchwalk_service_callback)
 
     def interrupt_searchwalk_service_callback(self, future):
-        self.searchwalk_interrupted = True
-        self.get_logger().warn('interrupt sw signal success!')
+        self.searchwalk_halted = True
+        if self.state_machine_logger_verbose: self.get_logger().info('searchwalk interrupt success...')
     
 
     """
@@ -386,19 +395,37 @@ class CVSubSystem(Node):
             self.searchwalk_resume_thread.start()
 
     def resume_searchwalk_service_thread(self):
-        self.get_logger().info("attempting to resume searchwalk again...")
+        if self.state_machine_logger_verbose: self.get_logger().info("attempting to resume searchwalk again...")
 
         while not self.resume_searchwalk_service_client.wait_for_service(timeout_sec=0.5):
-            self.get_logger().info('searchwalk resume service not available, trying again...')
+            if self.state_machine_logger_verbose: self.get_logger().info('searchwalk resume service not available, trying again...')
                 
         self.req = Trigger.Request()
         future = self.resume_searchwalk_service_client.call_async(self.req)
         future.add_done_callback(self.resume_searchwalk_service_callback)
 
     def resume_searchwalk_service_callback(self, future):
-        self.searchwalk_interrupted = False
-        self.get_logger().warn('resume sw signal success!')
+        self.searchwalk_halted = False
+        if self.state_machine_logger_verbose: self.get_logger().info('resume sw signal success!')
 
+
+    """
+    Reset Functions
+    """
+    def put_sm_into_reset(self):
+        if self.state_machine_logger_verbose: self.get_logger().info('resetting...')
+        self.reset_to_idle_confirm_filter.reg_time(time.time())
+        self.subsystem_state = SM_DICT['reset']
+    
+    def do_something_to_get_higher_activation(self):
+        self.publish_approach_error(0)
+
+    """
+    SM Processing
+    """
+    def approach_aruco_markers(self):
+        error = self.localiser.calculate_approach_error()
+        self.publish_approach_error(error)
 
     """
     PUBLISHING MESSAGES
@@ -408,17 +435,16 @@ class CVSubSystem(Node):
         msg.data = self.aruco_is_detected
         self.aruco_detection_state_pub.publish(msg)
 
-    def publish_approach_error(self):
-        error = self.localiser.calculate_approach_error()
+    def publish_approach_error(self, error):
         if error is not  None:
             msg = Float64()
             msg.data = float(error)
             self.send_cv_error_pub.publish(msg)
-            print("[approach_subroutine]: approach_error:\t", error, "[deg]")
+            if self.approach_verbose: print("[approach_subroutine]: approach_error:\t", error, "[deg]")
 
 
     """
-    USEFUL USER INTERFACES
+    USEFUL DEBUGGING INTERFACES
     """
     def toggle_cvs2_state_callback(self, msg):
         self.get_logger().warn("cvs2 state toggle received") 
@@ -439,7 +465,7 @@ class CVSubSystem(Node):
             self.searchwalk_interruption_thread_event.set()
             self.searchwalk_interruption_thread.join()
             self.searchwalk_interruption_thread = None
-            print("resetting cvs2... ") 
+            print("resetting... ") 
             self.subsystem_state = SM_DICT['reset']
 
     def state_timer_callback(self):

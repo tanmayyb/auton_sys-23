@@ -1,4 +1,13 @@
 import cv2
+
+MIN_ARUCO_DIST = 60.0
+
+
+
+
+"""
+ARUCO DICTIONARY
+"""
 ARUCO_DICT = {
 	"DICT_4X4_50": cv2.aruco.DICT_4X4_50,
 	"DICT_4X4_100": cv2.aruco.DICT_4X4_100,

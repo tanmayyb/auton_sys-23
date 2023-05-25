@@ -1,4 +1,4 @@
-from settings.aruco_dict import *
+from settings.aruco import *
 import cv2, argparse, time, sys
 import numpy as np
 

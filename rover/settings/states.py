@@ -3,9 +3,10 @@ SM_DICT = {
     'confirm_aruco':1,
     'approach':2,
     'reset':3,
-    'interrupt_searchwalk': 4}
+    'interrupt_searchwalk': 4,
+    'standby':5}
 
-SM_INFO = ['READY/SCANNING','CONFIRMING...','APPROACHING','RESETING', 'INTERRUPTING SEARCHWALK']
+SM_INFO = ['READY/SCANNING','CONFIRMING...','APPROACHING','RESETING', 'INTERRUPTING SEARCHWALK','STANDBY']
 
 
 RVR_DICT = {

@@ -1,5 +1,8 @@
 import cv2
+import numpy as np
 import utils.max_segment 
+from settings.aruco import MIN_ARUCO_DIST
+import time
 
 class aruco_localiser():
     def __init__(self, detector, dims=None, fov=None):
@@ -16,12 +19,28 @@ class aruco_localiser():
 
         self.center_of_mass = None
 
+
+        self.intrinsic_camera_matrix_coeff = np.array(((933.15867, 0, 657.59),(0,933.1586, 400.36993),(0,0,1)))
+        self.intrinsic_camera_distortion_coeff = np.array((-0.43948,0.18514,0,0))
+
+        self.approached_aruco = None
+
     def do_localisation(self):
         self.get_and_compute_center_params()
     
     def get_and_compute_center_params(self):
         self.corners, self.ids = self.detector.get_marker_params()
         self.computer_centers(self.corners, self.ids)
+        for corners in self.corners:
+            rvec, tvec, markerPoints = cv2.aruco.estimatePoseSingleMarkers(
+                corners, 
+                22.0, 
+                self.intrinsic_camera_matrix_coeff,
+                self.intrinsic_camera_distortion_coeff)   
+            if len(tvec) > 0: 
+                distance = tvec[0][0][2]
+                self.approached_aruco = True if distance < MIN_ARUCO_DIST else False 
+                #print("aruco approached? ", self.approached_aruco)           
 
     '''
         output of print(corners, ids):
@@ -37,7 +56,7 @@ class aruco_localiser():
                     
         [[4] [1]]
 
-        '''
+    '''
     
     def calculate_approach_error(self):
         cX = self.cX_array
