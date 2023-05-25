@@ -15,11 +15,11 @@ class CamName(Enum):
     Gucc = "gucc"
     Test_Webcam = "Tanmay's Personal Test Webcam"
 
-CAM = CamName.Test_Webcam
+CAM = CamName.Gucc
 STREAM_CVS2_OUT_TO_USER = True
 SHOW_CALIBRATION_PIPELINE = True
-WATCH_CALIBRATION_IP_ADDRESSES = ',10.0.0.217:8080'
-WATCH_CVS2_OUTPUT_IP_ADDRESSES = ',10.0.0.217:8081'
+WATCH_CALIBRATION_IP_ADDRESSES = ',172.17.255.10:8080'
+WATCH_CVS2_OUTPUT_IP_ADDRESSES = ',172.17.255.10:8081'
 
 
 """
@@ -52,8 +52,6 @@ PIPELINE PROFILE FOR EACH CAM
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 if CAM == CamName.Gucc:
-    #pipeline for Gucc Cam: lin_vrx_1.0    
-        
     usr_tx_pipeline = "gst-launch-1.0 -vvv v4l2src device=/dev/video0 ! 'image/jpeg, width=1280, height=720, framerate=60/1' ! jpegparse ! rtpjpegpay ! multiudpsink clients=127.0.0.1:8080"
     if SHOW_CALIBRATION_PIPELINE:   usr_tx_pipeline = 'gst-launch-1.0 -v v4l2src device=/dev/video0 ! "image/jpeg,width=640, height=480,framerate=30/1" ! rtpjpegpay ! multiudpsink clients=127.0.0.0:8080'+str(WATCH_CALIBRATION_IP_ADDRESSES)
     

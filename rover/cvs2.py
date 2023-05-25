@@ -189,10 +189,10 @@ class CVSubSystem(Node):
     def set_cvs2_state_callback(self, msg):
         msg = msg.data
         if (msg==True):
-            self.get_logger().warn("cvs2 start request received. starting cvs2... ") 
+            self.get_logger().info("cvs2 start request received. starting cvs2... ") 
             self.start_subsystem_thread()
         else:
-            self.get_logger().warn("cvs2 stop request received. stopping cvs2... ") 
+            self.get_logger().info("cvs2 stop request received. stopping cvs2... ") 
             self.stop_subsystem_thread()
 
     def main_subsystem_thread(self):
