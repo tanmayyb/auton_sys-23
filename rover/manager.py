@@ -79,9 +79,9 @@ class SearchApproachActionManager(Node):
             'resume_searchwalk',
             self.resume_searchwalk_callback)
         
-        self.successful_searchwalk = self.create_subscription(
+        self.succesful_searchwalk_sub = self.create_subscription(
             Empty, 
-            'succesful_searchwalk', 
+            'successful_searchwalk', 
             self.succesful_searchwalk_subscription, 
             10)
 
@@ -270,15 +270,15 @@ class SearchApproachActionManager(Node):
         
         return goal_list
 
-    def run_cvs2(self, _msg_):
-        if not isinstance(_msg_, bool):
-        	raise TypeError("run_cvs2: must be of type Bool")
+    def run_cvs2(self, val):
         msg = Bool()
-        msg.data = _msg_
+        msg.data = val
         self.set_cvs2_state_publisher.publish(msg)
 
     def succesful_searchwalk_subscription(self, msg):
-        pass
+        #inform base client
+        #reset action manager
+        self.run_cvs2(False)
          
 
 

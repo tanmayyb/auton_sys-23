@@ -33,7 +33,7 @@ from libs.overlay import overlay_on
 from utils.fp_filter import mean_window
 
 from settings.pipeline import *
-from settings.states import SM_DICT, SM_INFO
+from settings.cvs2 import SM_DICT, SM_INFO
 from settings.fp_filter import *
 
 
@@ -146,6 +146,11 @@ class CVSubSystem(Node):
         self.send_cv_error_pub = self.create_publisher(
             Float64, 
             'cvs2_error_msg',
+            10)
+        
+        self.succesful_searchwalk_pub = self.create_publisher(
+            Empty, 
+            'successful_searchwalk',
             10)
         
         """
@@ -281,8 +286,9 @@ class CVSubSystem(Node):
                 self.put_sm_into_reset()
 
         elif self.subsystem_state == SM_DICT['aruco_reached']:
-            
-            pass
+            msg = Empty()
+            self.succesful_searchwalk_pub.publish(msg)
+            self.subsystem_state = SM_DICT['standby']
 
         elif self.subsystem_state == SM_DICT['standby']:
 

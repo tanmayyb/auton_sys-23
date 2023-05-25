@@ -23,7 +23,6 @@ from std_msgs.msg import Empty, Float64, Int64
 from libs.controller import controller
 from settings.pid import *
 from settings.rover import *
-from settings.states import RVR_DICT, RVR_INFO
 
 from utils.navigation_vector import calculate_navigation_vector  
 from utils.navigation_error import calculate_heading_error
@@ -107,19 +106,25 @@ class Rover(Node):
             'cvs2_error_msg',
             self.approach_drive_callback,
             10)
+        
+        self.successful_searchwalk_sub = self.create_subscription(
+            Empty,
+            'successful_searchwalk',
+            self.successful_searchwalk_callback, 
+            10)
 
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         State Variables
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
-        self.state = RVR_DICT['idle/standby']
+        self.state = RVR_DICT['idle_standby']
         self.state_publisher = self.create_publisher(
             Int64, 
             'rover_state', 
             10)
         self.state_pub_timer = self.create_timer(
-            STATE_PUB_TIMER_PERIOD, 
+            ROVER_STATE_PUB_TIMER_PERIOD, 
             self.state_pub_timer_callback)
         self.set_rover_state_sub = self.create_subscription(
             Int64,
@@ -176,6 +181,7 @@ class Rover(Node):
         self.set_rover_state(RVR_DICT['miniwalk'])
         
         coords = goal_handle.request.coords
+        use_signal_and_wait = goal_handle.request.signal_and_wait
         tcrds = (coords.x, coords.y)        #get coordinates from msg
         geofence = coords.z                 #get geofence from msg
 
@@ -220,17 +226,28 @@ class Rover(Node):
 
         self.get_logger().info('Goal Finished Executing!...')
         #dont flash green at every waypoint
+        if use_signal_and_wait:
+            self.state = RVR_DICT['goal_reached']
+            self.green_flash_subroutine()
         return result
     
     """
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    approach action
+    other actions
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     """
     def approach_drive_callback(self, msg):
         cvs2_error = msg.data
         c2mm = self.approach_pid.control(cvs2_error)
         self.send_to_teensy_drive(c2mm)
+        self.state = RVR_DICT['approaching_aruco']
+        self.set_led_state(LED_DICT['AUTONOMOUS MODE'])
+
+    def successful_searchwalk_callback(self, msg):
+        self.send_to_teensy_drive(self.neutral_pwms)
+        self.state = RVR_DICT['goal_reached']
+        self.green_flash_subroutine()
+        self.state = RVR_DICT['idle_standby']
     
     """
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -272,9 +289,9 @@ class Rover(Node):
     #     start_time = time.time()
     #     self.green_flash_subroutine(start_time)
         
-    def green_flash_subroutine(self, start_time):
-        print("Green Flash Subroutine Triggered, looping..", time.time())
-        
+    def green_flash_subroutine(self):
+        #print("Green Flash Subroutine Triggered, looping..", time.time())
+        start_time = time.time()
         while(time.time()-start_time<FLASH_LED_GREEN_TIMEOUT):
             self.set_led_state(GREEN_LED_CODE)
             time.sleep(FLASH_LED_GREEN_ON_DURATION)
