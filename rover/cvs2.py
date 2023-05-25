@@ -44,16 +44,20 @@ class CVSubSystem(Node):
         super().__init__('cv_subsystem_node')
 
         """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         TRACKERS
             - subsystem state
             - ARUCO 
             - node events
             - threading
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
 
 
         """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         Cvs2 System Variables
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
         self.subsystem_state = SM_DICT['idle_scan']
         self.aruco_is_detected = False
@@ -67,29 +71,33 @@ class CVSubSystem(Node):
         self.main_thread = None
         self.main_thread_event = None
 
-
         """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         Cvs2 Settings
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
         self.aruco_confimation_wait_time = 0.7 #seconds
         """Cvs2 FP Filters"""
         self.idle_confirm_filter = mean_window(IDLE_WINDOW_SIZE)
         self.active_confirm_filter = mean_window(ARUCO_COFIRM_WINDOW_SIZE)
         self.reset_confirm_filter = mean_window(RESET_WINDOW_SIZE)
-        self.idle_aruco_confirm = 0.0 
-        self.active_confirm = 0.0
-        self.reset_confirm = 0.0
+        """Cvs2 FP Filter Activations"""
+        self.idle_aruco_confirm_activation = 0.0 
+        self.active_confirm_activation = 0.0
+        self.reset_confirm_activation = 0.0
         """Cvs2 Stream Settings"""
         self.process_cvs2_overlay_frame = True
         self.show_cvs2_output_locally = False
         self.show_cvs2_output_on_network = True
 
         """
-        LIBS
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        CVS2 LIBS:
             - streaming
             - detection
             - localization
             - overlay
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
 
         self.stream = streamer()
@@ -195,16 +203,17 @@ class CVSubSystem(Node):
         #cleanup video pointers
         cv2.destroyAllWindows()
         # self.stream.stop() #this stops the class
-        self.get_logger().info("cvs2 STOPPED!") 
+        self.get_logger().info("cvs2 stopped!") 
 
     def process_data(self):
         """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         PROCESS DATA
         This function does:
             - processing of frame to detect and localise ARUCO markers
-            - calculates area of markers faces
-
+            - find and update distance to markers
             - updates and calculates mean sum of signal windows/FP (False-Positive) Filters
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
         """detect and localise ARUCO markers"""
         ret, frame = self.stream.get_frame()
@@ -214,9 +223,9 @@ class CVSubSystem(Node):
         #self.localiser.calculate_aruco_face_area()
 
         """update filter windows"""
-        self.idle_aruco_confirm = self.idle_confirm_filter.update_and_get_activation(self.aruco_is_detected)
-        self.active_confirm = self.active_confirm_filter.update_and_get_activation(self.aruco_is_detected)
-        self.reset_confirm = self.reset_confirm_filter.update_and_get_activation(self.aruco_is_detected)
+        self.idle_aruco_confirm_activation = self.idle_confirm_filter.update_and_get_activation(self.aruco_is_detected)
+        self.active_confirm_activation = self.active_confirm_filter.update_and_get_activation(self.aruco_is_detected)
+        self.reset_confirm_activation = self.reset_confirm_filter.update_and_get_activation(self.aruco_is_detected)
 
         return frame
 
@@ -230,7 +239,7 @@ class CVSubSystem(Node):
                 - checks for aruco detections
                 - interrupts 'action_manager'
             """
-            if self.idle_aruco_confirm > IDLE_CONFIRM_THRESHOLD:
+            if self.idle_aruco_confirm_activation > IDLE_CONFIRM_THRESHOLD:
                 #Rover saw the Tag for a brief second
                                
                 self.active_confirm_filter.reg_time(time.time())
@@ -248,7 +257,7 @@ class CVSubSystem(Node):
             CONFIRM ARUCO
                 - check for false positives
             """
-            if self.active_confirm > ARUCO_COFIRM_CONFIRM_THRESHOLD:
+            if self.idle_aruco_confirm_activation > ARUCO_COFIRM_CONFIRM_THRESHOLD:             #wtf does this mean
                 if self.active_confirm_filter.is_timeout(time.time(), ARUCO_COFIRM_TIMEOUT):
                     self.get_logger().warn("Triggering approach behaviour...")
                     self.subsystem_state = SM_DICT['approach']
@@ -257,7 +266,7 @@ class CVSubSystem(Node):
                 self.subsystem_state = SM_DICT['reset']
 
         elif self.subsystem_state == SM_DICT['approach']: #approach logic
-            if self.active_confirm >= ARUCO_COFIRM_CONFIRM_THRESHOLD:
+            if self.active_confirm_activation >= ARUCO_COFIRM_CONFIRM_THRESHOLD:
                 self.publish_approach_error()
             else:
                 self.get_logger().warn("aruco not detected, resetting to idle scan...")
@@ -270,7 +279,7 @@ class CVSubSystem(Node):
                 - resets cvs2 variables
                 - resumes searchwalk 
             """
-            if self.reset_confirm < RESET_CONFIRM_THRESHOLD:
+            if self.reset_confirm_activation < RESET_CONFIRM_THRESHOLD:
                 if self.searchwalk_interrupted:
                     if self.searchwalk_resume_thread is None:
                         self.resume_searchwalk()
@@ -331,6 +340,7 @@ class CVSubSystem(Node):
             self.main_thread_event.set()
             self.main_thread.join()
             self.main_thread = None
+            self.subsystem_state = SM_DICT['idle_scan']
         else:
             print("Subsystem thread is NOT running...")
 
