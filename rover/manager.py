@@ -276,9 +276,11 @@ class SearchApproachActionManager(Node):
         self.set_cvs2_state_publisher.publish(msg)
 
     def succesful_searchwalk_subscription(self, msg):
-        #inform base client
         #reset action manager
         self.run_cvs2(False)
+        #inform base client
+        self.get_logger().warn('searchwalk succesfully executed...')
+
          
 
 
