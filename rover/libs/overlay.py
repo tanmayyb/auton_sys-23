@@ -1,12 +1,12 @@
 import cv2
 
 class overlay_on():
-    def __init__(self, detector=None, localiser=None, dims=None):
+    def __init__(self, detector=None, processor=None, dims=None):
         self.frame = None
         self.width = dims[0]
         self.height = dims[1]
         self.detector = detector
-        self.localiser = localiser
+        self.processor = processor
 
     def convert_corners_to_ints(self, topLeft, topRight, bottomRight, bottomLeft):
         topLeft = (int(topLeft[0]), int(topLeft[1]))
@@ -21,16 +21,16 @@ class overlay_on():
     def put_overlay(self, 
                     frame, 
                     draw_bounding_box=True, 
-                    localiser=None, 
-                    use_localiser=False, 
+                    processor=None, 
+                    use_processor=False, 
                     plot_center_of_mass=False, 
                     state_text=None):
         
         self.frame = frame
-        self.localiser = localiser
+        self.processor = processor
         self.load_marker_params() #fetch corners from marker
         self.put_overlay_for_each_marker(enable=draw_bounding_box)
-        self.put_localiser_overlay(enable=use_localiser)
+        self.put_processor_overlay(enable=use_processor)
         self.draw_midline()
         self.put_center_of_mass_overlay(enable=plot_center_of_mass)
         self.put_state_text(state_text)
@@ -39,14 +39,14 @@ class overlay_on():
 
     def put_center_of_mass_overlay(self, enable):
         if enable:
-            center_of_mass = self.localiser.get_center_of_mass()
+            center_of_mass = self.processor.get_center_of_mass()
             if(center_of_mass != None):
                 cv2.circle(self.frame, (int(center_of_mass), int(self.height/2)),10,(0,255,255),-1)
 
 
-    def put_localiser_overlay(self, enable):
+    def put_processor_overlay(self, enable):
         if enable:
-            cX, cY  = self.localiser.fetch_center_arrays()
+            cX, cY  = self.processor.fetch_center_arrays()
             if(cX and cY):
                 for center_of_each_tag in zip(cX, cY):
                     sw = 4

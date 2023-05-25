@@ -27,7 +27,7 @@ from std_srvs.srv import Trigger
 
 from libs.streamer import streamer
 from libs.detector import aruco_detector
-from libs.localiser import aruco_localiser
+from libs.processor import aruco_processor
 from libs.overlay import overlay_on
 
 from utils.fp_filter import mean_window
@@ -45,17 +45,6 @@ class CVSubSystem(Node):
 
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        TRACKERS
-            - subsystem state
-            - ARUCO 
-            - node events
-            - threading
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        """
-
-
-        """
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         Print Verbose for User Settings 
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
@@ -63,14 +52,14 @@ class CVSubSystem(Node):
         self.state_machine_logger_verbose = False
         self.see_filter_activations_verbose = False
 
-
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        Cvs2 System Variables
+        Cvs2 Core System Variables
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
         self.subsystem_state = SM_DICT['idle_scan']
         self.aruco_is_detected = False
+        self.min_aruco_distance_approached = False
         
         self.searchwalk_halted = False
         self.searchwalk_interruption_thread_event = None
@@ -82,11 +71,9 @@ class CVSubSystem(Node):
 
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        Cvs2 Settings
+        Cvs2 FP(False Positive) Filters
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
-        self.aruco_confimation_wait_time = 0.7 #seconds
-        """Cvs2 FP Filters"""
         self.idle_confirm_filter = mean_window(IDLE_WINDOW_SIZE)
         self.active_confirm_filter = mean_window(ARUCO_COFIRM_WINDOW_SIZE)
         self.reset_to_idle_confirm_filter = mean_window(RESET_WINDOW_SIZE)
@@ -97,6 +84,11 @@ class CVSubSystem(Node):
         self.idle_confirm_filter.reg_time(None)
         self.active_confirm_filter.reg_time(None)
         self.reset_to_idle_confirm_filter.reg_time(None)
+        """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Cvs2 Graphic I/O and Overlay
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        """
         """Cvs2 Stream Settings"""
         self.process_cvs2_overlay_frame = True
         self.show_cvs2_output_locally = False
@@ -104,24 +96,24 @@ class CVSubSystem(Node):
 
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        CVS2 LIBS:
+        CORE CVS2 LIBS:
             - streaming
             - detection
-            - localization
+            - processing
             - overlay
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
-
         self.stream = streamer()
         self.frame_dims, self.fov = self.stream.get_info()
         self.detector = aruco_detector(self)
-        self.localiser = aruco_localiser(self.detector, dims=self.frame_dims, fov=self.fov)
-        self.overlay_handler = overlay_on(detector=self.detector, localiser=self.localiser, dims=self.frame_dims) #make this less messy
+        self.processor = aruco_processor(self.detector, dims=self.frame_dims, fov=self.fov)
+        self.overlay_handler = overlay_on(detector=self.detector, processor=self.processor, dims=self.frame_dims) #make this less messy
 
         """
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         ROS2 INTERFACES
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
-
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         CVS2 INTERFACES
@@ -158,7 +150,7 @@ class CVSubSystem(Node):
         
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        USER INTERFACES
+        USER DEBUGGING INTERFACES
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
         self.toggle_cvs2_state_subscription = self.create_subscription(
@@ -176,11 +168,8 @@ class CVSubSystem(Node):
             Int64, 
             'cvs2_state',
             10)
-
-        timer_period  = 0.2
-        self.create_timer(timer_period, self.state_timer_callback)
-
-
+        cvs2_state_pub_timer_period  = 0.2
+        self.create_timer(cvs2_state_pub_timer_period, self.state_timer_callback)
 
         """
         https://stackoverflow.com/questions/61394756/how-to-use-opencv-videowriter-with-gstreamer
@@ -195,14 +184,14 @@ class CVSubSystem(Node):
     def set_cvs2_state_callback(self, msg):
         msg = msg.data
         if (msg==True):
-            self.get_logger().warn("cvs2 START request received! starting cvs2... ") 
+            self.get_logger().warn("cvs2 start request received. starting cvs2... ") 
             self.start_subsystem_thread()
         else:
-            self.get_logger().warn("cvs2 STOP request received! stopping cvs2... ") 
+            self.get_logger().warn("cvs2 stop request received. stopping cvs2... ") 
             self.stop_subsystem_thread()
 
     def main_subsystem_thread(self):
-        self.get_logger().info("cvs2 STARTED!")
+        self.get_logger().warning("cvs2 subsystem launched...")
         
         while not self.main_thread_event.is_set():
             
@@ -215,7 +204,7 @@ class CVSubSystem(Node):
         #cleanup video pointers
         cv2.destroyAllWindows()
         # self.stream.stop() #this stops the class
-        self.get_logger().info("cvs2 stopped!") 
+        #self.get_logger().info("cvs2 stopped!") 
 
     def process_data(self):
         """
@@ -231,13 +220,15 @@ class CVSubSystem(Node):
         ret, frame = self.stream.get_frame()
         # These functions have to occur in this sequence
         self.detector.do_aruco_marker_detection(frame)
-        self.localiser.do_localisation()
-        #self.localiser.calculate_aruco_face_area()
+        self.processor.do_aruco_processing()
 
         """update filter windows"""
         self.idle_aruco_confirm_activation = self.idle_confirm_filter.update_and_get_activation(self.aruco_is_detected)
         self.active_confirm_activation = self.active_confirm_filter.update_and_get_activation(self.aruco_is_detected)
         self.reset_to_idle_activation = self.reset_to_idle_confirm_filter.update_and_get_activation(self.aruco_is_detected)
+
+        """update min_aruco_distance_approached"""
+        self.min_aruco_distance_approached = self.processor.get_min_aruco_distance_approached()
 
         return frame
 
@@ -272,7 +263,7 @@ class CVSubSystem(Node):
             """
             if self.active_confirm_activation >= IDLE_ARUCO_CONFIRM_THRESHOLD: 
                 if self.active_confirm_filter.is_timeout(time.time(), ARUCO_COFIRM_TIMEOUT):
-                    self.get_logger().warn("approaching...")
+                    self.get_logger().info("approaching...")
                     self.subsystem_state = SM_DICT['approach']
             else: 
                 self.state_machine_logger_verbose: self.get_logger().info("FP detection spotted...")  
@@ -280,10 +271,17 @@ class CVSubSystem(Node):
 
         elif self.subsystem_state == SM_DICT['approach']: #approach logic
             if self.active_confirm_activation >= ACTIVE_ARUCO_CONFIRM_ACTIVATION:
-                self.approach_aruco_markers()
+                if self.min_aruco_distance_approached:
+                    self.get_logger().warn("aruco tag(s) reached!")
+                    self.subsystem_state = SM_DICT['aruco_reached']
+                else:
+                    self.approach_aruco_markers()
             else:
                 self.state_machine_logger_verbose: self.get_logger().warn("lost active aruco confirm...")
                 self.put_sm_into_reset()
+
+        elif self.subsystem_state == SM_DICT['aruco_reached']:
+            pass
 
         elif self.subsystem_state == SM_DICT['reset']:
             """
@@ -313,8 +311,8 @@ class CVSubSystem(Node):
         if self.process_cvs2_overlay_frame:
             frame = self.overlay_handler.put_overlay( # overlay handler zips and overlays data 
                 frame,
-                localiser=self.localiser, 
-                use_localiser=True, 
+                processor=self.processor, 
+                use_processor=True, 
                 plot_center_of_mass=True,
                 state_text=SM_INFO[self.subsystem_state])        
             """
@@ -348,13 +346,13 @@ class CVSubSystem(Node):
         https://superfastpython.com/stop-a-thread-in-python/
         """
         if self.main_thread is not None:
-            self.get_logger().info("setting thread event to stop...") 
             self.main_thread_event.set()
             self.main_thread.join()
             self.main_thread = None
+            self.get_logger().warn("subsystem thread stopped") 
             self.subsystem_state = SM_DICT['idle_scan']
         else:
-            print("Subsystem thread is NOT running...")
+            print("attempted to stop subsystem thread, but it is not running...")
 
 
     """
@@ -424,7 +422,7 @@ class CVSubSystem(Node):
     SM Processing
     """
     def approach_aruco_markers(self):
-        error = self.localiser.calculate_approach_error()
+        error = self.processor.calculate_approach_error()
         self.publish_approach_error(error)
 
     """
@@ -446,13 +444,11 @@ class CVSubSystem(Node):
     """
     USEFUL DEBUGGING INTERFACES
     """
-    def toggle_cvs2_state_callback(self, msg):
-        self.get_logger().warn("cvs2 state toggle received") 
+    def toggle_cvs2_state_callback(self, msg): 
+        self.get_logger().info("state toggle requested...")
         if self.main_thread is None:
-            self.get_logger().warn("starting cvs2... ") 
             self.start_subsystem_thread()
         else:
-            self.get_logger().warn("stopping cvs2... ") 
             self.stop_subsystem_thread()
 
     def reset_sW_interrupt(self, msg):
