@@ -124,6 +124,17 @@ class aruco_processor():
     
     def get_min_aruco_distance_approached(self):
         return self.min_aruco_distance_approached
+    
+    def set_default_states(self):
+        self.corners = None 
+        self.ids = None
+        self.cX_array  = []
+        self.cY_array = []
+        self.distances_array = []
+        self.center_of_mass = None
+        self.mean_distance_of_aruco_markers = None
+        self.min_aruco_distance_approached = None
+
 
     """
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

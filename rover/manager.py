@@ -16,7 +16,7 @@ from rclpy.executors import MultiThreadedExecutor
 
 from std_srvs.srv import Trigger
 from geometry_msgs.msg import Point
-from std_msgs.msg import Bool
+from std_msgs.msg import Empty, Bool
 
 
 from rover_utils.action import MinimalWalk
@@ -78,6 +78,12 @@ class SearchApproachActionManager(Node):
             Trigger,
             'resume_searchwalk',
             self.resume_searchwalk_callback)
+        
+        self.successful_searchwalk = self.create_subscription(
+            Empty, 
+            'succesful_searchwalk', 
+            self.succesful_searchwalk_subscription, 
+            10)
 
         print("------------ACTION MANAGER CREATED------------") 
 
@@ -270,6 +276,9 @@ class SearchApproachActionManager(Node):
         msg = Bool()
         msg.data = _msg_
         self.set_cvs2_state_publisher.publish(msg)
+
+    def succesful_searchwalk_subscription(self, msg):
+        pass
          
 
 

@@ -281,6 +281,11 @@ class CVSubSystem(Node):
                 self.put_sm_into_reset()
 
         elif self.subsystem_state == SM_DICT['aruco_reached']:
+            
+            pass
+
+        elif self.subsystem_state == SM_DICT['standby']:
+
             pass
 
         elif self.subsystem_state == SM_DICT['reset']:
@@ -350,10 +355,13 @@ class CVSubSystem(Node):
             self.main_thread.join()
             self.main_thread = None
             self.get_logger().warn("subsystem thread stopped") 
-            self.subsystem_state = SM_DICT['idle_scan']
+            self.set_default_cvs2_states()
         else:
             print("attempted to stop subsystem thread, but it is not running...")
 
+    def set_default_cvs2_states(self):
+        self.subsystem_state = SM_DICT['idle_scan']
+        self.processor.set_default_states()
 
     """
     Interrupt Searchwalk
