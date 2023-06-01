@@ -156,9 +156,10 @@ class SearchApproachActionManager(Node):
             else: 
                 #patch this part of code
                 #loop control goes here
-                self.get_logger().warning('searchwalk_goal_executor: all goals successfully completed...')
+                self.get_logger().warning('searchwalk_goal_executor: executor has stopped...')
                 self.running_search = False
                 self.goal_handle = None
+                self.run_cvs2(False)
 
     def send_miniwalk_goal(self, goal):
         send_goal_future = self.miniwalk_action_client.send_goal_async(
