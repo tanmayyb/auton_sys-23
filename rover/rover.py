@@ -112,6 +112,12 @@ class Rover(Node):
             'successful_searchwalk',
             self.successful_searchwalk_callback, 
             10)
+        
+        self.node_sub = self.create_subscription(
+            Int64,
+            'node_test',
+            self.node_callback,
+            10)
 
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -319,6 +325,9 @@ class Rover(Node):
         msg = Int64()
         msg.data = led_code
         self.teensy_led_pub.publish(msg)
+    
+    def node_callback(self, msg):
+        None
 
 def main(args=None):
     rclpy.init(args=args)

@@ -114,6 +114,11 @@ class CVSubSystem(Node):
         ROS2 INTERFACES
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         """
+        self.node_sub = self.create_subscription(
+            Int64,
+            'node_test',
+            self.node_callback,
+            10)
         """
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         CVS2 INTERFACES
@@ -333,7 +338,7 @@ class CVSubSystem(Node):
             if self.show_cvs2_output_on_network:    self.out_streamer.write(frame)
 
         if self.see_filter_activations_verbose: print(self.idle_aruco_confirm_activation, self.active_confirm_activation, self.reset_to_idle_activation)
-        
+        #print("STATE:\t", self.subsystem_state)
         self.pub_aruco_detection_state_msg()
         self.mainloop = self.stream.check_for_exit_keypresses()
     
@@ -482,7 +487,9 @@ class CVSubSystem(Node):
         msg = Int64()
         msg.data = self.subsystem_state
         self.state_publisher.publish(msg)
-
+    
+    def node_callback(self, msg):
+        None
 
 
 def main(args=None):
