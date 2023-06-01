@@ -4,17 +4,24 @@ import os
 
 # This scripts creates a database with offline tiles.
 
-# specify the region to load TMU
+#TMU
+# tl_coords = (43.65939, -79.38062)
+# br_coords = (43.65823, -79.37881) 
+# db_name = "offline_tiles_tmu.db"
 
-# TMU
-top_left_position = (43.65939, -79.38062)
-bottom_right_position = (43.65823, -79.37881)
+#MDRS
+tl_coords = (38.40701179562584, -110.79282616484986) 
+br_coords = (38.40701179562584, -110.79282616484986) 
+db_name = "site_A_off_tiles.db"
+
+top_left_position = (tl_coords[0], tl_coords[1])
+bottom_right_position = (br_coords[0], br_coords[1])
 zoom_min = 19
 zoom_max = 20
 
 # specify path and name of the database
 script_directory = os.path.dirname(os.path.abspath(__file__))
-database_path = os.path.join(script_directory, "offline_tiles_tmu_1.db")
+database_path = os.path.join(script_directory, db_name)
 
 # create OfflineLoader instance
 loader = tkintermapview.OfflineLoader(path=database_path)
