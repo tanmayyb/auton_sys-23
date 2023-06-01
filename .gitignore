@@ -15,5 +15,6 @@ base/plugins/teleop/__pycache__
 rover/settings/__pycache__
 rover/libs/__pycache__
 rover/utils/__pycache__
+rover/utils/calibration/__pycache__
 
 **/__pycache__/
