@@ -229,7 +229,7 @@ class actionConsole():
                 column=BUTTON_FRAME_COLUMN,
                 padx=ACTION_CONSOLE_FRAME_INNER_PADDING_X,
                 pady=ACTION_CONSOLE_FRAME_INNER_PADDING_Y,
-                sticky='W')
+                sticky='E')
 
         self.pub_button = Button(
             self.button_label_frame, 
@@ -260,7 +260,7 @@ class actionConsole():
                 rowspan=ROVER_INFO_LABEL_FRAME_ROWSPAN,
                 padx=ROVER_INFO_FRAME_INNER_PADDING_X,
                 pady=ROVER_INFO_FRAME_INNER_PADDING_Y,
-                sticky='E')
+                sticky='W')
 
         """ labels """
 
