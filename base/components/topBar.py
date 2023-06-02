@@ -124,9 +124,9 @@ class topBar():
         self.state_cvs2_label.pack(side=RIGHT)
     
     def hide_cvs2_state(self):
-        self.current_cvs2_state.destroy()
+        self.current_cvs2_state.pack_forget()
         
-        self.state_cvs2_label.destroy()
+        self.state_cvs2_label.pack_forget()
 
     def set_rover_state(self, state):
         self.current_state.config(text=self.parent.state_array[state], bg=self.state_color[state])

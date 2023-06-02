@@ -17,55 +17,75 @@ class map():
     def __init__(self, parent, window):
         self.window = window
         self.parent = parent
-
-        self.home = (TMU_LAT, TMU_LON)
+        
+        self.map_list = ["offline_tiles_tmu.db", "offline_green_river.db", "offline_mdrs.db"]
+        
+        self.lats = {
+            0: 43.65897373429778,
+            1: 38.99347971713025,
+            2: 38.40714534649276
+        }
+        
+        self.lons = {
+            0: -79.37932931217927,
+            1: -110.13929946458637,
+            2: -110.79057649597202
+        }
+        
+        self.home = (self.lats[0], self.lons[0])
 
         self.waypoints = 0
         self.markers = []
         self.path = None
+        
+        self.map_frame = LabelFrame(
+            self.window,
+            text="map")
+        
+        self.map_frame.grid(
+                row=MAP_FRAME_ROW, 
+                column=MAP_FRAME_COLUMN,
+                sticky=MAP_STICKY)
+        
+        self.map_widget = tkintermapview.TkinterMapView(self.window)
+        
+        self.input_map = IntVar(0)
 
-        self.show_map()
+        self.show_map(self.input_map)
+        self.show_map_settings()
     
-    def show_map(self):
+    def show_map(self, map):
+        self.map_widget.destroy()
+        
         script_directory = os.path.dirname(os.path.abspath("base/components"))
         database_path = os.path.join(
             script_directory,
             "database", 
-            "offline_tiles_tmu.db")
-
-        self.map_frame = LabelFrame(
-            self.window,
-            text="map")
-        self.map_frame.grid(
-                row=MAP_FRAME_ROW, 
-                column=MAP_FRAME_COLUMN,
-                rowspan=MAP_FRAME_ROWSPAN,
-                columnspan=MAP_FRAME_COLUMNSPAN,
-                sticky=MAP_STICKY)
-
+            self.map_list[map.get()])
+        
         self.map_widget = tkintermapview.TkinterMapView(
             self.map_frame, 
             width=MAP_WIDTH, 
             height=MAP_HEIGHT, 
             corner_radius=MAP_CORNER_RADIUS,
             use_database_only=True,
-            max_zoom=22,
+            max_zoom=19,
             database_path=database_path)
-
+        
         self.map_widget.grid(
             row=MAP_WIDGET_ROW,
             column=MAP_WIDGET_COLUMN,
             sticky = MAP_STICKY)
-
-        # set current widget position and zoom
+        
         self.map_widget.set_position(
-            LAT_FOR_MAP, 
-            LON_FOR_MAP)  # Ryerson
+            self.lats[map.get()], 
+            self.lons[map.get()])
+        
         self.rover_marker = self.map_widget.set_marker(
-            LAT_FOR_MAP,
-            LON_FOR_MAP, 
+            self.lats[map.get()],
+            self.lons[map.get()], 
             text="Rover")
-
+        
         self.map_widget.set_zoom(19)
 
         self.map_widget.add_right_click_menu_command(label="add waypoint",
@@ -84,11 +104,29 @@ class map():
         self.map_widget.add_right_click_menu_command(label="load coordinates",
                                         command=self.load_coords,
                                         pass_coords=True)
-
+        
         # self.map_widget.add_right_click_menu_command(label="go here",
         #                         command=self.load_coords,
         #                         pass_coords=True)
 
+    def show_map_settings(self):
+        self.settings_frame = LabelFrame(
+            self.map_frame,
+            text="")
+        
+        self.settings_frame.grid(
+            row=0, 
+            column=0,
+            columnspan=1)
+        
+        self.map1 = Radiobutton(self.settings_frame, text="TMU", value=0, variable = self.input_map, command = lambda : self.show_map(self.input_map))
+        self.map2 = Radiobutton(self.settings_frame, text="GreenR", value=1, variable = self.input_map, command = lambda : self.show_map(self.input_map))
+        self.map3 = Radiobutton(self.settings_frame, text="MDRS", value=2, variable = self.input_map, command = lambda : self.show_map(self.input_map))
+        self.map1.grid(row=0,column=1)
+        self.map2.grid(row=0,column=2)
+        self.map3.grid(row=0,column=3)
+    
+    
     def load_coords(self, coords):
         self.parent.actionConsole.input_tlat.set(str(coords[0]))
         self.parent.actionConsole.input_tlon.set(str(coords[1]))
