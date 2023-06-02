@@ -225,5 +225,5 @@ class baseNode(Node):
     
     def set_cvs2_state_callback(self, msg):
         self.cvs2_state = msg.data
-        self.parent.topBar.set_cvs2_state(self.state)
+        self.parent.topBar.set_cvs2_state(self.cvs2_state)
 

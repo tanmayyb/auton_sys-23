@@ -221,11 +221,12 @@ class SearchApproachActionManager(Node):
         cancel_response = future.result()
 
     def pause_searchwalk_callback(self, request, response):
+        #generally requested by cvs2
         if self.running_search:
             self.get_logger().warn('sw: cvs2 interrupted searchwalk...')
             
             self.cancel_miniwalk_goal()
-            response.success = True    # write condition to ensure cancellation
+            response.success = True 
         else:
             self.get_logger().error('no searchwalk goals to interrupt...')
             response.success = False
@@ -244,6 +245,7 @@ class SearchApproachActionManager(Node):
         return response
 
     def stop_searchwalk_callback(self, msg):
+        #generally requested by client
         #check if goal handle is none or not
         self.get_logger().warn('stopping searchwalk...')
         self.cancel_miniwalk_goal()
