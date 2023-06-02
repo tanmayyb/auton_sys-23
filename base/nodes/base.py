@@ -71,6 +71,12 @@ class baseNode(Node):
             'rover_state',
             self.set_rover_state_callback,
             10)
+        
+        self.set_cvs2_state_sub = self.create_subscription(
+            Int64,
+            'cvs2_state',
+            self.set_cvs2_state_callback,
+            10)
 
         self.node_test_timer = self.create_timer(
             3.0,
@@ -208,7 +214,7 @@ class baseNode(Node):
     
     def set_rover_state_callback(self, msg):
        self.state = msg.data
-       self.parent.topBar.set_state(self.parent.state_array[self.state])
+       self.parent.topBar.set_rover_state(self.state)
     
     def node_test_callback(self):
        rover_node_list = []
@@ -216,4 +222,8 @@ class baseNode(Node):
        for nodes in self.rover_node_alive:
            rover_node_list.append(str(nodes.node_name))
        self.parent.topBar.set_led_status(rover_node_list)
+    
+    def set_cvs2_state_callback(self, msg):
+        self.cvs2_state = msg.data
+        self.parent.topBar.set_cvs2_state(self.state)
 
