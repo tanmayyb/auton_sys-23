@@ -10,9 +10,31 @@ class topBar():
     def __init__(self, parent, window):
         self.window = window
         self.parent = parent
+        
+        self.current_cvs2_state = Label(self.window, text= "  N/A  ")
+        
+        self.state_cvs2_label = Label(self.window, text="CVS2 State:")
+        
+        self.state_color = {
+           0: 'yellow',
+           1: 'red',
+           2: 'blue',
+           3: 'yellow',
+           4: 'green'
+        }
+        
+        self.cvs2_state_color = {
+           0: 'yellow',
+           1: 'yellow',
+           2: 'green',
+           3: 'yellow',
+           4: 'blue',
+           5: 'green',
+           6: 'yellow'
+        }
 
         self.show_top_bar()
-        self.show_state()
+        self.show_rover_state()
 
 
     def show_top_bar(self):
@@ -87,14 +109,29 @@ class topBar():
         for node in temp_list:
             self.canvas_dic[node].itemconfig(self.led_dic[node], fill='')
 
-    def show_state(self):
-        self.current_state = Label(self.top_frame, text= " ")
+    def show_rover_state(self):
+        self.current_state = Label(self.top_frame, text= "  N/A  ")
         self.current_state.pack(side=RIGHT, padx=5)
         
         self.state_label = Label(self.top_frame, text="Rover State:")
         self.state_label.pack(side=RIGHT)
+    
+    def show_cvs2_state(self):
+        self.current_cvs2_state = Label(self.top_frame, text= "  N/A  ")
+        self.current_cvs2_state.pack(side=RIGHT, padx=5)
+        
+        self.state_cvs2_label = Label(self.top_frame, text="CVS2 State:")
+        self.state_cvs2_label.pack(side=RIGHT)
+    
+    def hide_cvs2_state(self):
+        self.current_cvs2_state.destroy()
+        
+        self.state_cvs2_label.destroy()
 
-    def set_state(self, state):
-        self.current_state.config(text=state)
+    def set_rover_state(self, state):
+        self.current_state.config(text=self.parent.state_array[state], bg=self.state_color[state])
+        
+    def set_cvs2_state(self, state):
+        self.current_cvs2_state.config(text=self.parent.cvs2_state_array[state], bg=self.cvs2_state_color[state])
         
         

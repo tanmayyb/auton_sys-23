@@ -15,6 +15,7 @@ class actionConsole():
         self.show_drive_switch_frame()
         self.show_rover_info_labels()
         self.show_action_console()
+        self.show_buttons()
         
 
     def show_action_console(self):
@@ -44,8 +45,6 @@ class actionConsole():
         self.draw_searchwalk_tab()
         
 
-
-
         #set frame placement
         self.miniwalk_frame.pack(fill='both', expand=True)
         self.srch_act_frame.pack(fill='both', expand=True)
@@ -54,7 +53,7 @@ class actionConsole():
         self.actions_notebook.add(self.miniwalk_frame, text='Miniwalk')
         self.actions_notebook.add(self.srch_act_frame, text='Searchwalk')
 
-
+        self.actions_notebook.bind('<<NotebookTabChanged>>', self.on_tab_change)
 
         #self.show_rover_info_labels(self.action_console_frame)
 
@@ -94,12 +93,6 @@ class actionConsole():
         # adjust elements in grid
         self.do_miniwalk_bttn.grid(row=0,column=0)
         self.cancel_miniwalk_bttn.grid(row=1,column=0)
-
-        self.stop_button = Button(self.frame2_miniwalk_frame, text=" Stop/Standby", command=self.stop_standby_button_3)
-        self.action_button = Button(self.frame2_miniwalk_frame, text="  Do Teleop  ",  command=self.do_teleop_button_4)
-
-        self.stop_button.grid(row=0,column=1)
-        self.action_button.grid(row=1,column=1)
 
     def do_miniwalk(self):
         tlat = float(self.input_tlat.get())
@@ -202,7 +195,7 @@ class actionConsole():
     def do_teleop_button_4(self):
         #stop/standby everything
         self.parent.teleop.do_teleop_func(True)
-        self.parent.base_node.set_rover_state(int(3))
+        self.parent.base_node.set_rover_state(3)
 
     def stop_standby_button_3(self):
         self.parent.base_node.set_rover_state(0)
@@ -226,38 +219,17 @@ class actionConsole():
         self.parent.base_node.do_teleop(lpwm, rpwm)
 
         
-    def show_buttons(self, frame):
+    def show_buttons(self):
         #button pub sub buttons
         
-        self.button_label_frame = LabelFrame(frame)
+        self.button_label_frame = LabelFrame(self.window, text='Drive Controls')
 
         self.button_label_frame.grid(
                 row=BUTTON_FRAME_ROW, 
                 column=BUTTON_FRAME_COLUMN,
-                rowspan=BUTTON_FRAME_ROWSPAN,
-                columnspan=BUTTON_FRAME_COLUMNSPAN,
                 padx=ACTION_CONSOLE_FRAME_INNER_PADDING_X,
-                pady=ACTION_CONSOLE_FRAME_INNER_PADDING_Y)
-
-
-        self.action_button_2 = Button(
-            self.button_label_frame, 
-            text="  Do MiniWalk  ",  
-            command=self.miniwalk_action_button_1).grid(
-                row=ACTION_CONSOLE_BUTTON_MATRIX[0][0],
-                column=ACTION_CONSOLE_BUTTON_MATRIX[0][1],
-                padx=BUTTON_FRAME_INNER_PADDING_X,
-                pady=BUTTON_FRAME_INNER_PADDING_Y,)
-
-        self.cancel_action_button = Button(
-            self.button_label_frame, 
-            text="Cancel MiniWalk",  
-            command=self.cancel_action_button_2).grid(
-                row=ACTION_CONSOLE_BUTTON_MATRIX[1][0],
-                column=ACTION_CONSOLE_BUTTON_MATRIX[1][1],
-                padx=BUTTON_FRAME_INNER_PADDING_X,
-                pady=BUTTON_FRAME_INNER_PADDING_Y,)
-
+                pady=ACTION_CONSOLE_FRAME_INNER_PADDING_Y,
+                sticky='W')
 
         self.pub_button = Button(
             self.button_label_frame, 
@@ -280,15 +252,15 @@ class actionConsole():
                 pady=BUTTON_FRAME_INNER_PADDING_Y,)
 
     def show_rover_info_labels(self):
-        self.rover_info_label_frame = LabelFrame(self.window)
+        self.rover_info_label_frame = LabelFrame(self.window, text='Location')
 
         self.rover_info_label_frame.grid(
                 row=ROVER_INFO_LABEL_FRAME_ROW, 
                 column=ROVER_INFO_LABEL_FRAME_COLUMN,
                 rowspan=ROVER_INFO_LABEL_FRAME_ROWSPAN,
-                columnspan=ROVER_INFO_LABEL_FRAME_COLUMNSPAN,
                 padx=ROVER_INFO_FRAME_INNER_PADDING_X,
-                pady=ROVER_INFO_FRAME_INNER_PADDING_Y)
+                pady=ROVER_INFO_FRAME_INNER_PADDING_Y,
+                sticky='E')
 
         """ labels """
 
@@ -324,7 +296,7 @@ class actionConsole():
         
         self.rover_lat_data = Label(
             self.rover_info_label_frame,
-            text="")
+            text="    N/A    ")
         self.rover_lat_data.grid(
             row=ROVER_LAT_DATA_ROW,
             column=ROVER_LAT_DATA_COLUMN,
@@ -333,7 +305,7 @@ class actionConsole():
 
         self.rover_lon_data = Label(
             self.rover_info_label_frame,
-            text="")
+            text="    N/A    ")
         self.rover_lon_data.grid(
             row=ROVER_LON_DATA_ROW,
             column=ROVER_LON_DATA_COLUMN,
@@ -342,7 +314,7 @@ class actionConsole():
 
         self.rover_arb_data = Label(
             self.rover_info_label_frame,
-            text="")
+            text="    N/A    ")
         self.rover_arb_data.grid(
             row=ROVER_ARB_DATA_ROW,
             column=ROVER_ARB_DATA_COLUMN,
@@ -357,9 +329,7 @@ class actionConsole():
         self.drive_switch_frame.grid(
                 row=DRIVE_SWITCH_FRAME_ROW, 
                 column=DRIVE_SWITCH_FRAME_COLUMN,
-                rowspan=DRIVE_SWITCH_FRAME_ROWSPAN,
-                columnspan=DRIVE_SWITCH_FRAME_COLUMNSPAN,
-                sticky=DRIVE_SWITCH_FRAME_STICKY )
+                rowspan=DRIVE_SWITCH_FRAME_ROWSPAN)
 
         self.show_drive_switch_buttons()
 
@@ -386,4 +356,11 @@ class actionConsole():
         self.rover_lat_data.configure(text=f" {x:.5f} ")
         self.rover_lon_data.configure(text=f" {y:.5f} ")
         self.rover_arb_data.configure(text=f" {z:.4f} ")
-    
+        
+    def on_tab_change(self, event):
+        tab = event.widget.tab('current')['text']
+        if tab == 'Miniwalk':
+            self.parent.topBar.hide_cvs2_state()
+        elif tab == 'Searchwalk':
+            self.parent.topBar.show_cvs2_state()
+            

@@ -28,7 +28,8 @@ class gui(Thread):
 
         self.window = window
 
-        self.state_array = ['IDLE/STANDBY', 'MINIWALKING','', 'TELEOP']
+        self.state_array = ['IDLE/STANDBY', 'MINIWALKING', 'TELEOP', 'APPROACH', 'GOAL REACHED']
+        self.cvs2_state_array = ['READY/SCANNING','CONFIRMING...','APPROACHING','RESETING', 'INTERRUPTING SEARCHWALK','TGT REACHED', 'STANDBY']
 
         self.setup_window()
         self.draw_gui()
