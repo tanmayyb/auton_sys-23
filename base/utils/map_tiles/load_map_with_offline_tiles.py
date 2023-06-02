@@ -8,8 +8,12 @@ from tkintermapview import TkinterMapView
 #db_name = "offline_tiles_tmu.db"
 
 #MDRS
-coords = (38.40701179562584, -110.79282616484986) 
-db_name = "site_A_off_tiles.db"
+coords = (38.40714534649276, -110.79057649597202) 
+db_name = "offline_mdrs.db"
+
+#GREEN RIVER
+#coords = (38.99347971713025, -110.13929946458637) 
+#db_name = "offline_green_river.db"
 
 
 # create tkinter window
@@ -29,7 +33,9 @@ map_widget = TkinterMapView(root_tk,
                             use_database_only=True,
                             max_zoom=19, 
                             database_path=database_path)
+#map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=19)  # google satellite
 map_widget.pack(fill="both", expand=True)
+
 
 #map_widget.set_address("nyc")
 
@@ -38,6 +44,6 @@ map_widget.set_marker(
     coords[0],
     coords[1], 
     text="Location")
-map_widget.set_zoom(20)
+map_widget.set_zoom(19)
 
 root_tk.mainloop()
