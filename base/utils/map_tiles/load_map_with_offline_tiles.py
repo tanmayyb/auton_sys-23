@@ -15,6 +15,11 @@ db_name = "offline_mdrs.db"
 #coords = (38.99347971713025, -110.13929946458637) 
 #db_name = "offline_green_river.db"
 
+#SITE A
+#coords = (38.420255, -110.784279)
+
+#SITE B
+#coords = (38.421601, -110.784859)
 
 # create tkinter window
 root_tk = tkinter.Tk()
