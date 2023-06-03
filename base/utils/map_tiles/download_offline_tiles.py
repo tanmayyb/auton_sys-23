@@ -21,14 +21,14 @@ import os
 
 
 #MDRS SITE A
-tl_coords = (38.420340, -110.791979) 
-br_coords = (38.414781, -110.777017)
-db_name = "offline_mdrs_site_a.db"
+#tl_coords = (38.420340, -110.791979) 
+#br_coords = (38.414781, -110.777017)
+#db_name = "offline_mdrs_site_a.db"
 
 #MDRS SITE B
-#tl_coords = (38.424662, -110.793279) 
-#br_coords = (38.418302, -110.776084) 
-#db_name = "offline_mdrs_site_b.db"
+tl_coords = (38.424662, -110.793279) 
+br_coords = (38.418302, -110.776084) 
+db_name = "offline_mdrs_site_b.db"
 
 
 top_left_position = (tl_coords[0], tl_coords[1])
