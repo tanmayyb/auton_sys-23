@@ -18,18 +18,22 @@ class map():
         self.window = window
         self.parent = parent
         
-        self.map_list = ["offline_tiles_tmu.db", "offline_green_river.db", "offline_mdrs.db"]
+        self.map_list = ["offline_tiles_tmu.db", "offline_green_river.db", "offline_mdrs.db", "offline_mdrs_site_a.db", "offline_mdrs_site_b.db"]
         
         self.lats = {
             0: 43.65897373429778,
             1: 38.99347971713025,
-            2: 38.40714534649276
+            2: 38.40714534649276,
+            3: 38.420255,
+            4: 38.421601
         }
         
         self.lons = {
             0: -79.37932931217927,
             1: -110.13929946458637,
-            2: -110.79057649597202
+            2: -110.79057649597202,
+            3: -110.784279,
+            4: -110.784859
         }
         
         self.home = (self.lats[0], self.lons[0])
@@ -122,9 +126,13 @@ class map():
         self.map1 = Radiobutton(self.settings_frame, text="TMU", value=0, variable = self.input_map, command = lambda : self.show_map(self.input_map))
         self.map2 = Radiobutton(self.settings_frame, text="GreenR", value=1, variable = self.input_map, command = lambda : self.show_map(self.input_map))
         self.map3 = Radiobutton(self.settings_frame, text="MDRS", value=2, variable = self.input_map, command = lambda : self.show_map(self.input_map))
+        self.map4 = Radiobutton(self.settings_frame, text="siteA", value=3, variable = self.input_map, command = lambda : self.show_map(self.input_map))
+        self.map5 = Radiobutton(self.settings_frame, text="siteB", value=4, variable = self.input_map, command = lambda : self.show_map(self.input_map))
         self.map1.grid(row=0,column=1)
         self.map2.grid(row=0,column=2)
         self.map3.grid(row=0,column=3)
+        self.map4.grid(row=0,column=4)
+        self.map5.grid(row=0,column=5)
     
     
     def load_coords(self, coords):
