@@ -1,0 +1,31 @@
+ssh xav@xav
+ssh xav@172.16.255.25
+
+cd github/auton_sys-23 && . utils/install/setup.bash
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Tanmay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+python3 base/app.py
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Ryan
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+python3 rover/sensors.py
+python3 rover/teensy.py
+python3 rover/manager.py
+python3 rover/rover.py
+python3 rover/cvs2.py
+
+
+
+
+testing interfaces (need source):
+python3 base/tests/led/led.py
+python3 base/tests/cvs2/cvs2-gui.py
+
+
