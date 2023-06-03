@@ -195,7 +195,7 @@ class actionConsole():
     def do_teleop_button_4(self):
         #stop/standby everything
         self.parent.teleop.do_teleop_func(True)
-        self.parent.base_node.set_rover_state(3)
+        self.parent.base_node.set_rover_state(2)
 
     def stop_standby_button_3(self):
         self.parent.base_node.set_rover_state(0)
@@ -228,8 +228,7 @@ class actionConsole():
                 row=BUTTON_FRAME_ROW, 
                 column=BUTTON_FRAME_COLUMN,
                 padx=ACTION_CONSOLE_FRAME_INNER_PADDING_X,
-                pady=ACTION_CONSOLE_FRAME_INNER_PADDING_Y,
-                sticky='E')
+                pady=ACTION_CONSOLE_FRAME_INNER_PADDING_Y)
 
         self.pub_button = Button(
             self.button_label_frame, 
@@ -329,7 +328,8 @@ class actionConsole():
         self.drive_switch_frame.grid(
                 row=DRIVE_SWITCH_FRAME_ROW, 
                 column=DRIVE_SWITCH_FRAME_COLUMN,
-                rowspan=DRIVE_SWITCH_FRAME_ROWSPAN)
+                rowspan=DRIVE_SWITCH_FRAME_ROWSPAN,
+                sticky='E')
 
         self.show_drive_switch_buttons()
 

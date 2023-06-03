@@ -99,7 +99,7 @@ class baseNode(Node):
         minimal_walk_goal_msg = MinimalWalk.Goal()
         minimal_walk_goal_msg.coords = coords
         minimal_walk_goal_msg.use_guidance = False
-        minimal_walk_goal_msg.signal_and_wait = False
+        minimal_walk_goal_msg.signal_and_wait = True
         
         self.minimal_walk_action_client.wait_for_server()  
 

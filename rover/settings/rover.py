@@ -38,4 +38,4 @@ FLASH_LED_GREEN_OFF_DURATION = 0.2
 
 
 
-RVR_INFO = ['IDLE/STANDBY', 'MINIWALKING','', 'TELEOP']
+RVR_INFO = ['idle_standby', 'miniwalk', 'teleop', 'approaching_aruco', 'goal_reached']
