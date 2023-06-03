@@ -25,7 +25,7 @@ class topBar():
         
         self.cvs2_state_color = {
            0: 'yellow',
-           1: 'yellow',
+           1: 'green',
            2: 'green',
            3: 'yellow',
            4: 'blue',
